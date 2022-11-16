@@ -1,9 +1,8 @@
 export const commonTheme = {
 	colors: {
-		primary: '#7986cb',
-		secondary: '#2b2b2b',
-		success: '#4caf50',
-		danger: '#f44336 ',
+		primary: '#fff',
+		secondary: '#777',
+		tertiary: '#c0c0c0',
 	},
 
 	media: {
@@ -14,6 +13,29 @@ export const commonTheme = {
 
 	// in px
 	fontSizes: {
-		header: { desk: 124, tablet: 76, phone: 48 },
+		title: { desk: 124, tablet: 76, phone: 48 },
+		text: { desk: 18, tablet: 16, phone: 12 },
+	},
+
+	// in ms
+	durations: {
+		ms300: 1000,
 	},
 }
+
+export const lightTheme = {
+	bg: '#fff',
+	text: '#1e1e1e',
+}
+
+export const darkTheme = {
+	bg: '#1e1e1e',
+	text: '#fff',
+}
+
+export const accentTheme = [
+	{name: 'purple', color: '#c2a6cd'},
+	{name: 'blue', color: '#718ec4'},
+	{name: 'green', color: '#46bbb1'},
+	{name: 'orange', color: '#ffb4a2'},
+]

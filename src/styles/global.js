@@ -1,12 +1,41 @@
 import { createGlobalStyle } from "styled-components";
+import { commonTheme } from "./theme";
 
 export default createGlobalStyle`
-	@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap');
+html {
+	font-size: ${commonTheme.fontSizes.text.desk}px;
+	height: 100%;
+	margin: 0;
+}
 
-	body {
-		margin: 0;
-		font-family: 'Inter Tight', sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
+body {
+	margin: 0;
+	height: 100%;
+	font-family: 'Inter Tight', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0;
+}
+
+h2 {
+	color: ${commonTheme.colors.primary};
+	font-weight: 200;
+	font-size: ${commonTheme.fontSizes.title.desk}px;
+}
+
+a {
+	color: ${ ({theme}) => theme.text };
+	text-decoration: none;
+}
+
+picture {
+	line-height: 0;
+}
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
 `
