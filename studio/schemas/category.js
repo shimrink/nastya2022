@@ -1,17 +1,17 @@
 export default {
-  name: 'category',
-  title: 'Category',
-  type: 'document',
-  fields: [
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-    },
-    {
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-    },
-  ],
+	name: 'category',
+	title: 'Табы',
+	type: 'document',
+	fields: [
+		{
+			name: 'title',
+			title: 'Название',
+			type: 'string',
+		},
+		{
+			name: 'order',
+			title: 'Порядковый номер',
+			type: 'number',
+		},
+	],
 }
