@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../App';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
 const TabsWrapper = styled.div`

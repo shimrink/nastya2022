@@ -1,3 +1,4 @@
+
 const state = {
 	home: {
 		gridWidth: 1520,
@@ -9,4 +10,4 @@ const state = {
 	},
 }
 
-export default state
+export default state;

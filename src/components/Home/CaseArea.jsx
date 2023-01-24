@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { commonTheme } from '../../styles/theme';
-import { MediaContext } from '../../App';
+import { MediaContext } from '../../AppWrap';
 
 const CarouselContainer = styled.div`
 	grid-row: 1/2;
@@ -60,7 +60,7 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 				indent: nodeW * 0.22
 			})
 		}
-	}, [media])
+	}, [media, setCarouselSizes])
 
 	// Hovering animation
 	useEffect(() => {

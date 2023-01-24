@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MediaContext } from '../../App';
-import Line from './Line';
+import { MediaContext } from '../../AppWrap';
+import Line from '../common/Line';
 
 const Case = styled.div`
 	display: flex;

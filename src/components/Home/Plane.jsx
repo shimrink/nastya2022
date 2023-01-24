@@ -4,7 +4,7 @@ import { Html, useTexture } from '@react-three/drei';
 import { extend, useFrame } from '@react-three/fiber';
 import lerp from 'lerp';
 import { commonTheme } from '../../styles/theme';
-import { MediaContext } from '../../App';
+import { MediaContext } from '../../AppWrap';
 import CustomMaterial from '../../shaders/CustomMaterial';
 
 const Case = styled.div`
@@ -22,6 +22,7 @@ const Title = styled.h2`
 	font-size: ${ ({media}) => media === 'mobile' ? '10vw' : commonTheme.fontSizes.title[media] + 'px'};
 	text-align: center;
 	text-transform: uppercase;
+	z-index: 2;
 `
 const Tags = styled.div`
 	grid-row: 2/3;
@@ -29,6 +30,7 @@ const Tags = styled.div`
 	align-self: start;
 	font-size: ${ ({media}) => commonTheme.fontSizes.tag[media]}px;
 	text-align: center;
+	z-index: 2;
 `
 const Tag = styled.span`
 	color: ${commonTheme.colors.primary};
@@ -40,7 +42,9 @@ const FilterDiv = styled.div`
 	grid-column: 1/13;
 	width: 100%;
 	height: 100%;
-	filter: brightness(0.8);
+	background-color: ${commonTheme.colors.quaternary};
+	opacity: 20%;
+	z-index: 1;
 `
 extend({CustomMaterial})
 
@@ -70,6 +74,7 @@ const Plane = ({ post, index, caseData, planeW, planeH, planeI, hovering }) => {
 		<customMaterial ref={materialRef} uTexture={media === 'mobile' ? coversMobile[index] : covers[index]} attach='material' />
 		<Html center position={[0, 0, -100]}>
 			<Case planeW={planeW} planeH={planeH}>
+				<FilterDiv />
 				<Title media={media}>{post.title}</Title>
 				<Tags media={media}>{post.tags.map((t, i) =>
 					<Tag key={i}>

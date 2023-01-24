@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
-import { AccentColorContext, MediaContext } from '../App';
+import { motion } from 'framer-motion';
+import { AccentColorContext, MediaContext } from '../AppWrap';
 import state from '../store';
 import { commonTheme } from '../styles/theme';
+import { pageTransition, pageVariants } from '../styles/animations';
 import asyaImg from '../assets/images/Asya.png';
 
-const FooterWrapper = styled.footer`
+const FooterWrapper = styled(motion.footer)`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -164,7 +166,7 @@ const Footer = () => {
 	})
 
 	if (pathname === '/') return null
-	return <FooterWrapper media={media}>
+	return <FooterWrapper media={media} initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
 		<UpperFooter media={media}>
 			<TitleWrap ref={titleWrapRef} media={media}>
 				<Title media={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> ·</Title>

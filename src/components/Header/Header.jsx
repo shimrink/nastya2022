@@ -5,7 +5,7 @@ import ThemeToggler from './ThemeToggler';
 import AccentColorToggler from './AccentColorToggler';
 import Navigation from './Navigation';
 import Logo from './Logo';
-import { AccentColorContext, MediaContext } from '../../App';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
 
 const HeaderWrapper = styled.div`
 	width: 100vw;
@@ -122,7 +122,7 @@ const Header = ({ toggleTheme, accentColorToggler }) => {
 
 	return <HeaderWrapper className='header-container'>
 		<Hat media={media}>
-			<Logo accentColor={accentColor} media={media} />
+			<Logo />
 			<TogglersAndNav media={media}>
 				<ThemeTogglerContainer onClick={media === 'hugeDesk' || media === 'desk' ? ()=>{} : toggleTheme} media={media}>
 					<ThemeToggler toggleTheme={toggleTheme} />
@@ -140,7 +140,7 @@ const Header = ({ toggleTheme, accentColorToggler }) => {
 		{media !== 'hugeDesk' && media !== 'desk' &&
 		<MenuMobile ref={menuMobileRef} accentColor={accentColor.dark}>
 			<HatMobile>
-				<Logo mobile closeMenu={closeMenu} accentColor={accentColor} media={media} />
+				<Logo mobile closeMenu={closeMenu} />
 				<Close>
 					<span onClick={closeMenu}>Закрыть</span>
 				</Close>

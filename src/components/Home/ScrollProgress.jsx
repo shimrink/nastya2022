@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { mapRange } from "gsap/gsap-core"
 import { commonTheme } from '../../styles/theme';
-import { AccentColorContext, MediaContext } from '../../App';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
 
 const ProgressLineWrapper = styled.div`
 	grid-row: 1/2;
@@ -20,8 +20,7 @@ const ProgressLineContainer = styled.div`
 	border-radius: 9em;
 	width: 100%;
 	height: 100%;
-	background-color: ${ ({accentColor}) => accentColor.dark };
-	opacity: 50%;
+	background-color: ${ ({accentColor}) => accentColor.light };
 `
 const ProgressLine = styled.div`
 	position: absolute;

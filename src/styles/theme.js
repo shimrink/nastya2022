@@ -1,8 +1,8 @@
 export const commonTheme = {
 	colors: {
-		primary: '#fff',
+		primary: '#FFF',
 		secondary: '#777',
-		tertiary: '#e6e6e6',
+		tertiary: '#E6E6E6',
 		quaternary: '#000',
 	},
 
@@ -38,18 +38,18 @@ export const commonTheme = {
 }
 
 export const lightTheme = {
-	bg: '#fff',
-	text: '#1e1e1e',
+	bg: '#FFF',
+	text: '#1E1E1E',
 }
 
 export const darkTheme = {
-	bg: '#1e1e1e',
-	text: '#fff',
+	bg: '#1E1E1E',
+	text: '#FFF',
 }
 
 export const accentTheme = [
-	{name: 'purple', color: {dark: '#BCAED5', light: '#E5D5FF'}},
-	{name: 'blue', color: {dark: '#6997CC', light: '#C7E1F7'}},
-	{name: 'green', color: {dark: '#087C7C', light: '#A8EDED'}},
-	{name: 'orange', color: {dark: '#E39D58', light: '#FFC994'}},
+	{name: 'purple', color: {dark: '#BCAED5', light: '#E7E1F8'}},
+	{name: 'blue', color: {dark: '#6997CC', light: '#C0D8F4'}},
+	{name: 'green', color: {dark: '#087C7C', light: '#C6F4F4'}},
+	{name: 'orange', color: {dark: '#E39D58', light: '#F9ECE4'}},
 ]

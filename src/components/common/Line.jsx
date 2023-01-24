@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../App';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
 
 const LineDiv = styled.div`
 	grid-column: 1/13;

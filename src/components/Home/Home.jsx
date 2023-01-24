@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from "three";
+import { motion } from 'framer-motion';
 import { commonTheme } from '../../styles/theme';
+import { pageTransition, pageVariants } from '../../styles/animations';
 import state from '../../store';
-import { AccentColorContext, MediaContext } from '../../App';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
 import Scene from './Scene';
 import CaseArea from './CaseArea';
 
-const Main = styled.main`
+const Main = styled(motion.main)`
 	position: absolute;
 	display: grid;
 	grid-template-columns: 1fr ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '1fr' } 1fr;
@@ -124,7 +126,15 @@ const Home = ({ caseData }) => {
 	let planeH = carouselSizes.height
 	let planeI = carouselSizes.indent
 
-	return caseData && <Main className='main-container' media={media} onTouchStart={touchStartHandler} onTouchMove={touchMoveHandler}>
+	return caseData && <Main className='main-container'
+									media={media}
+									onTouchStart={touchStartHandler}
+									onTouchMove={touchMoveHandler}
+									initial='out'
+									animate='in'
+									exit='out'
+									variants={pageVariants}
+									transition={pageTransition}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}

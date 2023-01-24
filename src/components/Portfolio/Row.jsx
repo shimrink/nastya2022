@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import gsap from 'gsap';
-import Line from './Line';
-import { AccentColorContext } from '../../App';
+import Line from '../common/Line';
+import { AccentColorContext } from '../../AppWrap';
 
 const RowContent = styled.div`
 	display: grid;

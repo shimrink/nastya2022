@@ -1,13 +1,15 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import state from '../../store';
-import { MediaContext } from '../../App';
+import { pageTransition, pageVariants } from '../../styles/animations';
+import { MediaContext } from '../../AppWrap';
 import Row from './Row';
-import Line from './Line';
+import Line from '../common/Line';
 import Tabs from './Tabs';
 import Grid from './Grid';
 
-const Main = styled.main`
+const Main = styled(motion.main)`
 	display: flex;
 	flex-direction: column;
 	width: ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '100vw' };
@@ -36,7 +38,7 @@ const Portfolio = ({ caseData, categoriesData }) => {
 
 	const mainRef = useRef()
 
-	return caseData && <Main media={media} ref={mainRef}>
+	return caseData && <Main media={media} ref={mainRef} initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
 		<Title media={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
 		<Tabs caseData={caseData} categoriesData={categoriesData} />
 		<Line top />
