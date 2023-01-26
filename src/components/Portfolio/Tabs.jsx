@@ -11,7 +11,7 @@ const TabsWrapper = styled.div`
 	margin-bottom: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 168 : 48 }px;
 	z-index: 4;
 	div {
-		font-family: 'WinterR', sans-serif;
+		font-family: 'AccentFontM', sans-serif;
 		font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16 }px;
 		border: 1px solid ${ ({accentColor}) => accentColor.light };
 		border-radius: 9em;
@@ -31,10 +31,13 @@ const TabsWrapper = styled.div`
 		color: ${ ({theme}) => theme.bg };
 	}
 	div.tabItemActive {
-		font-family: 'WinterEBI', sans-serif;
+		font-family: 'AccentFontSBI', sans-serif;
 		background-color: ${ ({accentColor}) => accentColor.dark };
 		border-color: ${ ({accentColor}) => accentColor.dark };
 		color: ${ ({theme}) => theme.bg };
+	}
+	div.tabItemActive span {
+		border-bottom: 1px solid;
 	}
 `
 const Tabs = ({ caseData, categoriesData }) => {
@@ -78,11 +81,15 @@ const Tabs = ({ caseData, categoriesData }) => {
 	}
 
 	return caseData && categoriesData && <TabsWrapper media={media} accentColor={accentColor}>
-			<div className='tabItem tabItemActive' onClick={showAll}>Все</div>
+			<div className='tabItem tabItemActive' onClick={showAll}>
+				<span>Все</span>
+			</div>
 			{categoriesData.map((c, i) =>
 				<div key={i}
 				onClick={showCategory}
-				className='tabItem'>{c.title}</div>
+				className='tabItem'>
+					<span>{c.title}</span>
+				</div>
 			)}
 		</TabsWrapper>
 }

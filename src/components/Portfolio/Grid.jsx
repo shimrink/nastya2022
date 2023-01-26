@@ -18,8 +18,6 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 `
 const Name = styled.h3`
-	font-family: 'WinterEL', sans-serif;
-	font-weight: 200;
 	font-size: 30px;
 	margin: 24px 0 12px 0;
 	text-transform: uppercase;

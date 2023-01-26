@@ -12,8 +12,9 @@ const Nav = styled.nav`
 	justify-self: ${ ({mobile}) => mobile ? 'center' : 'end' };
 	justify-content: center;
 	a {
-		font-family: ${ ({mobile}) => mobile ? 'WinterEL' : 'WinterR' }, sans-serif;
+		font-family: ${ ({mobile}) => mobile ? 'AccentFontT' : 'AccentFontM' }, sans-serif;
 		font-size: ${ ({mobile}) => mobile ? 'clamp(48px, 15.415vw, 76px)' : commonTheme.fontSizes.text.desktop + 'px' };
+		line-height: ${ ({mobile}) => mobile ? 1.15 : 0.8 };
 		margin-right: ${ ({mobile}) => mobile ? 0 : 24 }px;
 		color: ${ ({theme, mobile}) => mobile ? commonTheme.colors.primary : theme.text };
 		text-transform: ${ ({mobile}) => mobile ? 'uppercase' : 'none' };
@@ -23,11 +24,12 @@ const Nav = styled.nav`
 		margin-right: 0;
 	}
 	a.navItemActive {
-		font-family: 'WinterEBI', sans-serif;
+		font-family: 'AccentFontSBI', sans-serif;
 		color: ${ ({accentColor}) => accentColor.dark };
+		border-bottom: 1px solid;
 	}
 	a.navItemMobileActive {
-		font-family: 'WinterI', sans-serif;
+		font-family: 'AccentFontI', sans-serif;
 	}
 `
 const Navigation = ({ mobile, closeMenu, accentColor }) => {

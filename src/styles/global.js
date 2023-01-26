@@ -10,45 +10,45 @@ import { commonTheme } from "./theme";
 
 export default createGlobalStyle`
 @font-face {
-	font-family: 'IBMPlexSans';
+	font-family: 'BaseFont';
 	src: url(/fonts/IBMPlexSans-Regular.ttf) format('truetype');
 	font-weight: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterR';
-	src: url(/fonts/WinterSansTrial-Regular.otf) format('opentype');
+	font-family: 'AccentFontR';
+	src: url(/fonts/PPNeueMontreal-Book.otf) format('opentype');
 	font-weight: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterI';
-	src: url(/fonts/WinterSansTrial-Italic.otf) format('opentype');
+	font-family: 'AccentFontI';
+	src: url(/fonts/PPNeueMontreal-Italic.otf) format('opentype');
 	font-weight: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterEL';
-	src: url(/fonts/WinterSansTrial-ExtraLight.otf) format('opentype');
-	font-weight: 200;
+	font-family: 'AccentFontT';
+	src: url(/fonts/PPNeueMontreal-Thin.otf) format('opentype');
+	font-weight: 100;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterELI';
-	src: url(/fonts/WinterSansTrial-ExtraLightItalic.otf) format('opentype');
-	font-weight: 200;
+	font-family: 'AccentFontM';
+	src: url(/fonts/PPNeueMontreal-Medium.otf) format('opentype');
+	font-weight: 500;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterEB';
-	src: url(/fonts/WinterSansTrial-ExtraBold.otf) format('opentype');
-	font-weight: 800;
+	font-family: 'AccentFontSBI';
+	src: url(/fonts/PPNeueMontreal-SemiBoldItalic.otf) format('opentype');
+	font-weight: 600;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'WinterEBI';
-	src: url(/fonts/WinterSansTrial-ExtraBoldItalic.otf) format('opentype');
-	font-weight: 800;
+	font-family: 'AccentFontB';
+	src: url(/fonts/PPNeueMontreal-Bold.otf) format('opentype');
+	font-weight: 700;
 	font-display: swap;
 }
 
@@ -71,7 +71,7 @@ html {
 body {
 	margin: 0;
 	height: 100%;
-	font-family: 'IBMPlexSans', sans-serif;
+	font-family: 'BaseFont', sans-serif;
 	overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -82,14 +82,13 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+	font-family: 'AccentFontT', sans-serif;
+	font-weight: 100;
 	margin: 0;
-	letter-spacing: -0.02em;
 }
 
 h2 {
-	font-family: 'WinterEL', sans-serif;
 	color: ${commonTheme.colors.primary};
-	font-weight: 200;
 	line-height: 110%;
 }
 

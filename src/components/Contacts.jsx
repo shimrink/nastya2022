@@ -6,8 +6,13 @@ import { pageTransition, pageVariants } from '../styles/animations';
 const Main = styled(motion.main)`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `
 const Contacts = () => {
+
+	// const media = useContext(MediaContext)
+	// const accentColor = useContext(AccentColorContext)
+
 	return <Main initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
 
 	</Main>

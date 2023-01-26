@@ -14,7 +14,7 @@ const RowContent = styled.div`
 	width: 100%;
 	padding: 0 40px;
 	h3.nameActive {
-		font-family: 'WinterI', sans-serif;
+		font-family: 'AccentFontI', sans-serif;
 		font-weight: 400;
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
@@ -29,8 +29,6 @@ const RowArea = styled.div`
 const Name = styled.h3`
 	grid-row: 1/2;
 	grid-column: 1/10;
-	font-family: 'WinterEL', sans-serif;
-	font-weight: 200;
 	font-size: ${commonTheme.fontSizes.title.tabletA}px;
 	margin: 48px 0;
 	text-transform: uppercase;

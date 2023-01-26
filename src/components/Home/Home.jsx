@@ -37,7 +37,7 @@ const ShowButton = styled.div`
 	color: ${commonTheme.colors.primary};
 	width: 146px;
 	height: 146px;
-	font-family: 'WinterEBI', sans-serif;
+	font-family: 'AccentFontSBI', sans-serif;
 	font-size: 18px;
 	border-radius: 50%;
 	transform: translate(-50%, -50%) scale(0);

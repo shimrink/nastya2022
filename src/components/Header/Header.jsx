@@ -8,15 +8,15 @@ import Logo from './Logo';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 
 const HeaderWrapper = styled.div`
-	width: 100vw;
-	font-family: 'WinterR', sans-serif;
+	width: 100%;
+	font-family: 'AccentFontM', sans-serif;
 	overflow: hidden;
 	touch-action: none;
 	z-index: 2147000001;
 `
 const Hat = styled.header`
 	position: fixed;
-	width: 100vw;
+	width: 100%;
 	display: grid;
 	grid-template-columns: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 'repeat(12, 1fr)' : '1fr' };
 	grid-column-gap: 24px;
@@ -63,11 +63,11 @@ const MenuMobile = styled.div`
 	top: 0;
 	left: 0;
 	display: grid;
-	background-color: ${ props => props.accentColor };
+	background-color: ${ ({accentColor}) => accentColor.dark };
 	color: ${commonTheme.colors.primary};
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
-	padding: 24px;
+	padding: ${({media}) => media === 'mobile' ? '24px' : '24px 40px'};
 	transform: translateX(100%);
 	transition: transform ${commonTheme.durations.short}ms;
 	z-index: 2147000002;
@@ -138,7 +138,7 @@ const Header = ({ toggleTheme, accentColorToggler }) => {
 			</TogglersAndNav>
 		</Hat>
 		{media !== 'hugeDesk' && media !== 'desk' &&
-		<MenuMobile ref={menuMobileRef} accentColor={accentColor.dark}>
+		<MenuMobile ref={menuMobileRef} accentColor={accentColor} media={media}>
 			<HatMobile>
 				<Logo mobile closeMenu={closeMenu} />
 				<Close>

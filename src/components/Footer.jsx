@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import gsap from 'gsap';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import { AccentColorContext, MediaContext } from '../AppWrap';
 import state from '../store';
@@ -9,6 +8,14 @@ import { commonTheme } from '../styles/theme';
 import { pageTransition, pageVariants } from '../styles/animations';
 import asyaImg from '../assets/images/Asya.png';
 
+const moveX = keyframes`
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-25%);
+	}
+`
 const FooterWrapper = styled(motion.footer)`
 	display: flex;
 	flex-direction: column;
@@ -40,21 +47,16 @@ const TitleWrap = styled.div`
 									: '0'}px;
 	overflow: hidden;
 	z-index: ${ ({media}) => media === 'mobile' ? 3 : 1 };
-	h2 {
-		margin-left: 10px;
-	}
-	h2:last-child {
-		margin-left: 0;
-	}
+	animation: ${moveX} 10s linear infinite;
 `
 const Title = styled.h2`
 	color: ${ ({theme}) => theme.text };
-	font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 124 : media === 'tabletA' ? 76 : 48 }px;
+	font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 96 : media === 'tabletA' ? 76 : 48 }px;
 	text-transform: uppercase;
 	white-space: nowrap;
 	margin-right: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 30 : 22 }px;
 	span {
-		font-family: 'WinterR', sans-serif;
+		font-family: 'AccentFontI', sans-serif;
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
 `
@@ -85,6 +87,10 @@ const Contacts = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: ${ ({media}) => media === 'tabletP' ? 'center' : 'flex-start' };
+	font-family: 'AccentFontM', sans-serif;
+	a {
+		margin-bottom: 4px;
+	}
 `
 const Social = styled.div`
 	grid-row: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? '3/4' : '2/3' };
@@ -97,6 +103,10 @@ const Social = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: ${ ({media}) => media === 'tabletP' ? 'center' : 'flex-start' };
+	font-family: 'AccentFontM', sans-serif;
+	a {
+		margin-bottom: 4px;
+	}
 `
 const DevGrid = styled.div`
 	display: grid;
@@ -152,23 +162,13 @@ const Footer = () => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
-	const titleWrapRef = useRef()
-	
-	useEffect(() => {
-		if (titleWrapRef && pathname === '/portfolio') {
-			gsap.to(titleWrapRef.current, {
-				xPercent: -50,
-				duration: 10,
-				ease: 'none',
-				repeat: -1,
-			})
-		}
-	})
 
 	if (pathname === '/') return null
 	return <FooterWrapper media={media} initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
 		<UpperFooter media={media}>
-			<TitleWrap ref={titleWrapRef} media={media}>
+			<TitleWrap media={media}>
+				<Title media={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> ·</Title>
+				<Title media={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> ·</Title>
 				<Title media={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> ·</Title>
 				<Title media={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> ·</Title>
 			</TitleWrap>

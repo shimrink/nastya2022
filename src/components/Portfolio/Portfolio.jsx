@@ -12,7 +12,7 @@ import Grid from './Grid';
 const Main = styled(motion.main)`
 	display: flex;
 	flex-direction: column;
-	width: ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '100vw' };
+	width: ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '100%' };
 	padding: ${({media}) => media === 'hugeDesk' ? '0'
 								: media === 'mobile' ? '0 24px'
 								: '0 40px'

@@ -6,7 +6,6 @@ import groq from 'groq';
 import { useColorMode } from "./hooks/useColorMode";
 import GlobalStyles from "./styles/global";
 import { accentTheme, commonTheme, darkTheme, lightTheme } from "./styles/theme";
-import Preloader from './components/common/Preloader';
 import App from './App';
 
 export const AccentColorContext = React.createContext()
@@ -22,8 +21,6 @@ const AppWrap = () => {
 	const [media, setMedia] = useState('')
 	const [caseData, setCaseData] = useState(null)
 	const [categoriesData, setCategoriesData] = useState(null)
-	const [appInitialized, setAppInitialized] = useState(false)
-	const [showPreloader, setShowPreloader] = useState(true)
 
 	useEffect(() => {
 		switch (accentColor) {
@@ -119,21 +116,12 @@ const AppWrap = () => {
 		.catch(console.error)
 	}, [])
 
-	useEffect(() => {
-		if (appInitialized) {
-			setTimeout(() => {
-				setShowPreloader(false)
-			}, 4000)
-		}
-	}, [appInitialized])
-
 	if (!mountedComponent) return null
 	return <BrowserRouter>
 		<ThemeProvider theme={themeMode}>
 			<AccentColorContext.Provider value={endCol}>
 			<MediaContext.Provider value={media}>
 				<GlobalStyles />
-				{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} />}
 				<App themeToggler={themeToggler}
 					accentColorToggler={accentColorToggler}
 					caseData={caseData}

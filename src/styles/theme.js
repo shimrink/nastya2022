@@ -15,7 +15,7 @@ export const commonTheme = {
 
 	// in px
 	fontSizes: {
-		title: {hugeDesk: 124, desk: 124, tabletA: 76, tabletP: 76, mobile: 48 },
+		title: {hugeDesk: 96, desk: 96, tabletA: 76, tabletP: 76, mobile: 48 },
 		text: {hugeDesk: 18, desk: 18, tabletA: 16, tabletP: 16, mobile: 16 },
 		tag: {hugeDesk: 16, desk: 16, tabletA: 16, tabletP: 16, mobile: 14 },
 	},

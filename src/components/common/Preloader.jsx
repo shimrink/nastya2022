@@ -12,7 +12,7 @@ const Main = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	background-color: ${({theme}) => theme.bg};
 	overflow: hidden;
 	z-index: 2147483646;
@@ -30,7 +30,26 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 	const mainRef = useRef()
 	const darkColRef = useRef()
 
+	// useEffect(() => {
+	// 	// Set the loading value by 1%
+	// 	gsap.to(darkColRef.current.offset, {
+	// 		baseVal: 0.01,
+	// 		duration: 1,
+	// 		ease: 'power3.inOut',
+	// 		delay: commonTheme.durations.short / 1000,
+	// 	})
+	// }, [])
+
 	useEffect(() => {
+		// Set the loading value by 1%
+		gsap.to(darkColRef.current.offset, {
+			baseVal: 0.01,
+			duration: 1,
+			ease: 'power3.inOut',
+			delay: commonTheme.durations.short / 1000,
+		})
+
+		// Fill in the array with images URLs from Sanity
 		let imgArr = []
 		if (caseData && categoriesData) {
 			for (let i = 0; i < caseData.length; i++) {
@@ -39,16 +58,18 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 			}
 			setArrInitialized(true)
 		}
+
 		const imagesCount = imgArr.length
 		const percent = 100 / imagesCount
 		let progress = 0
 		let loadedImg = 0
 
+		// This function triggers every time when created phantom of the image
 		const imgLoad = () => {
 			progress += percent
 			loadedImg++
-			const darkCol = darkColRef.current.offset
-			gsap.to(darkCol, {
+			// Increase the loading value by percent value
+			gsap.to(darkColRef.current.offset, {
 				baseVal: progress / 100,
 				duration: 1,
 				ease: 'power3.inOut',
@@ -56,16 +77,15 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 			})
 			if (progress >= 100 || loadedImg === imagesCount) {
 				setAppInitialized(true)
-				setTimeout(() => {
-					gsap.to(mainRef.current, {
-						yPercent: -100,
-						duration: 1,
-						ease: 'power3.inOut',
-						delay: commonTheme.durations.middle / 1000,
-					})
-				}, commonTheme.durations.short)
+				gsap.to(mainRef.current, {
+					opacity: 0,
+					duration: commonTheme.durations.long / 1000,
+					ease: 'none',
+					delay: 1.5,
+				})
 			}
 		}
+
 		if (arrInitialized) {
 			if (imagesCount > 0) {
 				for (let i = 0; i < imagesCount; i++) {
@@ -84,7 +104,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 		<Svg viewBox="0 0 109 123" xmlns="http://www.w3.org/2000/svg">
 			<defs>
 				<linearGradient id="grad" x1="100%" x2="100%" y1="100%" y2="0">
-					<stop ref={darkColRef} offset="1%" stopColor={accentColor.dark} />
+					<stop ref={darkColRef} offset="0%" stopColor={accentColor.dark} />
 					<stop offset="0%" stopColor={accentColor.light} />
 				</linearGradient>
 			</defs>
