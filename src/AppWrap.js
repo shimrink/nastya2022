@@ -117,7 +117,7 @@ const AppWrap = () => {
 	}, [])
 
 	if (!mountedComponent) return null
-	return <BrowserRouter>
+	return caseData && categoriesData && <BrowserRouter>
 		<ThemeProvider theme={themeMode}>
 			<AccentColorContext.Provider value={endCol}>
 			<MediaContext.Provider value={media}>

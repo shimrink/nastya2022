@@ -14,6 +14,7 @@ const Case = styled.div`
 	justify-items: center;
 	width: ${ ({planeW}) => planeW }px;
 	height: ${ ({planeH}) => planeH }px;
+	box-shadow: 12.3417px 117.182px 68.0764px rgba(30, 30, 30, 0.0404687), 8.59017px 81.5614px 44.0297px rgba(30, 30, 30, 0.03375), 5.63398px 53.4932px 27.3213px rgba(30, 30, 30, 0.0289063), 3.39365px 32.2218px 16.4125px rgba(30, 30, 30, 0.025), 1.78962px 16.992px 9.76465px rgba(30, 30, 30, 0.0210938), 0.74236px 7.04851px 5.83906px rgba(30, 30, 30, 0.01625), 0.172334px 1.63626px 3.09707px rgba(30, 30, 30, 0.00953125), 0px 0px 72.3514px rgba(0, 0, 0, 0.08);
 `
 const Title = styled.h2`
 	grid-row: 1/2;

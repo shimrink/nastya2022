@@ -8,15 +8,14 @@ const TabsWrapper = styled.div`
 	flex-wrap: wrap;
 	justify-content: ${ ({media}) => media === 'mobile' || media === 'tabletP' ? 'space-between' : 'center' };
 	width: 100%;
-	margin-bottom: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 168 : 48 }px;
-	z-index: 4;
+	margin-bottom: 48px;
 	div {
 		font-family: 'AccentFontM', sans-serif;
 		font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16 }px;
 		border: 1px solid ${ ({accentColor}) => accentColor.light };
 		border-radius: 9em;
 		padding: 16px ${ ({media}) => media === 'mobile' ? 'clamp(20px, 5.28vw, 24px)' : '24px' };
-		color: ${ ({theme}) => theme.text };
+		color: ${commonTheme.colors.primary};
 		margin-right: ${ ({media}) => media === 'mobile' || media === 'tabletP' ? 0 : 24 }px;
 		margin-bottom: ${ ({media}) => media === 'mobile' ? 12 : 0 }px;
 		cursor: pointer;
@@ -26,18 +25,15 @@ const TabsWrapper = styled.div`
 		margin-right: 0;
 	}
 	div:hover {
-		background-color: ${ ({accentColor}) => accentColor.dark };
-		border-color: ${ ({accentColor}) => accentColor.dark };
-		color: ${ ({theme}) => theme.bg };
+		background-color: ${commonTheme.colors.primary};
+		border-color: ${commonTheme.colors.primary};
+		color: ${ ({accentColor}) => accentColor.dark };
 	}
 	div.tabItemActive {
 		font-family: 'AccentFontSBI', sans-serif;
-		background-color: ${ ({accentColor}) => accentColor.dark };
-		border-color: ${ ({accentColor}) => accentColor.dark };
-		color: ${ ({theme}) => theme.bg };
-	}
-	div.tabItemActive span {
-		border-bottom: 1px solid;
+		background-color: ${commonTheme.colors.primary};
+		border-color: ${commonTheme.colors.primary};
+		color: ${ ({accentColor}) => accentColor.dark };
 	}
 `
 const Tabs = ({ caseData, categoriesData }) => {
@@ -45,53 +41,46 @@ const Tabs = ({ caseData, categoriesData }) => {
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
-	const tabSwitch = e => {
-		const tabArr = document.querySelectorAll('.tabItem')
-		for (let i = 0; i < tabArr.length; i++) {
-			tabArr[i].classList.remove('tabItemActive')
-		}
-		e.target.classList.add('tabItemActive')
-	}
-
-	const showAll = e => {
-		tabSwitch(e)
+	const tabSwitch = el => {
+		const elem = document.querySelector(el)
 		const rowArr = document.querySelectorAll('.rowItem')
+
+		// Switch active class
+		document.querySelector('.tabItemActive').classList.remove('tabItemActive')
+		elem.classList.add('tabItemActive')
+
+		// Show all cases
 		for (let i = 0; i < rowArr.length; i++) {
 			rowArr[i].style.display = 'inline'
 		}
-	}
 
-	const showCategory = e => {
-		tabSwitch(e)
-		const rowArr = document.querySelectorAll('.rowItem')
-		for (let i = 0; i < rowArr.length; i++) {
-			rowArr[i].style.display = 'inline'
-		}
-		for (let i = 0; i < caseData.length; i++) {
-			for (let j = 0; j < caseData[i].categories.length; j++) {
-				if (caseData[i].categories[j].title === e.target.innerText) break
-
-				if (j === caseData[i].categories.length - 1
-				&& caseData[i].categories[j].title !== e.target.innerText) {
-					// hide
-					rowArr[i].style.display = 'none'
+		// Hide unnecessary cases
+		if (el !== '.tabItem0') {
+			for (let i = 0; i < caseData.length; i++) {
+				for (let j = 0; j < caseData[i].categories.length; j++) {
+					if (caseData[i].categories[j].title === elem.innerText) break
+	
+					if (j === caseData[i].categories.length - 1
+					&& caseData[i].categories[j].title !== elem.innerText) {
+						rowArr[i].style.display = 'none'
+					}
 				}
 			}
 		}
 	}
 
-	return caseData && categoriesData && <TabsWrapper media={media} accentColor={accentColor}>
-			<div className='tabItem tabItemActive' onClick={showAll}>
-				<span>Все</span>
+	return <TabsWrapper media={media} accentColor={accentColor}>
+		<div className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
+			<span>Все</span>
+		</div>
+		{categoriesData.map((c, i) =>
+			<div key={i}
+			className={`tabItem${i + 1}`}
+			onClick={ e => {tabSwitch(`.tabItem${i + 1}`)} }>
+				<span>{c.title}</span>
 			</div>
-			{categoriesData.map((c, i) =>
-				<div key={i}
-				onClick={showCategory}
-				className='tabItem'>
-					<span>{c.title}</span>
-				</div>
-			)}
-		</TabsWrapper>
+		)}
+	</TabsWrapper>
 }
 
 export default Tabs;

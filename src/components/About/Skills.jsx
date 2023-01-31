@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
-import gsap from 'gsap';
-import { AccentColorContext } from '../../AppWrap';
-import { commonTheme } from '../../styles/theme';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
+import Line from '../common/Line';
 
 const moveX = keyframes`
 	from {
@@ -21,131 +19,91 @@ const moveXReverse = keyframes`
 		transform: translateX(25%);
 	}
 `
-const SkillsWrap = styled.div`
+const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 200px 0;
+	margin-top: 576px;
+`
+const Title = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '0 40px 348px 40px' : '0 24px 348px 24px'};
+`
+const Hi = styled.span`
+	font-family: 'AccentFontR', sans-serif;
+	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '18px' : '16px'};
+	text-transform: uppercase;
+	text-align: center;
+	padding-bottom: 48px;
 `
 const MovingRow = styled.div`
 	position: absolute;
 	left: ${({reverse}) => reverse ? 'auto' : 0};
 	right: ${({reverse}) => reverse ? 0 : 'auto'};
 	display: flex;
-	margin-top: ${({row}) => row * 100}px;
+	margin-top: ${({media, row}) => media === 'hugeDesk' || media === 'desk' ? row * 108 + 116
+												: media === 'mobile' ? row * 45 + 116
+												: row * 77 + 116}px;
 	animation: ${({reverse}) => reverse ? moveXReverse : moveX} 22s linear infinite;
 `
-const HalfRow = styled.div`
-	padding-left: 40px;
+const String = styled.div`
+	padding-left: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40
+										: media === 'mobile' ? 16
+										: 24}px;
+	span {
+		margin-right: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40
+										: media === 'mobile' ? 16
+										: 24}px;
+	}
 	span:last-child {
 		margin-right: 0;
 	}
 `
 const Skill = styled.span`
 	font-family: ${ ({bold}) => bold ? 'AccentFontI' : 'AccentFontT' }, sans-serif;
-	font-size: 76px;
-	color: ${ ({accentColor, bold}) => bold ? accentColor.dark : commonTheme.colors.quaternary};
-	margin-right: 40px;
+	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '76px'
+										: media === 'mobile' ? '30px'
+										: '48px'};
+	color: ${ ({theme, accentColor, bold}) => bold ? accentColor.dark : theme.text};
 	text-transform: uppercase;
 	white-space: nowrap;
 `
-// const topWords = ["GRAPHIC", "UI/UX", "WEB DESIGN", "DIGITAL", "PRODUCT"]
-// const middleWords = ["FIGMA", "PHOTOSHOP", "ILLUSTRATOR", "HTML/CSS/JS"]
-// const bottomWords = ["CREATIVE", "MARKETING", "SMM", "IIIUSTRATION", "3D"]
+const topWords = ["GRAPHIC", "UI/UX", "WEB DESIGN", "DIGITAL", "PRODUCT"]
+const middleWords = ["FIGMA", "PHOTOSHOP", "ILLUSTRATOR", "HTML/CSS/JS"]
+const bottomWords = ["CREATIVE", "MARKETING", "SMM", "IIIUSTRATION", "3D"]
 
-gsap.registerPlugin(ScrollTrigger)
 const Skills = () => {
 
-	// const media = useContext(MediaContext)
+	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
-	return <SkillsWrap>
-		<MovingRow row={0}>
-			<HalfRow>
-				<Skill accentColor={accentColor}>GRAPHIC</Skill>
-				<Skill accentColor={accentColor}>UI/UX</Skill>
-				<Skill bold accentColor={accentColor}>WEB DESIGN</Skill>
-				<Skill accentColor={accentColor}>DIGITAL</Skill>
-				<Skill accentColor={accentColor}>PRODUCT</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>GRAPHIC</Skill>
-				<Skill accentColor={accentColor}>UI/UX</Skill>
-				<Skill bold accentColor={accentColor}>WEB DESIGN</Skill>
-				<Skill accentColor={accentColor}>DIGITAL</Skill>
-				<Skill accentColor={accentColor}>PRODUCT</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>GRAPHIC</Skill>
-				<Skill accentColor={accentColor}>UI/UX</Skill>
-				<Skill bold accentColor={accentColor}>WEB DESIGN</Skill>
-				<Skill accentColor={accentColor}>DIGITAL</Skill>
-				<Skill accentColor={accentColor}>PRODUCT</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>GRAPHIC</Skill>
-				<Skill accentColor={accentColor}>UI/UX</Skill>
-				<Skill bold accentColor={accentColor}>WEB DESIGN</Skill>
-				<Skill accentColor={accentColor}>DIGITAL</Skill>
-				<Skill accentColor={accentColor}>PRODUCT</Skill>
-			</HalfRow>
+	return <Wrap>
+		<Title media={media}>
+			<Hi media={media}>Навыки</Hi>
+			<Line />
+		</Title>
+		<MovingRow row={0} media={media}>
+			{[...Array(4)].map((v, ind) => (
+				<String key={ind} media={media}>
+					{topWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				</String>
+			))}
 		</MovingRow>
-		<MovingRow row={1} reverse>
-			<HalfRow>
-				<Skill bold accentColor={accentColor}>FIGMA</Skill>
-				<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-				<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-				<Skill bold accentColor={accentColor}>HTML/CSS/JS</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill bold accentColor={accentColor}>FIGMA</Skill>
-				<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-				<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-				<Skill bold accentColor={accentColor}>HTML/CSS/JS</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill bold accentColor={accentColor}>FIGMA</Skill>
-				<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-				<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-				<Skill bold accentColor={accentColor}>HTML/CSS/JS</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill bold accentColor={accentColor}>FIGMA</Skill>
-				<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-				<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-				<Skill bold accentColor={accentColor}>HTML/CSS/JS</Skill>
-			</HalfRow>
+		<MovingRow row={1} reverse media={media}>
+			{[...Array(4)].map((v, ind) => (
+				<String key={ind} media={media}>
+					{middleWords.map((w, i) => <Skill bold={i === 0 || i === 3 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				</String>
+			))}
 		</MovingRow>
-		<MovingRow row={2}>
-			<HalfRow>
-				<Skill accentColor={accentColor}>CREATIVE</Skill>
-				<Skill accentColor={accentColor}>MARKETING</Skill>
-				<Skill bold accentColor={accentColor}>SMM</Skill>
-				<Skill accentColor={accentColor}>IIIUSTRATION</Skill>
-				<Skill accentColor={accentColor}>3D</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>CREATIVE</Skill>
-				<Skill accentColor={accentColor}>MARKETING</Skill>
-				<Skill bold accentColor={accentColor}>SMM</Skill>
-				<Skill accentColor={accentColor}>IIIUSTRATION</Skill>
-				<Skill accentColor={accentColor}>3D</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>CREATIVE</Skill>
-				<Skill accentColor={accentColor}>MARKETING</Skill>
-				<Skill bold accentColor={accentColor}>SMM</Skill>
-				<Skill accentColor={accentColor}>IIIUSTRATION</Skill>
-				<Skill accentColor={accentColor}>3D</Skill>
-			</HalfRow>
-			<HalfRow>
-				<Skill accentColor={accentColor}>CREATIVE</Skill>
-				<Skill accentColor={accentColor}>MARKETING</Skill>
-				<Skill bold accentColor={accentColor}>SMM</Skill>
-				<Skill accentColor={accentColor}>IIIUSTRATION</Skill>
-				<Skill accentColor={accentColor}>3D</Skill>
-			</HalfRow>
+		<MovingRow row={2} media={media}>
+			{[...Array(4)].map((v, ind) => (
+				<String key={ind} media={media}>
+					{bottomWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				</String>
+			))}
 		</MovingRow>
-	</SkillsWrap>
+	</Wrap>
 }
 
 export default Skills;

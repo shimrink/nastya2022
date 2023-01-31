@@ -120,7 +120,7 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 					planeI={planeI}
 					onMouseOver={mouseOverHandler}
 					onMouseOut={mouseOutHandler}
-					onClick={() => navigate(`case/${post.slug.current}`)} />
+					onClick={() => navigate(`cases/${post.slug.current}`)} />
 			)}
 		</Carousel>
 	</CarouselContainer>

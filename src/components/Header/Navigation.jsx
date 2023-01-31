@@ -14,26 +14,25 @@ const Nav = styled.nav`
 	a {
 		font-family: ${ ({mobile}) => mobile ? 'AccentFontT' : 'AccentFontM' }, sans-serif;
 		font-size: ${ ({mobile}) => mobile ? 'clamp(48px, 15.415vw, 76px)' : commonTheme.fontSizes.text.desktop + 'px' };
-		line-height: ${ ({mobile}) => mobile ? 1.15 : 0.8 };
 		margin-right: ${ ({mobile}) => mobile ? 0 : 24 }px;
-		color: ${ ({theme, mobile}) => mobile ? commonTheme.colors.primary : theme.text };
+		color: ${ ({theme, mobile, inside}) => mobile || inside ? commonTheme.colors.primary : theme.text };
 		text-transform: ${ ({mobile}) => mobile ? 'uppercase' : 'none' };
 		white-space: nowrap;
+		transition: color ${commonTheme.durations.short}ms;
 	}
 	a:last-child {
 		margin-right: 0;
 	}
 	a.navItemActive {
 		font-family: 'AccentFontSBI', sans-serif;
-		color: ${ ({accentColor}) => accentColor.dark };
-		border-bottom: 1px solid;
+		color: ${ ({accentColor, inside}) => inside ? commonTheme.colors.primary : accentColor.dark };
 	}
 	a.navItemMobileActive {
 		font-family: 'AccentFontI', sans-serif;
 	}
 `
-const Navigation = ({ mobile, closeMenu, accentColor }) => {
-	return <Nav mobile={mobile} accentColor={accentColor}>
+const Navigation = ({ inside, mobile, closeMenu, accentColor }) => {
+	return <Nav mobile={mobile} accentColor={accentColor} inside={inside}>
 		<NavLink to='/portfolio' onClick={closeMenu}
 		className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
 			Все кейсы

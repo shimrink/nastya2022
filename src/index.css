@@ -1,0 +1,42 @@
+@font-face {
+	font-family: 'BaseFont';
+	src: url(./assets/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontR';
+	src: url(./assets/fonts/PPNeueMontreal-Book.otf) format('opentype');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontI';
+	src: url(./assets/fonts/PPNeueMontreal-Italic.otf) format('opentype');
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontT';
+	src: url(./assets/fonts/PPNeueMontreal-Thin.otf) format('opentype');
+	font-weight: 100;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontM';
+	src: url(./assets/fonts/PPNeueMontreal-Medium.otf) format('opentype');
+	font-weight: 500;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontSBI';
+	src: url(./assets/fonts/PPNeueMontreal-SemiBolditalic.otf) format('opentype');
+	font-weight: 600;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'AccentFontB';
+	src: url(./assets/fonts/PPNeueMontreal-Bold.otf) format('opentype');
+	font-weight: 700;
+	font-display: swap;
+}

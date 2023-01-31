@@ -1,57 +1,7 @@
 import { createGlobalStyle } from "styled-components";
-import { commonTheme } from "./theme";
-// import IBMPlexSans from '../assets/fonts/IBMPlexSans-Regular.ttf';
-// import winterR from '../assets/fonts/WinterSansTrial-Regular.otf';
-// import winterI from '../assets/fonts/WinterSansTrial-Italic.otf';
-// import winterEL from '../assets/fonts/WinterSansTrial-ExtraLight.otf';
-// import winterELI from '../assets/fonts/WinterSansTrial-ExtraLightItalic.otf';
-// import winterEB from '../assets/fonts/WinterSansTrial-ExtraBold.otf';
-// import winterEBI from '../assets/fonts/WinterSansTrial-ExtraBoldItalic.otf';
+import { commonTheme, lightTheme } from "./theme";
 
 export default createGlobalStyle`
-@font-face {
-	font-family: 'BaseFont';
-	src: url(/fonts/IBMPlexSans-Regular.ttf) format('truetype');
-	font-weight: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontR';
-	src: url(/fonts/PPNeueMontreal-Book.otf) format('opentype');
-	font-weight: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontI';
-	src: url(/fonts/PPNeueMontreal-Italic.otf) format('opentype');
-	font-weight: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontT';
-	src: url(/fonts/PPNeueMontreal-Thin.otf) format('opentype');
-	font-weight: 100;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontM';
-	src: url(/fonts/PPNeueMontreal-Medium.otf) format('opentype');
-	font-weight: 500;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontSBI';
-	src: url(/fonts/PPNeueMontreal-SemiBoldItalic.otf) format('opentype');
-	font-weight: 600;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'AccentFontB';
-	src: url(/fonts/PPNeueMontreal-Bold.otf) format('opentype');
-	font-weight: 700;
-	font-display: swap;
-}
-
 /* ::-webkit-scrollbar {
 	display: none;
 } */
@@ -82,7 +32,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'AccentFontT', sans-serif;
+	font-family: 'AccentFontT' , sans-serif;
 	font-weight: 100;
 	margin: 0;
 }
@@ -90,6 +40,11 @@ h1, h2, h3, h4, h5, h6 {
 h2 {
 	color: ${commonTheme.colors.primary};
 	line-height: 110%;
+}
+
+h3 {
+	font-family: ${({theme}) => theme.text === lightTheme.text ? 'AccentFontT' : 'AccentFontR'} , sans-serif;
+	font-weight: ${({theme}) => theme.text === lightTheme.text ? 100 : 400};
 }
 
 p {

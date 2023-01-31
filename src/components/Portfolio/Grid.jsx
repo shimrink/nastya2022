@@ -61,7 +61,7 @@ const Grid = ({ c, i }) => {
 		return () => window.removeEventListener('resize', CalcH)
 	})
 
-	return <Case className='rowItem' media={media} onClick={() => navigate(`case/${c.slug.current}`)}>
+	return <Case className='rowItem' media={media} onClick={() => navigate(`cases/${c.slug.current}`)}>
 		<Img className='mobileCaseImg' imgH={imgH} src={c.mobileImage.asset.url} alt={c.slug.current} />
 		<Name>{c.title}</Name>
 		<Line />

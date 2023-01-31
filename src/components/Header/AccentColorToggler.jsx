@@ -12,18 +12,21 @@ const Button = styled.button`
 	grid-row: 1/2;
 	grid-column: 1/2;
 	background-color: ${ ({col}) => col };
+	outline: ${({sn}) => sn === 0 ? '1px solid' : 'none'};
 	border: none;
 	border-radius: 50%;
+	outline-color: ${props => props.inside ? commonTheme.colors.primary : props.accentColor.dark};
 	height: 20px;
 	width: 20px;
-	transition: margin ${commonTheme.durations.short}ms;
 	cursor: pointer;
 	z-index: ${ ({sn}) => (accentTheme.length - sn) };
+	transition: margin ${commonTheme.durations.short}ms,
+					outline-color ${commonTheme.durations.short}ms;
 	${Wrapper}:hover && {
 		margin: ${ ({sn, media}) => media === 'hugeDesk' || media === 'desk' ? '0 0 0 ' + sn * 24 + 'px' : '0 ' + sn * 24 + 'px 0 0' };
 	}
 `
-const AccentColorToggler = ({ toggleAccentColor }) => {
+const AccentColorToggler = ({ toggleAccentColor, inside }) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
@@ -44,7 +47,9 @@ const AccentColorToggler = ({ toggleAccentColor }) => {
 						col={ac.color.dark}
 						sn={index}
 						media={media}
-						key={index} />
+						key={index}
+						inside={inside}
+						accentColor={accentColor} />
 		)}
 	</Wrapper>
 }

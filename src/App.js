@@ -6,18 +6,20 @@ import { commonTheme } from "./styles/theme";
 import About from "./components/About/About";
 import Portfolio from "./components/Portfolio/Portfolio";
 import Contacts from "./components/Contacts";
-import Footer from "./components/Footer";
-import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Header from './components/Header/Header';
 import Home from "./components/Home/Home";
 import Services from "./components/Services";
 import Preloader from './components/common/Preloader';
+import MenuMobile from './components/Header/MenuMobile';
+import Case from './cases/Case';
 
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	height: 100%;
+	height: ${ ({isMainPage}) => isMainPage ? '100%' : 'auto' };
 	background-color: ${ ({theme}) => theme.bg };
 	color: ${ ({theme}) => theme.text };
 	transition: background-color ${commonTheme.durations.short}ms;
@@ -25,30 +27,46 @@ const Wrapper = styled.div`
 const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => {
 
 	const location = useLocation()
+	const {pathname} = useLocation()
 
 	const [appInitialized, setAppInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
+	const [topBlockH, setTopBlockH] = useState(0)
 
+	// Delete Preloader
 	useEffect(() => {
 		if (appInitialized) {
 			setTimeout(() => {
 				setShowPreloader(false)
-			}, 9000)
+			}, 6000)
 		}
 	}, [appInitialized])
 
-	return <Wrapper>
-		<Header toggleTheme={themeToggler} accentColorToggler={accentColorToggler} />
+	// Calculate TopBlock height
+	const onResize = () => {
+		if (pathname !== '/')
+			setTopBlockH(document.getElementById('topBlock').getBoundingClientRect().height)
+	}
+
+	useEffect(() => {
+		window.addEventListener('resize', onResize)
+		return () => window.removeEventListener('resize', onResize)
+	})
+
+	return <Wrapper isMainPage={pathname === '/'}>
+		<Header isMainPage={pathname === '/'} themeToggler={themeToggler} accentColorToggler={accentColorToggler} topBlockH={topBlockH} />
+		<MenuMobile />
 		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} />}
 		<AnimatePresence mode='wait'>
 			<Routes location={location} key={location.pathname}>
-				<Route path="/portfolio" element={<Portfolio caseData={caseData} categoriesData={categoriesData} />} />
-				<Route path="/about" element={<About />} />
+				{caseData.map((c, i) => <Route key={i} c={c} path={`/cases/${c.slug.current}`} element={<Case />} />)}
+				<Route path="/portfolio" element={<Portfolio topBlockH={topBlockH} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} />} />
+				<Route path="/about" element={<About topBlockH={topBlockH} setTopBlockH={setTopBlockH} />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/" element={<Home caseData={caseData} />} />
 			</Routes>
-			<Footer />
+			{pathname !== '/' && <Footer />}
 		</AnimatePresence>
 	</Wrapper>
 }

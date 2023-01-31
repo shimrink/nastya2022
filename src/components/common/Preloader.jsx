@@ -5,7 +5,7 @@ import { commonTheme } from "../../styles/theme";
 import { AccentColorContext } from "../../AppWrap";
 
 const Main = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
@@ -30,17 +30,8 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 	const mainRef = useRef()
 	const darkColRef = useRef()
 
-	// useEffect(() => {
-	// 	// Set the loading value by 1%
-	// 	gsap.to(darkColRef.current.offset, {
-	// 		baseVal: 0.01,
-	// 		duration: 1,
-	// 		ease: 'power3.inOut',
-	// 		delay: commonTheme.durations.short / 1000,
-	// 	})
-	// }, [])
-
 	useEffect(() => {
+		document.querySelector('body').style.overflowY = 'hidden'
 		// Set the loading value by 1%
 		gsap.to(darkColRef.current.offset, {
 			baseVal: 0.01,
@@ -71,18 +62,25 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 			// Increase the loading value by percent value
 			gsap.to(darkColRef.current.offset, {
 				baseVal: progress / 100,
-				duration: 1,
+				duration: commonTheme.durations.long / 1000,
 				ease: 'power3.inOut',
 				delay: 0.2,
 			})
 			if (progress >= 100 || loadedImg === imagesCount) {
-				setAppInitialized(true)
-				gsap.to(mainRef.current, {
+				const tl = gsap.timeline()
+				tl.to(mainRef.current, {
 					opacity: 0,
 					duration: commonTheme.durations.long / 1000,
-					ease: 'none',
+					ease: 'linear',
 					delay: 1.5,
 				})
+				tl.to(mainRef.current, {
+					yPercent: -100,
+					duration: 0,
+					ease: 'linear',
+				})
+				document.querySelector('body').style.overflowY = 'visible'
+				setAppInitialized(true)
 			}
 		}
 
