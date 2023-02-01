@@ -100,14 +100,14 @@ const UpperFooter = () => {
 		</TitleWrap>
 		<Text media={media}>Я&nbsp;на&nbsp;связи в&nbsp;рабочее время: отвечу на&nbsp;возникшие вопросы, сориентирую в&nbsp;области онлайн-упаковки бизнеса и пойму, что вам необходимо!</Text>
 		<Messengers media={media}>
-			<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
-			<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
-			<a href="mailto:me@asyadulova.ru?subject=Запись на консультацию">Email</a>
+			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
+			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
+			<a className='linkUnderLine' href="mailto:me@asyadulova.ru?subject=Запись на консультацию">Email</a>
 		</Messengers>
 		<Social media={media}>
-			<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig*</a>
-			<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">Behance</a>
-			<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
+			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig*</a>
+			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">Behance</a>
+			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
 		</Social>
 		<Img media={media} src={asyaImg} alt='Asya'/>
 	</UpperFooterWrap>

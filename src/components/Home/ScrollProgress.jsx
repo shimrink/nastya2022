@@ -39,7 +39,7 @@ const ScrollProgress = ({ caseData, currentIndex, scrollCount }) => {
 
 	useEffect(() => {
 		if (caseData) {
-			setScrollValue(mapRange(0, (caseData.length - 1) * scrollCount, 0, 100, currentIndex))
+			setScrollValue(mapRange(0, caseData.length * scrollCount, 0, 100, currentIndex + scrollCount))
 		}
 	}, [currentIndex, caseData, scrollCount])
 

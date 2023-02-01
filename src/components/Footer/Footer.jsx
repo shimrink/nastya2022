@@ -12,7 +12,7 @@ const FooterWrapper = styled(motion.footer)`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	width: ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '100%' };
+	width: ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '100%' };
 	background-color: ${({theme}) => theme.bg};
 	margin-top: ${ ({media}) => media === 'tabletA' || media === 'tabletP' ? 288 : 384 }px;
 `

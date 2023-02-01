@@ -50,23 +50,20 @@ const Tabs = ({ caseData, categoriesData }) => {
 		elem.classList.add('tabItemActive')
 
 		// Show all cases
-		for (let i = 0; i < rowArr.length; i++) {
-			rowArr[i].style.display = 'inline'
-		}
+		for (let i = 0; i < rowArr.length; i++) rowArr[i].style.display = 'inline'
 
 		// Hide unnecessary cases
-		if (el !== '.tabItem0') {
-			for (let i = 0; i < caseData.length; i++) {
+		if (el !== '.tabItem0')
+			for (let i = 0; i < caseData.length; i++)
 				for (let j = 0; j < caseData[i].categories.length; j++) {
-					if (caseData[i].categories[j].title === elem.innerText) break
-	
+
+					if (caseData[i].categories[j].title === elem.innerText)
+						break
+
 					if (j === caseData[i].categories.length - 1
-					&& caseData[i].categories[j].title !== elem.innerText) {
+					&& caseData[i].categories[j].title !== elem.innerText)
 						rowArr[i].style.display = 'none'
-					}
 				}
-			}
-		}
 	}
 
 	return <TabsWrapper media={media} accentColor={accentColor}>

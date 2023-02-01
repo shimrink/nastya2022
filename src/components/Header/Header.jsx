@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import ThemeToggler from './ThemeToggler';
@@ -57,47 +57,41 @@ const Burger = styled.span`
 	cursor: pointer;
 	transition: color ${commonTheme.durations.short}ms;
 `
-const Header = ({ isMainPage, themeToggler, accentColorToggler, topBlockH }) => {
+const Header = ({ isMainPage, themeToggler, accentColorToggler, topBlockH, menuMobileRef }) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 	const [inside, setInside] = useState(false)
-
-	// Сделать запуск функций только если есть document.getElementById('topBlock')
+	const headerRef = useRef()
 
 	useEffect(() => {
 		setInside(!isMainPage)
-	}, [isMainPage])
-
-	useEffect(() => {
 		if (!isMainPage) {
 			const onScroll = () => {
 				let halfHeaderHeight = media === 'hugeDesk' || media === 'desk' ? 57.25 : 40
-				if (topBlockH - halfHeaderHeight < window.pageYOffset) {
-					setInside(false)
-				} else {
-					setInside(true)
-				}
+				setInside(!(topBlockH - halfHeaderHeight < window.pageYOffset))
 			}
 			window.addEventListener('scroll', onScroll)
+
 			return () => window.removeEventListener('scroll', onScroll)
 		}
-	})
+	}, [media, isMainPage, topBlockH])
 
 	useEffect(() => {
-		const el = document.querySelector('.headerContainer')
+		const el = headerRef.current
 		const onWheel = e => {
 			e.preventDefault()
 		}
 		el.addEventListener('wheel', onWheel)
+
 		return () => el.removeEventListener('wheel', onWheel)
-	})
+	}, [])
 
 	const openMenu = () => {
-		document.querySelector('.menuMobile').style.transform = 'translateX(0)'
+		menuMobileRef.current.style.transform = 'translateX(0)'
 	}
 
-	return <HeaderWrapper media={media} className='headerContainer'>
+	return <HeaderWrapper media={media} ref={headerRef}>
 		<Logo inside={inside} />
 		<TogglersAndNav media={media}>
 			<ThemeTogglerContainer onClick={media === 'hugeDesk' || media === 'desk' ? ()=>{} : themeToggler} media={media}>
@@ -108,7 +102,8 @@ const Header = ({ isMainPage, themeToggler, accentColorToggler, topBlockH }) => 
 			</AccentColorTogglerContainer>
 			{media === 'hugeDesk' || media === 'desk'
 				? <Navigation inside={inside} accentColor={accentColor} />
-				: <Burger onClick={openMenu} inside={inside}>Меню</Burger>}
+				: <Burger onClick={openMenu} inside={inside}>Меню</Burger>
+			}
 		</TogglersAndNav>
 	</HeaderWrapper>
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from "three";
@@ -14,7 +14,7 @@ import CaseArea from './CaseArea';
 const Main = styled(motion.main)`
 	position: absolute;
 	display: grid;
-	grid-template-columns: 1fr ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '1fr' } 1fr;
+	grid-template-columns: 1fr ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr' } 1fr;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -55,32 +55,29 @@ const Home = ({ caseData }) => {
 	const [hovering, setHovering] = useState(false)
 	const [touchPosition, setTouchPosition] = useState(null)
 	const showButtonRef = useRef()
+	const mainRef = useRef()
 
-	const next = () => {
-		if (currentIndex < ((caseData.length - 1) * scrollCount)) {
+	const next = useCallback(() => {
+		if (currentIndex < ((caseData.length - 1) * scrollCount))
 			setCurrentIndex(prevState => prevState + 1)
-		}
-	}
+	}, [currentIndex, caseData, scrollCount])
 
-	const prev = () => {
-		if (currentIndex > 0) {
+	const prev = useCallback(() => {
+		if (currentIndex > 0)
 			setCurrentIndex(prevState => prevState - 1)
-		}
-	}
+	}, [currentIndex])
 
 	useEffect(() => {
-		if (caseData) {
-			const el = document.querySelector('.main-container')
-			const onWheel = e => {
-				e.preventDefault()
-				e.deltaY > 0 ? next() : prev()
-			}
-
-			el.addEventListener('wheel', onWheel)
-
-			return () => el.removeEventListener('wheel', onWheel)
+		const el = mainRef.current
+		const onWheel = e => {
+			e.preventDefault()
+			e.deltaY > 0 ? next() : prev()
 		}
-	})
+
+		el.addEventListener('wheel', onWheel)
+
+		return () => el.removeEventListener('wheel', onWheel)
+	}, [next, prev])
 
 	const touchStartHandler = e => {
 		setTouchPosition({
@@ -92,49 +89,28 @@ const Home = ({ caseData }) => {
 	const touchMoveHandler = e => {
 		if (touchPosition !== null) {
 			if (touchPosition.x - e.touches[0].clientX > 5
-			|| touchPosition.y - e.touches[0].clientY > 5) {
-				next()
-			}
-	
+			|| touchPosition.y - e.touches[0].clientY > 5) next()
+
 			if (touchPosition.x - e.touches[0].clientX < -5
-			|| touchPosition.y - e.touches[0].clientY < 5) {
-				prev()
-			}
+			|| touchPosition.y - e.touches[0].clientY < 5) prev()
 
 			setTouchPosition(null)
 		}
 	}
 
-	const onResize = () => {
-		let nodeW = document.getElementById('carouselId').getBoundingClientRect().width
-		let nodeH = media === 'mobile' ? nodeW * 1.325 : nodeW * 9 / 16
-		setCarouselSizes({
-			width: nodeW,
-			height: nodeH,
-			indent: nodeW * 0.22
-		})
-	}
-
-	useEffect(() => {
-		if (caseData) {
-			window.addEventListener('resize', onResize)
-			return () => window.removeEventListener('resize', onResize)
-		}
-	})
-
 	let planeW = carouselSizes.width
 	let planeH = carouselSizes.height
 	let planeI = carouselSizes.indent
 
-	return caseData && <Main className='main-container'
-									media={media}
-									onTouchStart={touchStartHandler}
-									onTouchMove={touchMoveHandler}
-									initial='out'
-									animate='in'
-									exit='out'
-									variants={pageVariants}
-									transition={pageTransition}>
+	return <Main ref={mainRef}
+						media={media}
+						onTouchStart={touchStartHandler}
+						onTouchMove={touchMoveHandler}
+						initial='out'
+						animate='in'
+						exit='out'
+						variants={pageVariants}
+						transition={pageTransition}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}

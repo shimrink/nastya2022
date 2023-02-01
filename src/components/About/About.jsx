@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { pageTransition, pageVariants } from '../../styles/animations';
@@ -21,7 +21,7 @@ const TopBlock = styled.div`
 	position: absolute;
 	left: 0;
 	display: grid;
-	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '1fr'} 1fr;
+	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 	width: 100%;
 	background-color: ${({accentColor}) => accentColor.dark};
 	padding: ${ ({media}) => media === 'hugeDesk' ? '196px 0 156px 0'
@@ -62,39 +62,24 @@ const Cover = styled.img`
 	grid-column: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1/2' : '2/12'};
 	position: relative;
 	width: 100%;
-	height: ${({media, coverH}) => media === 'mobile' || media === 'tabletP' ? 'auto' : coverH + 'px'};
+	aspect-ratio: ${({media}) => media === 'mobile' || media === 'tabletP' ? 'auto' : '631/304'};
 	object-fit: cover;
 	z-index: 1;
 `
-const About = ({ topBlockH, setTopBlockH }) => {
+const About = forwardRef(({ topBlockH, setTopBlockH }, ref) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
-	const [coverH, setCoverH] = useState(0)
 
 	useEffect(() => {
-		setTopBlockH(document.getElementById('topBlock').getBoundingClientRect().height)
-	}, [media, setTopBlockH])
-
-	// Calculate Cover height
-	const onResize = () => {
-		setCoverH(document.querySelector('.cover').getBoundingClientRect().width * 0.482)
-	}
-
-	useEffect(() => {
-		window.addEventListener('resize', onResize)
-		return () => window.removeEventListener('resize', onResize)
-	})
-
-	useEffect(() => {
-		onResize()
-	}, [])
+		setTopBlockH(ref.current.getBoundingClientRect().height)
+	}, [media, setTopBlockH, ref])
 
 	return <Main initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
-		<TopBlock media={media} accentColor={accentColor} id='topBlock'>
+		<TopBlock ref={ref} media={media} accentColor={accentColor}>
 			<TopBlockContent media={media}>
 				<h2>Digital-дизайнер</h2>
-				<Cover className='cover' coverH={coverH} media={media} src={media === 'mobile' ? coverImgM : coverImg} alt='Asya' />
+				<Cover className='cover' media={media} src={media === 'mobile' ? coverImgM : coverImg} alt='Asya' />
 				<h2 className='name'>Анастасия Дулова</h2>
 			</TopBlockContent>
 		</TopBlock>
@@ -103,6 +88,6 @@ const About = ({ topBlockH, setTopBlockH }) => {
 		<Interests />
 		<Philosophy />
 	</Main>
-}
+})
 
 export default About;

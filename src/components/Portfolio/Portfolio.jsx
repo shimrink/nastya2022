@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { pageTransition, pageVariants } from '../../styles/animations';
@@ -39,17 +39,17 @@ const GridWrapper = styled.div`
 											: 'clamp(68px, 19.655vw, 96px) 24px 0 24px'};
 	margin-top: ${({topBlockH}) => topBlockH}px;
 `
-const Portfolio = ({ topBlockH, setTopBlockH, caseData, categoriesData }) => {
+const Portfolio = forwardRef(({ caseData, categoriesData, topBlockH, setTopBlockH }, ref) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
 	useEffect(() => {
-		setTopBlockH(document.getElementById('topBlock').getBoundingClientRect().height)
-	}, [media, setTopBlockH])
+		setTopBlockH(ref.current.getBoundingClientRect().height)
+	}, [media, setTopBlockH, ref])
 
 	return <Main initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
-		<TopBlock media={media} accentColor={accentColor} id='topBlock'>
+		<TopBlock media={media} accentColor={accentColor} ref={ref}>
 			<Title media={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
 			<Tabs caseData={caseData} categoriesData={categoriesData} />
 		</TopBlock>
@@ -59,11 +59,11 @@ const Portfolio = ({ topBlockH, setTopBlockH, caseData, categoriesData }) => {
 		:
 			<GridWrapper media={media} topBlockH={topBlockH}>
 				{caseData.map((c, i) => c.isPortfolio &&
-					<Grid key={i} c={c} i={i} />
+					<Grid key={i} c={c} />
 				)}
 			</GridWrapper>
 		}
 	</Main>
-}
+})
 
 export default Portfolio;

@@ -28,7 +28,7 @@ const Hi = styled.span`
 `
 const Content = styled.div`
 	display: grid;
-	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '1fr'} 1fr;
+	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 `
 const Gifs = styled.div`
 	grid-row: 1/2;
@@ -67,8 +67,8 @@ const InnerContainer = styled.div`
 const Toggles = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 100%;
+	justify-content: ${({media}) => media === 'mobile' ? 'space-between' : 'flex-start'};
+	height: ${({media}) => media === 'mobile' ? '100%' : 'auto'};
 	padding-left: ${({media}) => media === 'tabletP' ? 12 : media === 'mobile' ? 0 : 24}px;
 	h3 {
 		font-size: ${({media}) => media === 'mobile' ? 'clamp(26px, 7.08vw, 48px)' : 'clamp(48px, 3.85vw, 76px)'};
@@ -97,6 +97,12 @@ const Text = styled.div`
 											: media === 'desk' || media === 'tabletA' ? '1/6'
 											: '1/7'};
 		font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
+		white-space: pre-line;
+		opacity: 0;
+		transition: opacity ${commonTheme.durations.short}ms;
+	}
+	p.active {
+		opacity: 1;
 	}
 `
 const Interests = () => {
@@ -104,19 +110,24 @@ const Interests = () => {
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 	const gifs = [
-		{title: 'Цвета', url: colorsGif, alt: 'Colors'},
-		{title: 'Питомцы', url: petsGif, alt: 'Pets'},
-		{title: 'Игры', url: gamesGif, alt: 'Games'},
-		{title: 'Рукоделие', url: gamesGif, alt: 'Handiwork'},
+		{title: 'Цвета', url: colorsGif, alt: 'Colors', text: 'Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.\nВ своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!'},
+		{title: 'Питомцы', url: petsGif, alt: 'Pets', text: 'В моей жизни всегда было много питомцев. Сейчас у меня 3 любимых кошки: мамины Мишка и Марси, и самая-самая – моя кошка, Клипса!\nА еще мы с моим молодым человеком хотим завести собаку.'},
+		{title: 'Игры', url: gamesGif, alt: 'Games', text: 'Иногда в свободное время я позволяю себе немного поиграть. Чаще всего зависаю в многопользовательских шутерах Apex Legends и Overwatch, но иногда прохожу одиночки вроде Life is Strange, Detroit, Ori.'},
+		{title: 'Рукоделие', url: gamesGif, alt: 'Handiwork', text: 'С детства обожаю рукоделие и перепробовала, наверное, все виды: рисование, скрапбукинг, квиллинг, вышивка, шитье, вязание, валяние, бисер...\nСейчас в качестве хобби сохранила рисование и лепку украшений из полимерной глины.'},
 	]
 
 	const switchGif = e => {
 		const titlesArr = document.querySelectorAll('.interest')
 		const gifsArr = document.querySelectorAll('.gif')
+		const textsArr = document.querySelectorAll('.text')
 		for (let i = 0; i < titlesArr.length; i++) {
 			titlesArr[i].classList.remove('active')
 			gifsArr[i].classList.remove('active')
-			if (e.target === titlesArr[i]) gifsArr[i].classList.add('active')
+			textsArr[i].classList.remove('active')
+			if (e.target === titlesArr[i]) {
+				gifsArr[i].classList.add('active')
+				textsArr[i].classList.add('active')
+			}
 		}
 		e.target.classList.add('active')
 	}
@@ -137,7 +148,7 @@ const Interests = () => {
 					</Toggles>
 					{media !== 'mobile' && <Line />}
 					{media !== 'mobile' && <Text media={media}>
-						<p>Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.<br/>В своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!</p>
+						{gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
 					</Text>}
 				</InnerContainer>
 			</Container>

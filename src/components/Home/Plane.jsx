@@ -52,10 +52,8 @@ extend({CustomMaterial})
 const Plane = ({ post, index, caseData, planeW, planeH, planeI, hovering }) => {
 
 	const media = useContext(MediaContext)
-
 	const covers = useTexture(caseData.map(c => c.mainImage.asset.url))
 	const coversMobile = useTexture(caseData.map(c => c.mobileImage.asset.url))
-
 	const materialRef = useRef()
 
 	let last = 0

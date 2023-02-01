@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence } from 'framer-motion';
@@ -32,6 +32,8 @@ const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => 
 	const [appInitialized, setAppInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
 	const [topBlockH, setTopBlockH] = useState(0)
+	const topBlockRef = useRef()
+	const menuMobileRef = useRef()
 
 	// Delete Preloader
 	useEffect(() => {
@@ -43,25 +45,26 @@ const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => 
 	}, [appInitialized])
 
 	// Calculate TopBlock height
-	const onResize = () => {
-		if (pathname !== '/')
-			setTopBlockH(document.getElementById('topBlock').getBoundingClientRect().height)
-	}
-
 	useEffect(() => {
-		window.addEventListener('resize', onResize)
-		return () => window.removeEventListener('resize', onResize)
-	})
+		if (pathname !== '/') {
+			const calcTopBlockHeight = () => {
+				setTopBlockH(topBlockRef.current.getBoundingClientRect().height)
+			}
+			window.addEventListener('resize', calcTopBlockHeight)
+
+			return () => window.removeEventListener('resize', calcTopBlockHeight)
+		}
+	}, [pathname])
 
 	return <Wrapper isMainPage={pathname === '/'}>
-		<Header isMainPage={pathname === '/'} themeToggler={themeToggler} accentColorToggler={accentColorToggler} topBlockH={topBlockH} />
-		<MenuMobile />
+		<Header isMainPage={pathname === '/'} themeToggler={themeToggler} accentColorToggler={accentColorToggler} topBlockH={topBlockH} menuMobileRef={menuMobileRef} />
+		<MenuMobile ref={menuMobileRef} />
 		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} />}
 		<AnimatePresence mode='wait'>
 			<Routes location={location} key={location.pathname}>
 				{caseData.map((c, i) => <Route key={i} c={c} path={`/cases/${c.slug.current}`} element={<Case />} />)}
-				<Route path="/portfolio" element={<Portfolio topBlockH={topBlockH} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} />} />
-				<Route path="/about" element={<About topBlockH={topBlockH} setTopBlockH={setTopBlockH} />} />
+				<Route path="/portfolio" element={<Portfolio ref={topBlockRef} topBlockH={topBlockH} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} />} />
+				<Route path="/about" element={<About ref={topBlockRef} topBlockH={topBlockH} setTopBlockH={setTopBlockH} />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/" element={<Home caseData={caseData} />} />

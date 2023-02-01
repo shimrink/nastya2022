@@ -12,6 +12,7 @@ const Nav = styled.nav`
 	justify-self: ${ ({mobile}) => mobile ? 'center' : 'end' };
 	justify-content: center;
 	a {
+		position: relative;
 		font-family: ${ ({mobile}) => mobile ? 'AccentFontT' : 'AccentFontM' }, sans-serif;
 		font-size: ${ ({mobile}) => mobile ? 'clamp(48px, 15.415vw, 76px)' : commonTheme.fontSizes.text.desktop + 'px' };
 		margin-right: ${ ({mobile}) => mobile ? 0 : 24 }px;
@@ -29,6 +30,25 @@ const Nav = styled.nav`
 	}
 	a.navItemMobileActive {
 		font-family: 'AccentFontI', sans-serif;
+	}
+	a:after {
+		display: block;
+		position: absolute;
+		left: auto;
+		right: 0;
+		width: 0;
+		height: 1px;
+		background-color: ${ ({theme, mobile, inside}) => mobile || inside ? commonTheme.colors.primary : theme.text };
+		content: "";
+		transition: width 0.2s cubic-bezier(0, 0, .40, 1);
+	}
+	a.navItemActive:after {
+		background-color: ${ ({accentColor, inside}) => inside ? commonTheme.colors.primary : accentColor.dark };
+	}
+	a:hover:after {
+		width: 100%;
+		left: 0;
+		right: auto;
 	}
 `
 const Navigation = ({ inside, mobile, closeMenu, accentColor }) => {

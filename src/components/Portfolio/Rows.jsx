@@ -22,7 +22,7 @@ const RowContent = styled.div`
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
-	width: ${ ({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '100%' };
+	width: ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '100%' };
 	padding: 0 40px;
 	h3.nameActive {
 		font-family: 'AccentFontI', sans-serif;
@@ -84,44 +84,41 @@ const Rows = ({ caseData, topBlockH }) => {
 	const casesRef = useRef()
 
 	useEffect(() => {
-		if (caseData && casesRef) {
-			const onMouseMove = e => {
-				let crd = casesRef.current.getBoundingClientRect()
-				if (crd.top <= e.clientY
-				&& e.clientY <= crd.bottom
-				&& crd.left <= e.clientX
-				&& e.clientX <= crd.right) {
-					for (let i = 0; i < caseData.length; i++) {
-						if (imgRef.current[i]) {
-							gsap.to(imgRef.current[i], {
-								left: e.pageX + 'px',
-								top: e.pageY + 'px',
-								duration: commonTheme.durations.middle / 1000,
-								ease: 'power4.out',
-							})
-							gsap.to(imgRef.current[i], {
-								scale: 1,
-								duration: 0,
-								ease: 'linear',
-							})
-						}
-					}
-				} else {
-					for (let i = 0; i < caseData.length; i++) {
-						gsap.to(imgRef.current[i], {
-							scale: 0,
-							duration: 0,
-							ease: 'linear',
-						})
-					}
+		const el = casesRef.current
+		const onMouseMove = e => {
+			let crd = casesRef.current.getBoundingClientRect()
+			if (crd.top <= e.clientY
+			&& e.clientY <= crd.bottom
+			&& crd.left <= e.clientX
+			&& e.clientX <= crd.right) {
+				for (let i = 0; i < caseData.length; i++) {
+					gsap.to(imgRef.current[i], {
+						left: e.pageX + 'px',
+						top: e.pageY + 'px',
+						duration: commonTheme.durations.middle / 1000,
+						ease: 'power4.out',
+					})
+					gsap.to(imgRef.current[i], {
+						scale: 1,
+						duration: 0,
+						ease: 'linear',
+					})
+				}
+			} else {
+				for (let i = 0; i < caseData.length; i++) {
+					gsap.to(imgRef.current[i], {
+						scale: 0,
+						duration: 0,
+						ease: 'linear',
+					})
 				}
 			}
-
-			window.addEventListener('mousemove', onMouseMove)
-
-			return () => window.removeEventListener('mousemove', onMouseMove)
 		}
-	})
+
+		el.addEventListener('mousemove', onMouseMove)
+
+		return () => el.removeEventListener('mousemove', onMouseMove)
+	}, [caseData])
 
 	const showImg = i => {
 		nameRef.current[i].classList.add('nameActive')
@@ -154,7 +151,7 @@ const Rows = ({ caseData, topBlockH }) => {
 					<Img ref={el => imgRef.current[i] = el} src={c.mobileImage.asset.url} alt={c.slug.current} />
 					<RowArea onMouseOver={() => showImg(i)}
 								onMouseOut={() => hideImg(i)}
-								onClick={() => navigate(`cases/${c.slug.current}`)} />
+								onClick={() => navigate(`/cases/${c.slug.current}`)} />
 				</RowContent>
 				<Line />
 			</RowWrap>

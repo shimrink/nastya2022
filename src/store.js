@@ -1,7 +1,7 @@
 
 const state = {
+	gridWidth: 1520,
 	home: {
-		gridWidth: 1520,
 		hugeDesk: {scrollCount: 5},
 		desk: {scrollCount: 5},
 		tabletA: {scrollCount: 1},

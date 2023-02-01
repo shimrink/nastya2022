@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import Navigation from './Navigation';
@@ -46,13 +46,13 @@ const Social = styled.div`
 		margin: ${ ({media}) => media === 'mobile' ? '0' : '0 12px' };
 	}
 `
-const MenuMobile = () => {
+const MenuMobile = forwardRef((props, ref) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
 	useEffect(() => {
-		const el = document.querySelector('.menuMobile')
+		const el = ref.current
 		const onWheel = e => {
 			e.preventDefault()
 		}
@@ -61,10 +61,10 @@ const MenuMobile = () => {
 	})
 
 	const closeMenu =() => {
-		document.querySelector('.menuMobile').style.transform = 'translateX(100%)'
+		ref.current.style.transform = 'translateX(100%)'
 	}
 
-	return <MenuMobileWrapper accentColor={accentColor} media={media} className='menuMobile'>
+	return <MenuMobileWrapper ref={ref} accentColor={accentColor} media={media}>
 		<HatMobile>
 			<Logo mobile closeMenu={closeMenu} />
 			<Close>
@@ -80,6 +80,6 @@ const MenuMobile = () => {
 			<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
 		</Social>
 	</MenuMobileWrapper>
-}
+})
 
 export default MenuMobile;

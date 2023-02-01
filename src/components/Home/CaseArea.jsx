@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
@@ -44,15 +44,15 @@ const CaseWrapper = styled.div`
 	cursor: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 'none' : 'pointer' };
 `
 const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, planeH, planeI, setCarouselSizes, setHovering }) => {
-
-	const media = useContext(MediaContext)
-
 	const navigate = useNavigate()
 
-	// Set plane sizes on load and on resize
-	const carouselRef = useCallback(node => {
-		if (node) {
-			let nodeW = node.getBoundingClientRect().width
+	const media = useContext(MediaContext)
+	const containerRef = useRef()
+	const carouselRef = useRef()
+
+	useEffect(() => {
+		const calcPlaneSizes = () => {
+			let nodeW = carouselRef.current.getBoundingClientRect().width
 			let nodeH = media === 'mobile' ? nodeW * 1.325 : nodeW * 9 / 16
 			setCarouselSizes({
 				width: nodeW,
@@ -60,11 +60,16 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 				indent: nodeW * 0.22
 			})
 		}
+		calcPlaneSizes()
+		window.addEventListener('resize', calcPlaneSizes)
+
+		return () => window.removeEventListener('resize', calcPlaneSizes)
 	}, [media, setCarouselSizes])
 
 	// Hovering animation
 	useEffect(() => {
-		if (showButtonRef && caseData && (media === 'hugeDesk' || media === 'desk')) {
+		if (media === 'hugeDesk' || media === 'desk') {
+			const el = containerRef.current
 			const onMouseMove = e => {
 				gsap.to(showButtonRef.current, {
 					left: e.pageX + 'px',
@@ -74,14 +79,14 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 				})
 			}
 
-			window.addEventListener('mousemove', onMouseMove)
+			el.addEventListener('mousemove', onMouseMove)
 
-			return () => window.removeEventListener('mousemove', onMouseMove)
+			return () => el.removeEventListener('mousemove', onMouseMove)
 		}
-	})
+	}, [showButtonRef, media])
 
 	const mouseOverHandler = () => {
-		if (showButtonRef && caseData && (media === 'hugeDesk' || media === 'desk')) {
+		if (media === 'hugeDesk' || media === 'desk') {
 			gsap.to(showButtonRef.current, {
 				scale: 1,
 				duration: commonTheme.durations.short / 1000,
@@ -92,7 +97,7 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 	}
 
 	const mouseOutHandler = () => {
-		if (showButtonRef && caseData && (media === 'hugeDesk' || media === 'desk')) {
+		if (media === 'hugeDesk' || media === 'desk') {
 			gsap.to(showButtonRef.current, {
 				scale: 0,
 				duration: commonTheme.durations.short / 1000,
@@ -102,25 +107,24 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 		}
 	}
 
-	return <CarouselContainer media={media}>
-		<Carousel id='carouselId'
-			ref={carouselRef}
-			currentIndex={currentIndex}
-			media={media}
-			scrollCount={scrollCount}
-			planeW={planeW}
-			planeH={planeH}
-			planeI={planeI}>
-			{caseData.map((post, index) => post.isMainSlider &&
-				<CaseWrapper key={post.slug.current}
-					ind={index}
+	return <CarouselContainer ref={containerRef} media={media}>
+		<Carousel ref={carouselRef}
+					currentIndex={currentIndex}
 					media={media}
+					scrollCount={scrollCount}
 					planeW={planeW}
 					planeH={planeH}
-					planeI={planeI}
-					onMouseOver={mouseOverHandler}
-					onMouseOut={mouseOutHandler}
-					onClick={() => navigate(`cases/${post.slug.current}`)} />
+					planeI={planeI}>
+			{caseData.map((post, index) => post.isMainSlider &&
+				<CaseWrapper key={post.slug.current}
+								ind={index}
+								media={media}
+								planeW={planeW}
+								planeH={planeH}
+								planeI={planeI}
+								onMouseOver={mouseOverHandler}
+								onMouseOut={mouseOutHandler}
+								onClick={() => navigate(`cases/${post.slug.current}`)} />
 			)}
 		</Carousel>
 	</CarouselContainer>

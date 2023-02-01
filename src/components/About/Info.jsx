@@ -8,7 +8,7 @@ import state from '../../store';
 
 const Wrap = styled.div`
 	display: grid;
-	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.home.gridWidth + 'px' : '1fr'} 1fr;
+	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 	padding-top: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '192px' : 'clamp(96px, 26.67vw, 120px)'};
 	margin-top: ${({topBlockH}) => topBlockH}px;
 `
