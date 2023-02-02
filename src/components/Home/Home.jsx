@@ -98,26 +98,16 @@ const Home = ({ caseData }) => {
 		}
 	}
 
-	let planeW = carouselSizes.width
-	let planeH = carouselSizes.height
-	let planeI = carouselSizes.indent
-
 	return <Main ref={mainRef}
 						media={media}
 						onTouchStart={touchStartHandler}
 						onTouchMove={touchMoveHandler}
-						initial='out'
-						animate='in'
-						exit='out'
-						variants={pageVariants}
-						transition={pageTransition}>
+						initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}
 					scrollCount={scrollCount}
-					planeW={planeW}
-					planeH={planeH}
-					planeI={planeI}
+					carouselSizes={carouselSizes}
 					hovering={hovering} />
 		</Canvas>
 		{(media === 'hugeDesk' || media === 'desk') && <ShowButton ref={showButtonRef} accentColor={accentColor}>Смотреть</ShowButton>}
@@ -126,10 +116,7 @@ const Home = ({ caseData }) => {
 					scrollCount={scrollCount}
 					showButtonRef={showButtonRef}
 					setCarouselSizes={setCarouselSizes}
-					setHovering={setHovering}
-					planeW={planeW}
-					planeH={planeH}
-					planeI={planeI} />
+					setHovering={setHovering} />
 		<ScrollProgress caseData={caseData}
 							currentIndex={currentIndex}
 							scrollCount={scrollCount} />

@@ -63,8 +63,8 @@ const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => 
 		<AnimatePresence mode='wait'>
 			<Routes location={location} key={location.pathname}>
 				{caseData.map((c, i) => <Route key={i} c={c} path={`/cases/${c.slug.current}`} element={<Case />} />)}
-				<Route path="/portfolio" element={<Portfolio ref={topBlockRef} topBlockH={topBlockH} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} />} />
-				<Route path="/about" element={<About ref={topBlockRef} topBlockH={topBlockH} setTopBlockH={setTopBlockH} />} />
+				<Route path="/portfolio" element={<Portfolio ref={topBlockRef} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} />} />
+				<Route path="/about" element={<About ref={topBlockRef} setTopBlockH={setTopBlockH} />} />
 				<Route path="/services" element={<Services />} />
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/" element={<Home caseData={caseData} />} />

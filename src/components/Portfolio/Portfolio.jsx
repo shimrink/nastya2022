@@ -1,12 +1,12 @@
 import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { commonTheme } from '../../styles/theme';
 import { pageTransition, pageVariants } from '../../styles/animations';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import Rows from './Rows';
 import Tabs from './Tabs';
 import Grid from './Grid';
-import { commonTheme } from '../../styles/theme';
 
 const Main = styled(motion.main)`
 	display: flex;
@@ -14,7 +14,6 @@ const Main = styled(motion.main)`
 	width: 100%;
 `
 const TopBlock = styled.div`
-	position: absolute;
 	width: 100%;
 	background-color: ${({accentColor}) => accentColor.dark};
 	padding-top: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 288 : 196 }px;
@@ -37,9 +36,8 @@ const GridWrapper = styled.div`
 	padding: ${ ({media}) => media === 'tabletA' ? '100px 40px 0 40px'
 											: media === 'tabletP' ? '80px 40px 0 40px'
 											: 'clamp(68px, 19.655vw, 96px) 24px 0 24px'};
-	margin-top: ${({topBlockH}) => topBlockH}px;
 `
-const Portfolio = forwardRef(({ caseData, categoriesData, topBlockH, setTopBlockH }, ref) => {
+const Portfolio = forwardRef(({ caseData, categoriesData, setTopBlockH }, ref) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
@@ -55,9 +53,9 @@ const Portfolio = forwardRef(({ caseData, categoriesData, topBlockH, setTopBlock
 		</TopBlock>
 		{(media === 'hugeDesk' || media === 'desk')
 		?
-			<Rows caseData={caseData} topBlockH={topBlockH} />
+			<Rows caseData={caseData} />
 		:
-			<GridWrapper media={media} topBlockH={topBlockH}>
+			<GridWrapper media={media}>
 				{caseData.map((c, i) => c.isPortfolio &&
 					<Grid key={i} c={c} />
 				)}

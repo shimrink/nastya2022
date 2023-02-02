@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { commonTheme } from '../../styles/theme';
 import gsap from 'gsap';
-import Line from '../common/Line';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
 import state from '../../store';
+import { commonTheme } from '../../styles/theme';
+import { AccentColorContext, MediaContext } from '../../AppWrap';
+import Line from '../common/Line';
 
 const Cases = styled.div`
 	padding: 120px 40px;
-	margin-top: ${({topBlockH}) => topBlockH}px;
 `
 const RowWrap = styled.div`
 	display: flex;
@@ -73,7 +72,7 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 	z-index: 2;
 `
-const Rows = ({ caseData, topBlockH }) => {
+const Rows = ({ caseData }) => {
 
 	const navigate = useNavigate()
 
@@ -138,7 +137,7 @@ const Rows = ({ caseData, topBlockH }) => {
 		})
 	}
 
-	return <Cases ref={casesRef} topBlockH={topBlockH}>
+	return <Cases ref={casesRef}>
 		<Line />
 		{caseData.map((c, i) => c.isPortfolio &&
 			<RowWrap className='rowItem' key={i}>

@@ -10,7 +10,6 @@ const Wrap = styled.div`
 	display: grid;
 	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 	padding-top: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '192px' : 'clamp(96px, 26.67vw, 120px)'};
-	margin-top: ${({topBlockH}) => topBlockH}px;
 `
 const Title = styled.div`
 	grid-row: 1/2;
@@ -93,12 +92,12 @@ const Portrait = styled.img`
 	align-self: center;
 	z-index: 1;
 `
-const Info = ({ topBlockH }) => {
+const Info = () => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
-	return <Wrap media={media} topBlockH={topBlockH}>
+	return <Wrap media={media}>
 		<Title media={media}>
 			<Hi media={media}>Здрасьте, я Настя</Hi>
 			<Line />

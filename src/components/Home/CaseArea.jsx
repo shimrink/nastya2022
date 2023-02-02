@@ -27,23 +27,26 @@ const Carousel = styled.div`
 	grid-column: ${ ({media}) => media === 'mobile' || media === 'tabletP' ? '1/13' : '2/12' };
 	position: absolute;
 	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 1fr;
+	align-self: center;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: 100%;
+	aspect-ratio: ${({media}) => media === 'mobile' ? '0.754' : '16/9'};
 	z-index: 2147000000;
 	transition: transform ${commonTheme.durations.long}ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
-	transform: translate(${ props => -props.currentIndex * (props.planeW + props.planeI) / props.scrollCount }px, ${ props => -props.currentIndex * props.planeH / props.scrollCount }px);
+	transform: translate(${ props => -props.currentIndex * 122 / props.scrollCount }%, ${ props => -props.currentIndex * 100 / props.scrollCount }%);
 `
 const CaseWrapper = styled.div`
 	grid-row: 1/2;
 	grid-column: 1/2;
-	width: ${ ({planeW}) => planeW }px;
-	height: ${ ({planeH}) => planeH }px;
-	transform: translate(${ props => props.ind * (props.planeW + props.planeI) }px, ${ props => props.ind * props.planeH }px);
+	width: 100%;
+	height: 100%;
+	transform: translate(${ ({i}) => i * 122 }%, ${ ({i}) => i * 100 }%);
 	cursor: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 'none' : 'pointer' };
 `
-const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, planeH, planeI, setCarouselSizes, setHovering }) => {
+const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarouselSizes, setHovering }) => {
 	const navigate = useNavigate()
 
 	const media = useContext(MediaContext)
@@ -52,12 +55,10 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 
 	useEffect(() => {
 		const calcPlaneSizes = () => {
-			let nodeW = carouselRef.current.getBoundingClientRect().width
-			let nodeH = media === 'mobile' ? nodeW * 1.325 : nodeW * 9 / 16
 			setCarouselSizes({
-				width: nodeW,
-				height: nodeH,
-				indent: nodeW * 0.22
+				w: carouselRef.current.getBoundingClientRect().width,
+				h: carouselRef.current.getBoundingClientRect().height,
+				i: carouselRef.current.getBoundingClientRect().width * 1.22
 			})
 		}
 		calcPlaneSizes()
@@ -109,22 +110,16 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, planeW, 
 
 	return <CarouselContainer ref={containerRef} media={media}>
 		<Carousel ref={carouselRef}
-					currentIndex={currentIndex}
 					media={media}
-					scrollCount={scrollCount}
-					planeW={planeW}
-					planeH={planeH}
-					planeI={planeI}>
-			{caseData.map((post, index) => post.isMainSlider &&
-				<CaseWrapper key={post.slug.current}
-								ind={index}
+					currentIndex={currentIndex}
+					scrollCount={scrollCount}>
+			{caseData.map((p, i) => p.isMainSlider &&
+				<CaseWrapper key={p.slug.current}
 								media={media}
-								planeW={planeW}
-								planeH={planeH}
-								planeI={planeI}
+								i={i}
 								onMouseOver={mouseOverHandler}
 								onMouseOut={mouseOutHandler}
-								onClick={() => navigate(`cases/${post.slug.current}`)} />
+								onClick={() => navigate(`cases/${p.slug.current}`)} />
 			)}
 		</Carousel>
 	</CarouselContainer>

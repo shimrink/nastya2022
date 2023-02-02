@@ -18,8 +18,6 @@ const Main = styled(motion.main)`
 	width: 100%;
 `
 const TopBlock = styled.div`
-	position: absolute;
-	left: 0;
 	display: grid;
 	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 	width: 100%;
@@ -66,7 +64,7 @@ const Cover = styled.img`
 	object-fit: cover;
 	z-index: 1;
 `
-const About = forwardRef(({ topBlockH, setTopBlockH }, ref) => {
+const About = forwardRef(({ setTopBlockH }, ref) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
@@ -83,7 +81,7 @@ const About = forwardRef(({ topBlockH, setTopBlockH }, ref) => {
 				<h2 className='name'>Анастасия Дулова</h2>
 			</TopBlockContent>
 		</TopBlock>
-		<Info topBlockH={topBlockH} />
+		<Info />
 		<Skills />
 		<Interests />
 		<Philosophy />
