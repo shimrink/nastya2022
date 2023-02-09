@@ -34,8 +34,8 @@ const CustomMaterial = shaderMaterial(
 
 		void main() {
 			float angle = 1.55;
-			vec2 p = (vUv - vec2(0.5, 0.5)) * uZoom  + vec2(0.5, 0.5);
-			vec2 pf = p - vec2(-0.2, 0.2) * uScale;
+			vec2 p = (vUv - vec2(0.5, 0.5)) * uZoom + vec2(0.5, 0.5);
+			vec2 pf = p - vec2(-0.15, 0.15) * uScale;
 			vec2 offset = uShift / 4.0 * vec2(cos(angle), sin(angle));
 			vec4 cr = texture2D(uTexture, pf + offset);
 			vec4 cga = texture2D(uTexture, pf);

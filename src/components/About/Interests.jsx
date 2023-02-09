@@ -16,12 +16,12 @@ const Wrap = styled.div`
 const Title = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '0 40px' : '0 24px'};
+	padding: ${ ({media}) => media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px' };
 	margin-bottom: 76px;
 `
 const Hi = styled.span`
 	font-family: 'AccentFontR', sans-serif;
-	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '18px' : '16px'};
+	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
 	text-transform: uppercase;
 	text-align: center;
 	padding-bottom: 48px;
@@ -35,8 +35,13 @@ const Gifs = styled.div`
 	grid-column: ${({media}) => media === 'hugeDesk' ? '2/3' : '1/4'};
 	display: grid;
 	grid-template-columns: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1fr 1fr' : 'repeat(12, 1fr)'};
-	grid-column-gap: ${({media}) => media === 'mobile' ? 0 : 24}px;
-	padding: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '0 40px' : '0 24px'};
+	grid-column-gap: ${({media}) => media === 'mobile' ? 0
+											: media === 'tabletP' ? 40
+											: 24}px;
+	padding: ${ ({media}) => media === 'hugeDesk' ? '0'
+									: media === 'desk' ? '0 80px'
+									: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
+									: '0 40px'};
 	img {
 		grid-row: 1/2;
 		grid-column: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1/2' : '2/6'};
@@ -53,7 +58,7 @@ const Container = styled.div`
 	grid-column: 1/4;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: 24px;
+	grid-column-gap: ${({media}) => media === 'mobile' || media === 'tabletP' ? 40 : 24}px;
 `
 const InnerContainer = styled.div`
 	grid-row: 1/2;
@@ -61,15 +66,18 @@ const InnerContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding-right: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40 : 24}px;
-	margin-left: ${({media}) => media === 'tabletP' ? -12 : media === 'mobile' ? 0 : -24}px;
+	padding-right: ${({media}) => media === 'hugeDesk' ? '0'
+										: media === 'desk' ? '80px'
+										: media === 'mobile' ? 'clamp(24px, 7.5vw, 40px)'
+										: '40px'};
+	margin-left: ${({media}) => media === 'tabletP' ? -20 : media === 'mobile' ? 0 : -24}px;
 `
 const Toggles = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: ${({media}) => media === 'mobile' ? 'space-between' : 'flex-start'};
 	height: ${({media}) => media === 'mobile' ? '100%' : 'auto'};
-	padding-left: ${({media}) => media === 'tabletP' ? 12 : media === 'mobile' ? 0 : 24}px;
+	padding-left: ${({media}) => media === 'tabletP' ? 20 : media === 'mobile' ? 0 : 24}px;
 	h3 {
 		font-size: ${({media}) => media === 'mobile' ? 'clamp(26px, 7.08vw, 48px)' : 'clamp(48px, 3.85vw, 76px)'};
 		text-transform: uppercase;
@@ -88,9 +96,10 @@ const Text = styled.div`
 	grid-row: 2/3;
 	grid-column: 1/4;
 	display: grid;
+	align-items: center;
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: 24px;
-	padding: ${({media}) => media === 'tabletP' ? ' 0 0 0 12px' : media === 'mobile' ? '48px 24px 0 24px' : '0 0 0 24px'};
+	padding: ${({media}) => media === 'tabletP' ? '0 0 0 20px' : media === 'mobile' ? '48px 24px 0 24px' : '0 0 0 24px'};
 	p {
 		grid-row: 1/2;
 		grid-column: ${({media}) => media === 'hugeDesk' ? '1/5'

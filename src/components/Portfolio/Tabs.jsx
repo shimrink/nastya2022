@@ -6,18 +6,21 @@ import { commonTheme } from '../../styles/theme';
 const TabsWrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: ${ ({media}) => media === 'mobile' || media === 'tabletP' ? 'space-between' : 'center' };
+	justify-content: ${({media}) => media === 'mobile' || media === 'tabletP' ? 'space-between' : 'center'};
 	width: 100%;
+	padding: ${({media}) => media === 'tabletP' ? '0 40px'
+								: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
+								: '0'};
 	margin-bottom: 48px;
 	div {
 		font-family: 'AccentFontM', sans-serif;
-		font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16 }px;
+		font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
 		border: 1px solid ${ ({accentColor}) => accentColor.light };
 		border-radius: 9em;
-		padding: 16px ${ ({media}) => media === 'mobile' ? 'clamp(20px, 5.28vw, 24px)' : '24px' };
+		padding: 16px ${({media}) => media === 'mobile' ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
 		color: ${commonTheme.colors.primary};
-		margin-right: ${ ({media}) => media === 'mobile' || media === 'tabletP' ? 0 : 24 }px;
-		margin-bottom: ${ ({media}) => media === 'mobile' ? 12 : 0 }px;
+		margin-right: ${({media}) => media === 'mobile' || media === 'tabletP' ? 0 : 24}px;
+		margin-bottom: ${({media}) => media === 'mobile' ? 12 : 0}px;
 		cursor: pointer;
 		transition: all ${commonTheme.durations.short}ms;
 	}

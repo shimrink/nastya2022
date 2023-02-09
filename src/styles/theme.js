@@ -48,8 +48,8 @@ export const darkTheme = {
 }
 
 export const accentTheme = [
-	{name: 'purple', color: {dark: '#BCAED5', light: '#E7E1F8'}},
-	{name: 'blue', color: {dark: '#6997CC', light: '#C0D8F4'}},
-	{name: 'green', color: {dark: '#087C7C', light: '#C6F4F4'}},
-	{name: 'orange', color: {dark: '#E39D58', light: '#F9ECE4'}},
+	{name: 'purple', color: {dark: '#BCAED5', light: 'rgba(188, 174, 213, 0.5)'}},
+	{name: 'blue', color: {dark: '#6997CC', light: 'rgba(105, 159, 204, 0.5)'}},
+	{name: 'green', color: {dark: '#087C7C', light: 'rgba(8, 124, 124, 0.5)'}},
+	{name: 'orange', color: {dark: '#E39D58', light: 'rgba(227, 157, 88, 0.5)'}},
 ]

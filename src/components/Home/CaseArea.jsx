@@ -18,9 +18,8 @@ const CarouselContainer = styled.div`
 	height: 100%;
 	padding: ${({media}) => media === 'hugeDesk' ? '0'
 								: media === 'desk' ? '0 80px'
-								: media === 'mobile' ? '0 24px'
-								: '0 40px'
-	};
+								: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
+								: '0 40px'};
 `
 const Carousel = styled.div`
 	grid-row: 1/2;
@@ -36,7 +35,7 @@ const Carousel = styled.div`
 	aspect-ratio: ${({media}) => media === 'mobile' ? '0.754' : '16/9'};
 	z-index: 2147000000;
 	transition: transform ${commonTheme.durations.long}ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
-	transform: translate(${ props => -props.currentIndex * 122 / props.scrollCount }%, ${ props => -props.currentIndex * 100 / props.scrollCount }%);
+	transform: translate(${props => -props.currentIndex * 122 / props.scrollCount }%, ${ props => -props.currentIndex * 100 / props.scrollCount}%);
 `
 const CaseWrapper = styled.div`
 	grid-row: 1/2;
@@ -46,7 +45,7 @@ const CaseWrapper = styled.div`
 	transform: translate(${ ({i}) => i * 122 }%, ${ ({i}) => i * 100 }%);
 	cursor: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 'none' : 'pointer' };
 `
-const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarouselSizes, setHovering }) => {
+const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarouselSizes, setHovering, setHoverNum }) => {
 	const navigate = useNavigate()
 
 	const media = useContext(MediaContext)
@@ -86,14 +85,15 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 		}
 	}, [showButtonRef, media])
 
-	const mouseOverHandler = () => {
+	const mouseOverHandler = (i) => {
 		if (media === 'hugeDesk' || media === 'desk') {
 			gsap.to(showButtonRef.current, {
 				scale: 1,
 				duration: commonTheme.durations.short / 1000,
 				ease: 'power4.out',
 			})
-			setHovering(false)
+			setHoverNum(i)
+			setHovering(true)
 		}
 	}
 
@@ -117,7 +117,7 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 				<CaseWrapper key={p.slug.current}
 								media={media}
 								i={i}
-								onMouseOver={mouseOverHandler}
+								onMouseOver={e => mouseOverHandler(i)}
 								onMouseOut={mouseOutHandler}
 								onClick={() => navigate(`cases/${p.slug.current}`)} />
 			)}

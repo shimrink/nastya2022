@@ -13,15 +13,18 @@ const moveX = keyframes`
 `
 const UpperFooterWrap = styled.div`
 	display: grid;
-	grid-template-rows: ${({media}) => media === 'mobile' ? 'auto' : '1fr 1fr 1fr' };
+	grid-template-rows: ${({media}) => media === 'mobile' ? 'auto' : '1fr 1fr 1fr'};
 	grid-template-columns: ${({media}) => media === 'tabletP' ? 'repeat(4, 1fr)'
-								: media === 'mobile' ? '1fr 1fr'
-								: 'repeat(12, 1fr)'};
+													: media === 'mobile' ? '1fr 1fr'
+													: 'repeat(12, 1fr)'};
 	grid-row-gap: 48px;
-	grid-column-gap: 24px;
-	font-size: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16 }px;
+	grid-column-gap: ${({media}) => media === 'mobile' ? 'clamp(24px, 7.5vw, 40px)'
+											: media === 'tabletP' ? '40px'
+											: '24px'};
+	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
 	padding: ${({media}) => media === 'hugeDesk' ? '0'
-								: media === 'mobile' ? '0 24px'
+								: media === 'desk' ? '0 80px'
+								: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
 								: '0 40px'};
 `
 const TitleWrap = styled.div`
@@ -29,10 +32,10 @@ const TitleWrap = styled.div`
 	left: 0;
 	display: flex;
 	align-self: ${ ({media}) => media === 'tabletA' || media === 'tabletP' ? 'flex-start' : 'center' };
-	margin-top: ${({media}) => media === 'tabletA' ? '40'
-									: media === 'tabletP' ? '96'
-									: 'mobile' ? '100'
-									: '0'}px;
+	margin-top: ${({media}) => media === 'tabletA' ? 40
+									: media === 'tabletP' ? 96
+									: media === 'mobile' ? 100
+									: 0}px;
 	overflow: hidden;
 	z-index: ${ ({media}) => media === 'mobile' ? 3 : 1 };
 	animation: ${moveX} 10s linear infinite;

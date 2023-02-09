@@ -51,22 +51,22 @@ const Nav = styled.nav`
 		right: auto;
 	}
 `
-const Navigation = ({ inside, mobile, closeMenu, accentColor }) => {
+const Navigation = ({ inside, mobile, closeMenu, accentColor, pageTransition }) => {
 	return <Nav mobile={mobile} accentColor={accentColor} inside={inside}>
-		<NavLink to='/portfolio' onClick={closeMenu}
-		className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
+		<NavLink to='/portfolio' onClick={mobile ? closeMenu : e=>pageTransition(e, '/portfolio')}
+					className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
 			Все кейсы
 		</NavLink>
-		<NavLink to='/about' onClick={closeMenu}
-		className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
+		<NavLink to='/about' onClick={mobile ? closeMenu : e=>pageTransition(e, '/about')}
+					className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
 			Обо мне
 		</NavLink>
-		<NavLink to='/services' onClick={closeMenu}
-		className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
+		<NavLink to='/services' onClick={mobile ? closeMenu : e=>pageTransition(e, '/services')}
+					className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
 			Услуги
 		</NavLink>
-		<NavLink to='/contacts' onClick={closeMenu}
-		className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
+		<NavLink to='/contacts' onClick={mobile ? closeMenu : e=>pageTransition(e, '/contacts')}
+					className={navData => navData.isActive && !mobile ? 'navItemActive' : navData.isActive && mobile ? 'navItemMobileActive' : ''}>
 			Контакты
 		</NavLink>
 	</Nav>

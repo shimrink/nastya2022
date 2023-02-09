@@ -2,16 +2,14 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from "three";
-import { motion } from 'framer-motion';
 import { commonTheme } from '../../styles/theme';
-import { pageTransition, pageVariants } from '../../styles/animations';
 import state from '../../store';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
 import Scene from './Scene';
 import CaseArea from './CaseArea';
 
-const Main = styled(motion.main)`
+const Main = styled.main`
 	position: absolute;
 	display: grid;
 	grid-template-columns: 1fr ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr' } 1fr;
@@ -53,6 +51,7 @@ const Home = ({ caseData }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [carouselSizes, setCarouselSizes] = useState({width: 0, height: 0, indent: 0})
 	const [hovering, setHovering] = useState(false)
+	const [hoverNum, setHoverNum] = useState()
 	const [touchPosition, setTouchPosition] = useState(null)
 	const showButtonRef = useRef()
 	const mainRef = useRef()
@@ -101,14 +100,14 @@ const Home = ({ caseData }) => {
 	return <Main ref={mainRef}
 						media={media}
 						onTouchStart={touchStartHandler}
-						onTouchMove={touchMoveHandler}
-						initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
+						onTouchMove={touchMoveHandler}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}
 					scrollCount={scrollCount}
 					carouselSizes={carouselSizes}
-					hovering={hovering} />
+					hovering={hovering}
+					hoverNum={hoverNum} />
 		</Canvas>
 		{(media === 'hugeDesk' || media === 'desk') && <ShowButton ref={showButtonRef} accentColor={accentColor}>Смотреть</ShowButton>}
 		<CaseArea caseData={caseData}
@@ -116,7 +115,8 @@ const Home = ({ caseData }) => {
 					scrollCount={scrollCount}
 					showButtonRef={showButtonRef}
 					setCarouselSizes={setCarouselSizes}
-					setHovering={setHovering} />
+					setHovering={setHovering}
+					setHoverNum={setHoverNum} />
 		<ScrollProgress caseData={caseData}
 							currentIndex={currentIndex}
 							scrollCount={scrollCount} />

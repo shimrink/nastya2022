@@ -52,7 +52,7 @@ const FilterDiv = styled.div`
 `
 extend({CustomMaterial})
 
-const Plane = ({ post, index, caseData, carouselSizes, hovering }) => {
+const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => {
 
 	const media = useContext(MediaContext)
 	const covers = useTexture(caseData.map(c => c.mainImage.asset.url))
@@ -61,10 +61,10 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering }) => {
 
 	let last = 0
 	useFrame(({camera}) => {
-		let zoom = 0
-		media === 'mobile' ? zoom = 0.95 : zoom = 0.85
-		hovering
-		? materialRef.current.uZoom = lerp(materialRef.current.uZoom, 1, 0.05)
+		let zoom = 1
+		media === 'mobile' ? zoom = 0.95 : zoom = 0.8
+		hovering && hoverNum === index
+		? materialRef.current.uZoom = lerp(materialRef.current.uZoom, 0.9, 0.05)
 		: materialRef.current.uZoom = lerp(materialRef.current.uZoom, zoom, 0.05)
 		materialRef.current.uScale = lerp(materialRef.current.uScale, (camera.position.x - carouselSizes.i * index) / 4000, 0.05)
 		materialRef.current.uShift = lerp(materialRef.current.uShift, ((camera.position.x - carouselSizes.i * index) - last) / 2000, 0.05)

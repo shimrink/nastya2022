@@ -1,15 +1,14 @@
-import { commonTheme } from "./theme";
 
 export const pageVariants = {
 	in: {
-		opacity: 1
+		y: '-100%'
 	},
 	out: {
-		opacity: 0
+		y: '100%'
 	}
 }
 
 export const pageTransition = {
-	duration: commonTheme.durations.short / 1000,
+	duration: 1,
 	transition: 'linear'
 }

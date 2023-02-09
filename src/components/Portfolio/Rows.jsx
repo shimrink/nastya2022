@@ -22,7 +22,7 @@ const RowContent = styled.div`
 	grid-column-gap: 24px;
 	align-items: center;
 	width: ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '100%' };
-	padding: 0 40px;
+	padding: ${ ({media}) => media === 'hugeDesk' ? '0' : '0 40px' };
 	h3.nameActive {
 		font-family: 'AccentFontI', sans-serif;
 		font-weight: 400;

@@ -1,14 +1,12 @@
 import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { commonTheme } from '../../styles/theme';
-import { pageTransition, pageVariants } from '../../styles/animations';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import Rows from './Rows';
 import Tabs from './Tabs';
 import Grid from './Grid';
 
-const Main = styled(motion.main)`
+const Main = styled.main`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -30,12 +28,13 @@ const Title = styled.h2`
 `
 const GridWrapper = styled.div`
 	display: grid;
-	grid-template-columns: 1fr ${ ({media}) => media !== 'mobile' && '1fr' };
-	grid-column-gap: 24px;
+	grid-template-columns: 1fr ${({media}) => media !== 'mobile' && '1fr'};
+	grid-column-gap: ${({media}) => media === 'tabletP' ? '40px' : '24px'};
 	width: 100%;
-	padding: ${ ({media}) => media === 'tabletA' ? '100px 40px 0 40px'
-											: media === 'tabletP' ? '80px 40px 0 40px'
-											: 'clamp(68px, 19.655vw, 96px) 24px 0 24px'};
+	padding: ${({media}) => media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
+	margin-top: ${({media}) => media === 'tabletA' ? '100px'
+								: media === 'tabletP' ? '80px'
+								: 'clamp(68px, 19.655vw, 96px)'};
 `
 const Portfolio = forwardRef(({ caseData, categoriesData, setTopBlockH }, ref) => {
 
@@ -46,7 +45,7 @@ const Portfolio = forwardRef(({ caseData, categoriesData, setTopBlockH }, ref) =
 		setTopBlockH(ref.current.getBoundingClientRect().height)
 	}, [media, setTopBlockH, ref])
 
-	return <Main initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
+	return <Main>
 		<TopBlock media={media} accentColor={accentColor} ref={ref}>
 			<Title media={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
 			<Tabs caseData={caseData} categoriesData={categoriesData} />

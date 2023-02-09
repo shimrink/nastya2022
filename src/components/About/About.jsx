@@ -1,7 +1,5 @@
 import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { pageTransition, pageVariants } from '../../styles/animations';
 import Skills from './Skills';
 import { commonTheme } from '../../styles/theme';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
@@ -11,8 +9,9 @@ import Interests from './Interests';
 import Philosophy from './Philosophy';
 import coverImg from '../../assets/images/aboutCoverDesk.jpg';
 import coverImgM from '../../assets/images/aboutCover.jpg';
+import Values from './Values';
 
-const Main = styled(motion.main)`
+const Main = styled.main`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -21,23 +20,24 @@ const TopBlock = styled.div`
 	display: grid;
 	grid-template-columns: 1fr ${({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr'} 1fr;
 	width: 100%;
+	height: 100vh;
 	background-color: ${({accentColor}) => accentColor.dark};
-	padding: ${ ({media}) => media === 'hugeDesk' ? '196px 0 156px 0'
-									: media === 'desk' ? '248px 40px 274px 40px'
-									: media === 'tabletA' ? '148px 24px 155px 24px'
-									: media === 'tabletP' ? '175px 24px 175px 24px'
-									: '102px 24px 60px 24px' };
+	padding: ${ ({media}) => media === 'hugeDesk' ? '0'
+									: media === 'desk' ? '0 80px'
+									: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
+									: '0 40px'};
 	transition: background-color ${commonTheme.durations.short}ms;
 `
 const TopBlockContent = styled.div`
 	grid-row: 1/2;
 	grid-column: ${({media}) => media === 'hugeDesk' ? '2/3' : '1/4'};
 	display: grid;
-	grid-template-columns: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1fr' : 'repeat(12, 1fr)'};
+	align-self: center;
+	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	h2 {
 		grid-row: 1/2;
-		grid-column: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1/2' : '1/13'};
+		grid-column: 1/13;
 		position: relative;
 		font-family: 'AccentFontR', sans-serif;
 		font-weight: normal;
@@ -49,18 +49,22 @@ const TopBlockContent = styled.div`
 	}
 	h2.name {
 		grid-row: 3/4;
+		align-self: end;
 		font-family: 'AccentFontI', sans-serif;
 		font-size: ${({media}) => media === 'mobile' ? '13.33vw' : 'clamp(70px, 7.6vw, 96px)'};
 		letter-spacing: -0.02em;
 		margin-top: -0.4em;
+		margin-bottom: 0;
 	}
 `
 const Cover = styled.img`
 	grid-row: 2/3;
-	grid-column: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1/2' : '2/12'};
+	grid-column: ${({media}) => media === 'mobile' || media === 'tabletP' ? '1/13' : '2/12'};
 	position: relative;
 	width: 100%;
+	max-width: ${({media}) => media === 'mobile' ? '400px' : 'none'};
 	aspect-ratio: ${({media}) => media === 'mobile' || media === 'tabletP' ? 'auto' : '631/304'};
+	justify-self: center;
 	object-fit: cover;
 	z-index: 1;
 `
@@ -73,7 +77,7 @@ const About = forwardRef(({ setTopBlockH }, ref) => {
 		setTopBlockH(ref.current.getBoundingClientRect().height)
 	}, [media, setTopBlockH, ref])
 
-	return <Main initial='out' animate='in' exit='out' variants={pageVariants} transition={pageTransition}>
+	return <Main>
 		<TopBlock ref={ref} media={media} accentColor={accentColor}>
 			<TopBlockContent media={media}>
 				<h2>Digital-дизайнер</h2>
@@ -83,6 +87,7 @@ const About = forwardRef(({ setTopBlockH }, ref) => {
 		</TopBlock>
 		<Info />
 		<Skills />
+		<Values />
 		<Interests />
 		<Philosophy />
 	</Main>

@@ -4,11 +4,10 @@ import { useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import Plane from './Plane';
 
-const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering }) => {
+const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering, hoverNum }) => {
 
 	const [prevIndex, setPrevIndex] = useState(0)
 
-	// Move camera on scroll
 	useFrame(({camera}) => {
 		if (prevIndex !== currentIndex) {
 			gsap.to(camera.position, {
@@ -27,10 +26,10 @@ const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering })
 			<Plane key={p.slug.current}
 						post={p}
 						index={i}
-						currentIndex={currentIndex}
 						caseData={caseData}
 						carouselSizes={carouselSizes}
-						hovering={hovering} />
+						hovering={hovering}
+						hoverNum={hoverNum} />
 		)}
 	</Suspense>
 }

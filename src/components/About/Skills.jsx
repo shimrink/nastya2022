@@ -27,11 +27,11 @@ const Wrap = styled.div`
 const Title = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '0 40px 348px 40px' : '0 24px 348px 24px'};
+	padding: ${({media}) => media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px) 348px clamp(24px, 7.5vw, 40px)' : '0 40px 348px 40px'};
 `
 const Hi = styled.span`
 	font-family: 'AccentFontR', sans-serif;
-	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '18px' : '16px'};
+	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
 	text-transform: uppercase;
 	text-align: center;
 	padding-bottom: 48px;
