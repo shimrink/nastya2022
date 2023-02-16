@@ -3,37 +3,33 @@ export const commonTheme = {
 		primary: '#FFF',
 		secondary: '#777',
 		tertiary: '#E6E6E6',
-		quaternary: '#000',
+		quaternary: '#1E1E1E',
 	},
 
 	// in px
-	media: {
-		desk: 1680,
-		tabletA: 1280,
-		mobile: 768,
-	},
+	// fontSizes: {
+	// 	title: {hugeDesk: 96, desk: 96, tabletA: 76, tabletP: 76, mobile: 48 },
+	// 	text: {hugeDesk: 18, desk: 18, tabletA: 16, tabletP: 16, mobile: 16 },
+	// 	tag: {hugeDesk: 16, desk: 16, tabletA: 16, tabletP: 16, mobile: 14 },
+	// },
 
 	// in px
-	fontSizes: {
-		title: {hugeDesk: 96, desk: 96, tabletA: 76, tabletP: 76, mobile: 48 },
-		text: {hugeDesk: 18, desk: 18, tabletA: 16, tabletP: 16, mobile: 16 },
-		tag: {hugeDesk: 16, desk: 16, tabletA: 16, tabletP: 16, mobile: 14 },
-	},
+	// indents: {
+	// 	hugeDesk: 40,
+	// 	desk: 40,
+	// 	tabletA: 24,
+	// 	tabletP: 24,
+	// 	mobile: 24
+	// },
 
-	// in ms
+	// Grid width on 1680+ screen in px
+	gridWidth: 1520,
+
+	// in s
 	durations: {
-		short: 300,
-		middle: 600,
-		long: 1000,
-	},
-
-	// in px
-	indents: {
-		hugeDesk: 40,
-		desk: 40,
-		tabletA: 24,
-		tabletP: 24,
-		mobile: 24
+		short: 0.3,
+		middle: 0.6,
+		long: 1,
 	},
 }
 

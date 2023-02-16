@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
-import state from '../../store';
 import { commonTheme } from '../../styles/theme';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import Line from '../common/Line';
@@ -21,8 +19,8 @@ const RowContent = styled.div`
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
-	width: ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '100%' };
-	padding: ${ ({media}) => media === 'hugeDesk' ? '0' : '0 40px' };
+	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
+	padding: ${({m}) => m.isHugeDesk ? '0' : '0 40px'};
 	h3.nameActive {
 		font-family: 'AccentFontI', sans-serif;
 		font-weight: 400;
@@ -42,7 +40,7 @@ const Name = styled.h3`
 	grid-row: 1/2;
 	grid-column: 1/10;
 	position: relative;
-	font-size: ${commonTheme.fontSizes.title.tabletA}px;
+	font-size: 76px;
 	margin: 48px 0;
 	text-transform: uppercase;
 	z-index: 1;
@@ -72,9 +70,7 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 	z-index: 2;
 `
-const Rows = ({ caseData }) => {
-
-	const navigate = useNavigate()
+const Rows = ({ caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
@@ -94,7 +90,7 @@ const Rows = ({ caseData }) => {
 					gsap.to(imgRef.current[i], {
 						left: e.pageX + 'px',
 						top: e.pageY + 'px',
-						duration: commonTheme.durations.middle / 1000,
+						duration: commonTheme.durations.middle,
 						ease: 'power4.out',
 					})
 					gsap.to(imgRef.current[i], {
@@ -123,7 +119,7 @@ const Rows = ({ caseData }) => {
 		nameRef.current[i].classList.add('nameActive')
 		gsap.to(imgRef.current[i], {
 			opacity: 1,
-			duration: commonTheme.durations.short / 1000,
+			duration: commonTheme.durations.short,
 			ease: 'power4.out',
 		})
 	}
@@ -132,7 +128,7 @@ const Rows = ({ caseData }) => {
 		nameRef.current[i].classList.remove('nameActive')
 		gsap.to(imgRef.current[i], {
 			opacity: 0,
-			duration: commonTheme.durations.short / 1000,
+			duration: commonTheme.durations.short,
 			ease: 'power4.out',
 		})
 	}
@@ -141,7 +137,7 @@ const Rows = ({ caseData }) => {
 		<Line />
 		{caseData.map((c, i) => c.isPortfolio &&
 			<RowWrap className='rowItem' key={i}>
-				<RowContent media={media} accentColor={accentColor}>
+				<RowContent m={media} accentColor={accentColor}>
 					<Name ref={el => nameRef.current[i] = el}>{c.title}</Name>
 					<Tags>
 						{c.tags.map((t, ind) => <span key={ind}> {t} <br/> </span>)}
@@ -150,7 +146,7 @@ const Rows = ({ caseData }) => {
 					<Img ref={el => imgRef.current[i] = el} src={c.mobileImage.asset.url} alt={c.slug.current} />
 					<RowArea onMouseOver={() => showImg(i)}
 								onMouseOut={() => hideImg(i)}
-								onClick={() => navigate(`/cases/${c.slug.current}`)} />
+								onClick={e => pageTransition(e, `/cases/${c.slug.current}`)} />
 				</RowContent>
 				<Line />
 			</RowWrap>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from "three";
 import { commonTheme } from '../../styles/theme';
-import state from '../../store';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
 import Scene from './Scene';
@@ -12,7 +11,7 @@ import CaseArea from './CaseArea';
 const Main = styled.main`
 	position: absolute;
 	display: grid;
-	grid-template-columns: 1fr ${ ({media}) => media === 'hugeDesk' ? state.gridWidth + 'px' : '1fr' } 1fr;
+	grid-template-columns: 1fr ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -41,13 +40,12 @@ const ShowButton = styled.div`
 	transform: translate(-50%, -50%) scale(0);
 	z-index: 1000000000;
 `
-const Home = ({ caseData }) => {
+const Home = ({ caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 
-	let scrollCount = state.home[media].scrollCount
-
+	const [scrollCount, setScrollCount] = useState(1)
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [carouselSizes, setCarouselSizes] = useState({width: 0, height: 0, indent: 0})
 	const [hovering, setHovering] = useState(false)
@@ -55,6 +53,11 @@ const Home = ({ caseData }) => {
 	const [touchPosition, setTouchPosition] = useState(null)
 	const showButtonRef = useRef()
 	const mainRef = useRef()
+
+	useEffect(() => {
+		if (media.isHugeDesk || media.isDesk) { setScrollCount(5) }
+		else { setScrollCount(1) }
+	}, [media])
 
 	const next = useCallback(() => {
 		if (currentIndex < ((caseData.length - 1) * scrollCount))
@@ -98,7 +101,7 @@ const Home = ({ caseData }) => {
 	}
 
 	return <Main ref={mainRef}
-						media={media}
+						m={media}
 						onTouchStart={touchStartHandler}
 						onTouchMove={touchMoveHandler}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
@@ -109,14 +112,15 @@ const Home = ({ caseData }) => {
 					hovering={hovering}
 					hoverNum={hoverNum} />
 		</Canvas>
-		{(media === 'hugeDesk' || media === 'desk') && <ShowButton ref={showButtonRef} accentColor={accentColor}>Смотреть</ShowButton>}
+		{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef} accentColor={accentColor}>Смотреть</ShowButton>}
 		<CaseArea caseData={caseData}
 					currentIndex={currentIndex}
 					scrollCount={scrollCount}
 					showButtonRef={showButtonRef}
 					setCarouselSizes={setCarouselSizes}
 					setHovering={setHovering}
-					setHoverNum={setHoverNum} />
+					setHoverNum={setHoverNum}
+					pageTransition={pageTransition} />
 		<ScrollProgress caseData={caseData}
 							currentIndex={currentIndex}
 							scrollCount={scrollCount} />

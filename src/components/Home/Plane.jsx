@@ -21,18 +21,20 @@ const Case = styled.div.attrs(({carouselSizes}) => ({
 `
 const Title = styled.h2`
 	grid-row: 1/2;
-	grid-column: ${ ({media}) => media === 'mobile' ? '1/13' : '2/12'};
+	grid-column: ${({m}) => m.isMobile ? '1/13' : '2/12'};
 	align-self: end;
-	font-size: ${ ({media}) => media === 'mobile' ? '10vw' : commonTheme.fontSizes.title[media] + 'px'};
+	font-size: ${ ({m}) => m.isMobile ? '10vw'
+								: m.isTabletP || m.isTabletA ? '76px'
+								: '96px'};
 	text-align: center;
 	text-transform: uppercase;
 	z-index: 2;
 `
 const Tags = styled.div`
 	grid-row: 2/3;
-	grid-column: ${ ({media}) => media === 'mobile' ? '1/13' : '3/11'};
+	grid-column: ${({m}) => m.isMobile ? '1/13' : '3/11'};
 	align-self: start;
-	font-size: ${ ({media}) => commonTheme.fontSizes.tag[media]}px;
+	font-size: ${({m}) => m.isMobile ? 14 : 16}px;
 	text-align: center;
 	z-index: 2;
 `
@@ -62,7 +64,7 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => 
 	let last = 0
 	useFrame(({camera}) => {
 		let zoom = 1
-		media === 'mobile' ? zoom = 0.95 : zoom = 0.8
+		media.isMobile ? zoom = 0.95 : zoom = 0.8
 		hovering && hoverNum === index
 		? materialRef.current.uZoom = lerp(materialRef.current.uZoom, 0.9, 0.05)
 		: materialRef.current.uZoom = lerp(materialRef.current.uZoom, zoom, 0.05)
@@ -73,12 +75,12 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => 
 
 	return <mesh position={[index * carouselSizes.i, -index * carouselSizes.h, -110]}>
 		<planeGeometry args={[carouselSizes.w, carouselSizes.h, 16, 16]} attach='geometry' />
-		<customMaterial ref={materialRef} uTexture={media === 'mobile' ? coversMobile[index] : covers[index]} attach='material' />
+		<customMaterial ref={materialRef} uTexture={media.isMobile ? coversMobile[index] : covers[index]} attach='material' />
 		<Html center position={[0, 0, -100]}>
 			<Case carouselSizes={carouselSizes}>
 				<FilterDiv />
-				<Title media={media}>{post.title}</Title>
-				<Tags media={media}>{post.tags.map((t, i) =>
+				<Title m={media}>{post.title}</Title>
+				<Tags m={media}>{post.tags.map((t, i) =>
 					<Tag key={i}>
 						{t}{i < post.tags.length - 1 ? ', ' : ''}
 					</Tag>

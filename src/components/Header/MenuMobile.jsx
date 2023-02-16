@@ -23,7 +23,7 @@ const Content = styled.div`
 	width: 100%;
 	height: 100%;
 	font-family: 'AccentFontM', sans-serif;
-	padding: ${({media}) => media === 'mobile' ? '24px clamp(24px, 7.5vw, 40px)' : '24px 40px'};
+	padding: ${({m}) => m.isMobile ? '24px clamp(24px, 7.5vw, 40px)' : '24px 40px'};
 	background-color: ${ ({accentColor}) => accentColor.dark };
 `
 const Social = styled.div`
@@ -31,13 +31,13 @@ const Social = styled.div`
 	grid-column: 1/2;
 	display: flex;
 	align-items: flex-end;
-	justify-content: ${ ({media}) => media === 'mobile' ? 'space-between' : 'center' };
+	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'center'};
 	width: 100%;
 	height: 100%;
 	a {
-		font-size: ${ ({media}) => media === 'mobile' ? 'clamp(14px, 3.855vw, 16px)' : commonTheme.fontSizes.text.tabletA + 'px' };
+		font-size: ${({m}) => m.isMobile ? 'clamp(14px, 3.855vw, 16px)' : '16px'};
 		color: ${commonTheme.colors.primary};
-		margin: ${ ({media}) => media === 'mobile' ? '0' : '0 12px' };
+		margin: ${({m}) => m.isMobile ? '0' : '0 12px'};
 	}
 `
 const RoundedDiv = styled.div`
@@ -62,9 +62,9 @@ const MenuMobile = forwardRef(({ closeMenu }, ref) => {
 	})
 
 	return <Wrapper ref={ref}>
-		<Content accentColor={accentColor} media={media}>
+		<Content accentColor={accentColor} m={media}>
 			<Navigation mobile closeMenu={closeMenu} accentColor={accentColor} />
-			<Social media={media}>
+			<Social m={media}>
 				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
 				<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
 				<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig</a>

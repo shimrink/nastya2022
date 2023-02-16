@@ -13,7 +13,7 @@ const ProgressLineWrapper = styled.div`
 	transform: translateX(-50%);
 	width: 180px;
 	height: 4px;
-	margin-bottom: ${ ({media}) => commonTheme.indents[media] }px;
+	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
 `
 const ProgressLineContainer = styled.div`
 	position: absolute;
@@ -25,10 +25,10 @@ const ProgressLineContainer = styled.div`
 const ProgressLine = styled.div`
 	position: absolute;
 	border-radius: 9em;
-	width: ${ ({scrollValue}) => scrollValue }%;
+	width: ${({scrollValue}) => scrollValue}%;
 	height: 100%;
 	background-color: ${ ({accentColor}) => accentColor.dark };
-	transition: width ${commonTheme.durations.middle}ms;
+	transition: width ${commonTheme.durations.middle}s;
 `
 const ScrollProgress = ({ caseData, currentIndex, scrollCount }) => {
 
@@ -43,7 +43,7 @@ const ScrollProgress = ({ caseData, currentIndex, scrollCount }) => {
 		}
 	}, [currentIndex, caseData, scrollCount])
 
-	return <ProgressLineWrapper media={media}>
+	return <ProgressLineWrapper m={media}>
 		<ProgressLineContainer accentColor={accentColor} />
 		<ProgressLine accentColor={accentColor} scrollValue={scrollValue} />
 	</ProgressLineWrapper>

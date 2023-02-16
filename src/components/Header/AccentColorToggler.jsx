@@ -5,8 +5,8 @@ import { accentTheme, commonTheme } from '../../styles/theme';
 
 const Wrapper = styled.div`
 	display: grid;
-	justify-items: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 'start' : 'end' };
-	padding: ${ ({media}) => media === 'hugeDesk' || media === 'desk' ? 0 : 6 }px;
+	justify-items: ${({m}) => m.isHugeDesk || m.isDesk ? 'start' : 'end'};
+	padding: ${({m}) => m.isHugeDesk || m.isDesk ? 0 : 6}px;
 `
 const Button = styled.button`
 	grid-row: 1/2;
@@ -20,10 +20,10 @@ const Button = styled.button`
 	width: 20px;
 	cursor: pointer;
 	z-index: ${ ({sn}) => (accentTheme.length - sn) };
-	transition: margin ${commonTheme.durations.short}ms,
-					outline-color ${commonTheme.durations.short}ms;
+	transition: margin ${commonTheme.durations.short}s,
+					outline-color ${commonTheme.durations.short}s;
 	${Wrapper}:hover && {
-		margin: ${ ({sn, media}) => media === 'hugeDesk' || media === 'desk' ? '0 0 0 ' + sn * 24 + 'px' : '0 ' + sn * 24 + 'px 0 0' };
+		margin: ${({sn, m}) => m.isHugeDesk || m.isDesk ? '0 0 0 ' + sn * 24 + 'px' : '0 ' + sn * 24 + 'px 0 0'};
 	}
 `
 const AccentColorToggler = ({ toggleAccentColor, inside }) => {
@@ -41,12 +41,12 @@ const AccentColorToggler = ({ toggleAccentColor, inside }) => {
 		return null
 	})
 
-	return <Wrapper media={media}>
+	return <Wrapper m={media}>
 		{accentThemeLocal.map((ac, index) =>
 			<Button onClick={ () => toggleAccentColor(ac.name) }
 						col={ac.color.dark}
 						sn={index}
-						media={media}
+						m={media}
 						key={index}
 						inside={inside}
 						accentColor={accentColor} />

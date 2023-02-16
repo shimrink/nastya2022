@@ -1,6 +1,6 @@
 export default {
 	name: 'category',
-	title: 'Табы',
+	title: 'Категории',
 	type: 'document',
 	fields: [
 		{

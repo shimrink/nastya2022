@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { AccentColorContext } from '../../AppWrap';
 
 const LineDiv = styled.div`
 	grid-column: 1/13;
@@ -11,9 +11,8 @@ const LineDiv = styled.div`
 const Line = ({ top }) => {
 
 	const accentColor = useContext(AccentColorContext)
-	const media = useContext(MediaContext)
 
-	return <LineDiv top={top} media={media} accentColor={accentColor} />
+	return <LineDiv top={top} accentColor={accentColor} />
 }
 
 export default Line;

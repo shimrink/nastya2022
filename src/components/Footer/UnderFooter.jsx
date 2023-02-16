@@ -6,23 +6,23 @@ import { commonTheme } from '../../styles/theme';
 const UnderFooterContainer = styled.div`
 	position: absolute;
 	left: 0;
-	display: ${({media}) => media === 'mobile' || media === 'tabletP' ? 'grid' : 'flex'};
+	display: ${({m}) => m.isMobile || m.isTabletP ? 'grid' : 'flex'};
 	grid-row-gap: 24px;
 	align-items: flex-end;
 	justify-content: space-between;
 	width: 100%;
-	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 16 : 14}px;
+	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 16 : 14}px;
 	color: ${commonTheme.colors.secondary};
-	padding: ${({media}) => media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
-	margin-bottom: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40 : 24}px;
+	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
+	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
 `
 const Meta = styled.span`
 	grid-row: 1/2;
 	grid-column: 1/3;
 `
 const Year = styled.div`
-	grid-row: ${({media}) => media === 'tabletP' ? '1/2' : '2/3'};
-	grid-column: ${({media}) => media === 'tabletP' ? '3/5' : '2/3'};
+	grid-row: ${({m}) => m.isTabletP ? '1/2' : '2/3'};
+	grid-column: ${({m}) => m.isTabletP ? '3/5' : '2/3'};
 	display: flex;
 	flex-direction: column;
 	text-align: end;
@@ -31,9 +31,9 @@ const UnderFooter = () => {
 
 	const media = useContext(MediaContext)
 
-	return <UnderFooterContainer media={media}>
+	return <UnderFooterContainer m={media}>
 		<Meta>*Meta Platforms Inc. признана экстремистской<br/>организацией и запрещена на территории РФ</Meta>
-		<Year media={media}>
+		<Year m={media}>
 			<span>©2023</span>
 			<span>ASYADULOVA</span>
 		</Year>

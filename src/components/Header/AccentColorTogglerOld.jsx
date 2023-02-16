@@ -5,7 +5,7 @@ import { accentTheme, commonTheme } from '../styles/theme';
 const Wrapper = styled.div`
 	width: 20px;
 	height: 20px;
-	transition: width ${commonTheme.durations.ms300}ms;
+	transition: width ${commonTheme.durations.short}s;
 	:hover {
 		width: ${24 * accentTheme.length - 4}px;
 		transition: width 0s;
@@ -19,7 +19,7 @@ const Button = styled.button`
 	height: 20px;
 	width: 20px;
 	transform: translateX(0);
-	transition: transform ${commonTheme.durations.ms300}ms;
+	transition: transform ${commonTheme.durations.short}s;
 	cursor: pointer;
 	z-index: ${ ({sn}) => (accentTheme.length - sn) };
 	${Wrapper}:hover && {

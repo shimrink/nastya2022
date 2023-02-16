@@ -7,7 +7,7 @@ export default createGlobalStyle`
 }
 
 html {
-	font-size: ${commonTheme.fontSizes.text.desk}px;
+	font-size: 18px;
 	height: 100%;
 	margin: 0;
 	user-select: none;

@@ -18,9 +18,19 @@ export default {
 			},
 		},
 		{
+			name: 'link',
+			title: 'Ссылка',
+			type: 'url',
+		},
+		{
 			name: 'year',
 			title: 'Год',
 			type: 'number',
+		},
+		{
+			name: 'client',
+			title: 'Клиент',
+			type: 'string',
 		},
 		{
 			name: 'mainImage',
@@ -40,7 +50,7 @@ export default {
 		},
 		{
 			name: 'categories',
-			title: 'Табы',
+			title: 'Категории',
 			type: 'array',
 			description: 'Выбирать из выпадающего списка.',
 			of: [{type: 'reference', to: {type: 'category'}}],
@@ -73,8 +83,14 @@ export default {
 			type: 'number',
 		},
 		{
-			name: 'author',
-			title: 'Author',
+			name: 'design',
+			title: 'Дизайнер',
+			type: 'reference',
+			to: {type: 'author'},
+		},
+		{
+			name: 'dev',
+			title: 'Разработчик',
 			type: 'reference',
 			to: {type: 'author'},
 		},
@@ -82,11 +98,6 @@ export default {
 			name: 'publishedAt',
 			title: 'Published at',
 			type: 'datetime',
-		},
-		{
-			name: 'body',
-			title: 'Body',
-			type: 'blockContent',
 		},
 	],
 

@@ -9,10 +9,10 @@ const ThemeCircle = styled.div`
 	border: none;
 	outline: 1px solid;
 	border-radius: 50%;
-	outline-color: ${({theme, inside}) => inside ? commonTheme.colors.primary : theme.text};
+	outline-color: ${ ({theme, inside}) => inside ? commonTheme.colors.primary : theme.text };
 	justify-self: end;
 	cursor: pointer;
-	transition: outline-color ${commonTheme.durations.short}ms;
+	transition: outline-color ${commonTheme.durations.short}s;
 `
 const ThemeToggler = ({ toggleTheme, inside }) => {
 	return <ThemeCircle onClick={toggleTheme} inside={inside} />

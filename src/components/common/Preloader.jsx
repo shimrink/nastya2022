@@ -13,7 +13,7 @@ const Main = styled.div`
 	justify-content: center;
 	width: 100vw;
 	height: 100%;
-	background-color: ${({theme}) => theme.bg};
+	background-color: ${ ({theme}) => theme.bg };
 	overflow: hidden;
 	z-index: 2147483646;
 `
@@ -37,7 +37,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 			baseVal: 0.01,
 			duration: 1,
 			ease: 'power3.inOut',
-			delay: commonTheme.durations.short / 1000,
+			delay: commonTheme.durations.short,
 		})
 
 		// Fill in the array with images URLs from Sanity
@@ -62,7 +62,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 			// Increase the loading value by percent value
 			gsap.to(darkColRef.current.offset, {
 				baseVal: progress / 100,
-				duration: commonTheme.durations.long / 1000,
+				duration: commonTheme.durations.long,
 				ease: 'power3.inOut',
 				delay: 0.2,
 			})
@@ -70,7 +70,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
 				const tl = gsap.timeline()
 				tl.to(mainRef.current, {
 					opacity: 0,
-					duration: commonTheme.durations.long / 1000,
+					duration: commonTheme.durations.long,
 					ease: 'linear',
 					delay: 1.5,
 				})

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
 import sanityClient from './client';
 import groq from 'groq';
+import { ThemeProvider } from "styled-components";
+import useMediaQuery from 'beautiful-react-hooks/useMediaQuery';
 import { useColorMode } from "./hooks/useColorMode";
 import GlobalStyles from "./styles/global";
-import { accentTheme, commonTheme, darkTheme, lightTheme } from "./styles/theme";
+import { accentTheme, darkTheme, lightTheme } from "./styles/theme";
 import App from './App';
 
 export const AccentColorContext = React.createContext()
@@ -18,7 +19,7 @@ const AppWrap = () => {
 	const themeMode = theme === 'light' ? lightTheme : darkTheme
 
 	const [endCol, setEndCol] = useState()
-	const [media, setMedia] = useState('')
+	const [media, setMedia] = useState({})
 	const [caseData, setCaseData] = useState(null)
 	const [categoriesData, setCategoriesData] = useState(null)
 
@@ -39,40 +40,15 @@ const AppWrap = () => {
 		}
 	}, [accentColor])
 
-	// const isTabletA = useMediaQuery('(max-width: 1279px) and (min-width: 1000px) and (orientation: landscape)')
-	// const isTabletP = useMediaQuery('(max-width: 999px) and (min-width: 768px) and (orientation: portrait)')
-	// const isMobile = useMediaQuery('(max-width: 767px) and (orientation: portrait)')
-	// const media = isMobile ? 'mobile' : isTabletP ? 'tabletP' : isTabletA ? 'tabletA' : 'desk'
-
-	const calcMedia = () => {
-		if (window.innerWidth < commonTheme.media.mobile
-		&& window.innerWidth / window.innerHeight < 1) {
-			setMedia('mobile')
-		} else if (window.innerWidth >= commonTheme.media.mobile
-		&& window.innerWidth < commonTheme.media.tabletA
-		&& window.innerWidth / window.innerHeight < 1) {
-			setMedia('tabletP')
-		} else if (window.innerWidth >= commonTheme.media.mobile
-		&& window.innerWidth < commonTheme.media.tabletA
-		&& window.innerWidth / window.innerHeight >= 1) {
-			setMedia('tabletA')
-		} else if (window.innerWidth >= commonTheme.media.tabletA
-		&& window.innerWidth < commonTheme.media.desk
-		&& window.innerWidth / window.innerHeight >= 1) {
-			setMedia('desk')
-		} else {
-			setMedia('hugeDesk')
-		}
-	}
+	const isHugeDesk = useMediaQuery('(min-width: 1680px)')
+	const isDesk = useMediaQuery('(max-width: 1679px) and (min-width: 1280px)')
+	const isTabletA = useMediaQuery('(max-width: 1279px) and (orientation: landscape)')
+	const isTabletP = useMediaQuery('(max-width: 1279px) and (min-width: 768px) and (orientation: portrait)')
+	const isMobile = useMediaQuery('(max-width: 767px) and (orientation: portrait)')
 
 	useEffect(() => {
-		calcMedia()
-	}, [])
-
-	useEffect(() => {
-		window.addEventListener('resize', calcMedia)
-		return () => window.removeEventListener('resize', calcMedia)
-	})
+		setMedia({ isHugeDesk, isDesk, isTabletA, isTabletP, isMobile })
+	}, [isHugeDesk, isDesk, isTabletA, isTabletP, isMobile])
 
 	// Get data from Sanity
 	useEffect(() => {
@@ -80,11 +56,15 @@ const AppWrap = () => {
 			groq`*[_type == "post"] | order(order) {
 				title,
 				slug,
+				link,
+				year,
+				client,
 				tags,
-				order,
 				isMainSlider,
 				isPortfolio,
-				year,
+				order,
+				design->,
+				dev->,
 				mainImage {
 					asset->{
 						_id,

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import Line from '../common/Line';
@@ -7,7 +6,7 @@ import Line from '../common/Line';
 const Case = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: ${ ({media}) => media !== 'mobile' ? 72 : 48 }px;
+	margin-bottom: ${({m}) => !m.isMobile ? 72 : 48}px;
 	cursor: pointer;
 `
 const Img = styled.img`
@@ -40,13 +39,11 @@ const Tags = styled.span`
 const Year = styled.span`
 	font-size: 16px;
 `
-const Grid = ({ c }) => {
+const Grid = ({ c, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 
-	const navigate = useNavigate()
-
-	return <Case className='rowItem' media={media} onClick={() => navigate(`cases/${c.slug.current}`)}>
+	return <Case className='rowItem' m={media} onClick={e => pageTransition(e, `cases/${c.slug.current}`)}>
 		<Img src={c.mobileImage.asset.url} alt={c.slug.current} />
 		<Name>{c.title}</Name>
 		<Line />

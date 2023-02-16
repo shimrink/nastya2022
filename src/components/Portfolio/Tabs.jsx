@@ -6,36 +6,34 @@ import { commonTheme } from '../../styles/theme';
 const TabsWrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: ${({media}) => media === 'mobile' || media === 'tabletP' ? 'space-between' : 'center'};
+	justify-content: ${({m}) => m.isMobile || m.isTabletP ? 'space-between' : 'center'};
 	width: 100%;
-	padding: ${({media}) => media === 'tabletP' ? '0 40px'
-								: media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px)'
-								: '0'};
+	padding: ${({m}) => m.isTabletP ? '0 40px'
+							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
+							: '0'};
 	margin-bottom: 48px;
 	div {
 		font-family: 'AccentFontM', sans-serif;
-		font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
-		border: 1px solid ${ ({accentColor}) => accentColor.light };
+		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
+		border: 1px solid ${commonTheme.colors.primary};
 		border-radius: 9em;
-		padding: 16px ${({media}) => media === 'mobile' ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
+		padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
 		color: ${commonTheme.colors.primary};
-		margin-right: ${({media}) => media === 'mobile' || media === 'tabletP' ? 0 : 24}px;
-		margin-bottom: ${({media}) => media === 'mobile' ? 12 : 0}px;
+		margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
+		margin-bottom: ${({m}) => m.isMobile ? 12 : 0}px;
 		cursor: pointer;
-		transition: all ${commonTheme.durations.short}ms;
+		transition: all ${commonTheme.durations.short}s;
 	}
 	div:last-child {
 		margin-right: 0;
 	}
 	div:hover {
 		background-color: ${commonTheme.colors.primary};
-		border-color: ${commonTheme.colors.primary};
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
 	div.tabItemActive {
 		font-family: 'AccentFontSBI', sans-serif;
 		background-color: ${commonTheme.colors.primary};
-		border-color: ${commonTheme.colors.primary};
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
 `
@@ -69,7 +67,7 @@ const Tabs = ({ caseData, categoriesData }) => {
 				}
 	}
 
-	return <TabsWrapper media={media} accentColor={accentColor}>
+	return <TabsWrapper m={media} accentColor={accentColor}>
 		<div className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
 			<span>Все</span>
 		</div>

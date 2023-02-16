@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
-import Line from '../common/Line';
+import SectionTitle from '../common/SectionTitle';
 
 const moveX = keyframes`
 	from {
@@ -24,35 +24,19 @@ const Wrap = styled.div`
 	flex-direction: column;
 	margin-top: 576px;
 `
-const Title = styled.div`
-	display: flex;
-	flex-direction: column;
-	padding: ${({media}) => media === 'mobile' ? '0 clamp(24px, 7.5vw, 40px) 348px clamp(24px, 7.5vw, 40px)' : '0 40px 348px 40px'};
-`
-const Hi = styled.span`
-	font-family: 'AccentFontR', sans-serif;
-	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 18 : 16}px;
-	text-transform: uppercase;
-	text-align: center;
-	padding-bottom: 48px;
-`
 const MovingRow = styled.div`
-	position: absolute;
-	left: ${({reverse}) => reverse ? 'auto' : 0};
-	right: ${({reverse}) => reverse ? 0 : 'auto'};
 	display: flex;
-	margin-top: ${({media, row}) => media === 'hugeDesk' || media === 'desk' ? row * 108 + 116
-												: media === 'mobile' ? row * 45 + 116
-												: row * 77 + 116}px;
+	justify-content: ${({reverse}) => reverse ? 'flex-end' : 'flex-start'};
+	margin-top: ${({m, row}) => m.isTabletP || m.isMobile ? 12 : row === 0 ? 0 : 24}px;
 	animation: ${({reverse}) => reverse ? moveXReverse : moveX} 22s linear infinite;
 `
 const String = styled.div`
-	padding-left: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40
-										: media === 'mobile' ? 16
-										: 24}px;
+	padding-left: ${ ({m}) => m.isHugeDesk || m.isDesk ? 40
+									: m.isMobile ? 16
+									: 24}px;
 	span {
-		margin-right: ${({media}) => media === 'hugeDesk' || media === 'desk' ? 40
-										: media === 'mobile' ? 16
+		margin-right: ${ ({m}) => m.isHugeDesk || m.isDesk ? 40
+										: m.isMobile ? 16
 										: 24}px;
 	}
 	span:last-child {
@@ -61,9 +45,9 @@ const String = styled.div`
 `
 const Skill = styled.span`
 	font-family: ${ ({bold}) => bold ? 'AccentFontI' : 'AccentFontT' }, sans-serif;
-	font-size: ${({media}) => media === 'hugeDesk' || media === 'desk' ? '76px'
-										: media === 'mobile' ? '30px'
-										: '48px'};
+	font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? '76px'
+								: m.isMobile ? '30px'
+								: '48px'};
 	color: ${ ({theme, accentColor, bold}) => bold ? accentColor.dark : theme.text};
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -78,28 +62,25 @@ const Skills = () => {
 	const accentColor = useContext(AccentColorContext)
 
 	return <Wrap>
-		<Title media={media}>
-			<Hi media={media}>Навыки</Hi>
-			<Line />
-		</Title>
-		<MovingRow row={0} media={media}>
+		<SectionTitle skills>Навыки</SectionTitle>
+		<MovingRow row={0} m={media}>
 			{[...Array(4)].map((v, ind) => (
-				<String key={ind} media={media}>
-					{topWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				<String key={ind} m={media}>
+					{topWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} m={media}>{w}</Skill>)}
 				</String>
 			))}
 		</MovingRow>
-		<MovingRow row={1} reverse media={media}>
+		<MovingRow row={1} reverse m={media}>
 			{[...Array(4)].map((v, ind) => (
-				<String key={ind} media={media}>
-					{middleWords.map((w, i) => <Skill bold={i === 0 || i === 3 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				<String key={ind} m={media}>
+					{middleWords.map((w, i) => <Skill bold={i === 0 || i === 3 ? true : false} key={i} accentColor={accentColor} m={media}>{w}</Skill>)}
 				</String>
 			))}
 		</MovingRow>
-		<MovingRow row={2} media={media}>
+		<MovingRow row={2} m={media}>
 			{[...Array(4)].map((v, ind) => (
-				<String key={ind} media={media}>
-					{bottomWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} media={media}>{w}</Skill>)}
+				<String key={ind} m={media}>
+					{bottomWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} accentColor={accentColor} m={media}>{w}</Skill>)}
 				</String>
 			))}
 		</MovingRow>
