@@ -11,9 +11,7 @@ const Services = () => {
 	// const media = useContext(MediaContext)
 	// const accentColor = useContext(AccentColorContext)
 
-	return <Main>
-		
-	</Main>
+	return <Main></Main>
 }
 
 export default Services;

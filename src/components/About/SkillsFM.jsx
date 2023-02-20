@@ -17,7 +17,7 @@ const MovingRows = styled.div`
 	}
 `
 const Skill = styled.span`
-	font-family: ${ ({bold}) => bold ? 'AccentFontI' : 'AccentFontT' }, sans-serif;
+	font-family: ${ ({bold}) => bold ? 'AccentFontM' : 'AccentFontT' }, sans-serif;
 	font-size: 76px;
 	color: ${ ({accentColor, bold}) => bold ? accentColor.dark : commonTheme.colors.quaternary};
 	margin-right: 40px;

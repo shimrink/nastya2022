@@ -19,6 +19,7 @@ const CarouselContainer = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
+	z-index: 4;
 `
 const Carousel = styled.div`
 	grid-row: 1/2;
@@ -32,7 +33,6 @@ const Carousel = styled.div`
 	justify-content: center;
 	width: 100%;
 	aspect-ratio: ${({m}) => m.isMobile ? '0.754' : '16/9'};
-	z-index: 2147000000;
 	transition: transform ${commonTheme.durations.long}s cubic-bezier(0.230, 1.000, 0.320, 1.000);
 	transform: translate(${ props => -props.currentIndex * 122 / props.scrollCount }%, ${ props => -props.currentIndex * 100 / props.scrollCount }%);
 `

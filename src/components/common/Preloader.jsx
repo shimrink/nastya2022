@@ -15,7 +15,7 @@ const Main = styled.div`
 	height: 100%;
 	background-color: ${ ({theme}) => theme.bg };
 	overflow: hidden;
-	z-index: 2147483646;
+	z-index: 9;
 `
 const Svg = styled.svg`
 	width: 109px;

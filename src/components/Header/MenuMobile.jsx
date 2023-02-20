@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 	height: 110%;
 	touch-action: none;
 	transform: translateY(-110%);
-	z-index: 2147000003;
+	z-index: 6;
 `
 const Content = styled.div`
 	display: grid;

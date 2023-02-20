@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
+import LetterByLetter from '../common/LetterByLetter';
 import asyaImg from '../../assets/images/footerCover.png';
 
 const moveX = keyframes`
@@ -47,7 +48,8 @@ const Title = styled.h2`
 	white-space: nowrap;
 	margin-right: ${({m}) => m.isHugeDesk || m.isDesk ? 30 : 22}px;
 	span {
-		font-family: 'AccentFontI', sans-serif;
+		font-family: 'AccentFontM', sans-serif;
+		font-weight: 500;
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
 `
@@ -103,14 +105,26 @@ const UpperFooter = () => {
 		</TitleWrap>
 		<Text m={media}>Я&nbsp;на&nbsp;связи в&nbsp;рабочее время: отвечу на&nbsp;возникшие вопросы, сориентирую в&nbsp;области онлайн-упаковки бизнеса и пойму, что вам необходимо!</Text>
 		<Messengers m={media}>
-			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
-			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
-			<a className='linkUnderLine' href="mailto:me@asyadulova.ru?subject=Запись на консультацию">Email</a>
+			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Vk</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Telegramm</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="mailto:me@asyadulova.ru?subject=Запись на консультацию">
+				<LetterByLetter>Email</LetterByLetter>
+			</a>
 		</Messengers>
 		<Social m={media}>
-			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig*</a>
-			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">Behance</a>
-			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
+			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Ig*</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Behance</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Tilda experts</LetterByLetter>
+			</a>
 		</Social>
 		<Img m={media} src={asyaImg} alt='Asya'/>
 	</UpperFooterWrap>

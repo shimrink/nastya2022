@@ -23,9 +23,13 @@ export default {
 			type: 'url',
 		},
 		{
-			name: 'year',
-			title: 'Год',
-			type: 'number',
+			name: 'publishedAt',
+			title: 'Дата',
+			type: 'date',
+			description: 'Для сортировки и отображения года',
+			options: {
+				dateFormat: 'DD.MM.YYYY',
+			},
 		},
 		{
 			name: 'client',
@@ -78,11 +82,6 @@ export default {
 			initialValue: false,
 		},
 		{
-			name: 'order',
-			title: 'Порядковый номер',
-			type: 'number',
-		},
-		{
 			name: 'design',
 			title: 'Дизайнер',
 			type: 'reference',
@@ -93,11 +92,6 @@ export default {
 			title: 'Разработчик',
 			type: 'reference',
 			to: {type: 'author'},
-		},
-		{
-			name: 'publishedAt',
-			title: 'Published at',
-			type: 'datetime',
 		},
 	],
 

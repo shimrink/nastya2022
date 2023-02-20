@@ -4,9 +4,10 @@ import { commonTheme } from '../../styles/theme';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import Line from '../common/Line';
 import SectionTitle from '../common/SectionTitle';
-import colorsGif from '../../assets/images/Colors.gif';
-import petsGif from '../../assets/images/Cats.gif';
-import gamesGif from '../../assets/images/Games.gif';
+import colorsGif from '../../assets/images/Colors.webp';
+import petsGif from '../../assets/images/Cats.webp';
+import gamesGif from '../../assets/images/Games.webp';
+import neyroGif from '../../assets/images/Neyro.webp';
 
 const Wrap = styled.div`
 	display: flex;
@@ -66,17 +67,19 @@ const Toggles = styled.div`
 	height: ${({m}) => m.isMobile ? '100%' : 'auto'};
 	padding-left: ${({m}) => m.isTabletP ? 20 : m.isMobile ? 0 : 24}px;
 	h3 {
+		align-self: start;
 		font-size: ${({m}) => m.isMobile ? 'clamp(26px, 7.08vw, 48px)'
 													: 'clamp(48px, 3.85vw, 76px)'};
 		text-transform: uppercase;
 		margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : m.isMobile ? 0 : 20}px;
+		cursor: pointer;
 	}
 	h3:last-child {
 		margin-bottom: 0;
 	}
 	h3.active {
-		font-family: 'AccentFontI';
-		font-weight: normal;
+		font-family: 'AccentFontM';
+		font-weight: 500;
 		color: ${({accentColor}) => accentColor.dark};
 	}
 `
@@ -84,7 +87,7 @@ const Text = styled.div`
 	grid-row: 2/3;
 	grid-column: 1/4;
 	display: grid;
-	align-items: center;
+	align-items: end;
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: 24px;
 	padding: ${({m}) => m.isTabletP ? '0 0 0 20px'
@@ -112,7 +115,7 @@ const Interests = () => {
 		{title: 'Цвета', url: colorsGif, alt: 'Colors', text: 'Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.\nВ своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!'},
 		{title: 'Питомцы', url: petsGif, alt: 'Pets', text: 'В моей жизни всегда было много питомцев. Сейчас у меня 3 любимых кошки: мамины Мишка и Марси, и самая-самая – моя кошка, Клипса!\nА еще мы с моим молодым человеком хотим завести собаку.'},
 		{title: 'Игры', url: gamesGif, alt: 'Games', text: 'Иногда в свободное время я позволяю себе немного поиграть. Чаще всего зависаю в многопользовательских шутерах Apex Legends и Overwatch, но иногда прохожу одиночки вроде Life is Strange, Detroit, Ori.'},
-		{title: 'Рукоделие', url: gamesGif, alt: 'Handiwork', text: 'С детства обожаю рукоделие и перепробовала, наверное, все виды: рисование, скрапбукинг, квиллинг, вышивка, шитье, вязание, валяние, бисер...\nСейчас в качестве хобби сохранила рисование и лепку украшений из полимерной глины.'},
+		{title: 'Нейросети', url: neyroGif, alt: 'Handiwork', text: 'С появлением искусственного интеллекта появилось целое поле для творческих экспериментов. А когда нейросети научились «рисовать» арты — они стали моими незаменимыми помощниками в тренировке навыков и создании дизайн-концептов!'},
 	]
 
 	const switchGif = e => {

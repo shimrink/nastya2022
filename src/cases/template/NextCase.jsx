@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import gsap from 'gsap';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
+import LetterByLetter from "../../components/common/LetterByLetter";
 import Line from '../../components/common/Line';
 import Contacts from './Contacts';
 
@@ -100,7 +101,7 @@ const Circle = styled.div`
 	justify-content: center;
 	width: 146px;
 	height: 146px;
-	font-family: 'AccentFontSBI',sans-serif;
+	font-family: 'AccentFontB',sans-serif;
 	color: ${commonTheme.colors.primary};
 	background-color: ${ ({ac}) => ac.dark };
 	border-radius: 50%;
@@ -169,8 +170,12 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 					alt={caseData[nextCaseI].slug.current}
 					ref={imgRef}
 					onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)} />
-			<NavLink to='/portfolio' onClick={e => pageTransition(e, '/portfolio')} className='allWorks linkUnderLine'>Все работы</NavLink>
-			<NavLink to='/contacts' onClick={e => pageTransition(e, '/contacts')} className='orderProject linkUnderLine'>Заказать проект</NavLink>
+			<NavLink to='/portfolio' onClick={e => pageTransition(e, '/portfolio')} className='allWorks linkUnderLine'>
+				<LetterByLetter>Все работы</LetterByLetter>
+			</NavLink>
+			<NavLink to='/contacts' onClick={e => pageTransition(e, '/contacts')} className='orderProject linkUnderLine'>
+				<LetterByLetter>Заказать проект</LetterByLetter>
+			</NavLink>
 		</Info>
 		<Contacts c={c} />
 		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)} ac={accentColor}>Смотреть</Circle>}

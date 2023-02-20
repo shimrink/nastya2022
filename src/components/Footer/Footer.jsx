@@ -6,12 +6,15 @@ import UpperFooter from './UpperFooter';
 import UnderFooter from './UnderFooter';
 
 const FooterWrapper = styled.footer`
+	position: relative;
 	display: flex;
 	flex-direction: column;
+	align-self: center;
 	justify-content: flex-end;
 	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	height: 100%;
 	margin-top: ${({m}) => m.isMobile ? 25 : 15}vh;
+	z-index: 3;
 `
 const DevGrid = styled.div`
 	display: grid;

@@ -14,6 +14,7 @@ const ProgressLineWrapper = styled.div`
 	width: 180px;
 	height: 4px;
 	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
+	z-index: 3;
 `
 const ProgressLineContainer = styled.div`
 	position: absolute;

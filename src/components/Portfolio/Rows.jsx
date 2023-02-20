@@ -22,8 +22,8 @@ const RowContent = styled.div`
 	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	padding: ${({m}) => m.isHugeDesk ? '0' : '0 40px'};
 	h3.nameActive {
-		font-family: 'AccentFontI', sans-serif;
-		font-weight: 400;
+		font-family: 'AccentFontM', sans-serif;
+		font-weight: 500;
 		color: ${ ({accentColor}) => accentColor.dark };
 	}
 `
@@ -142,7 +142,7 @@ const Rows = ({ caseData, pageTransition }) => {
 					<Tags>
 						{c.tags.map((t, ind) => <span key={ind}> {t} <br/> </span>)}
 					</Tags>
-					<Year>{c.year}</Year>
+					<Year>{c.publishedAt.split('-')[0]}</Year>
 					<Img ref={el => imgRef.current[i] = el} src={c.mobileImage.asset.url} alt={c.slug.current} />
 					<RowArea onMouseOver={() => showImg(i)}
 								onMouseOut={() => hideImg(i)}

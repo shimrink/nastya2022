@@ -17,10 +17,12 @@ const Main = styled.main`
 	overflow: hidden;
 	touch-action: none;
 	.canvas-main {
+		position: relative;
 		grid-row: 1/2;
 		grid-column: 1/4;
 		width: 100%;
 		height: 100%;
+		z-index: 2;
 	}
 `
 const ShowButton = styled.div`
@@ -34,11 +36,11 @@ const ShowButton = styled.div`
 	color: ${commonTheme.colors.primary};
 	width: 146px;
 	height: 146px;
-	font-family: 'AccentFontSBI', sans-serif;
+	font-family: 'AccentFontB', sans-serif;
 	font-size: 18px;
 	border-radius: 50%;
 	transform: translate(-50%, -50%) scale(0);
-	z-index: 1000000000;
+	z-index: 3;
 `
 const Home = ({ caseData, pageTransition }) => {
 
@@ -101,9 +103,9 @@ const Home = ({ caseData, pageTransition }) => {
 	}
 
 	return <Main ref={mainRef}
-						m={media}
-						onTouchStart={touchStartHandler}
-						onTouchMove={touchMoveHandler}>
+					m={media}
+					onTouchStart={touchStartHandler}
+					onTouchMove={touchMoveHandler}>
 		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}

@@ -51,7 +51,7 @@ const Grid = ({ c, pageTransition }) => {
 			<Tags>
 				{c.tags.map((t, i) => <span key={i}> {t} <br/> </span>)}
 			</Tags>
-			<Year>{c.year}</Year>
+			<Year>{c.publishedAt.split('-')[0]}</Year>
 		</CaseInfo>
 	</Case>
 }

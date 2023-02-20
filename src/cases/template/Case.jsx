@@ -14,12 +14,17 @@ const Main = styled.main`
 	align-items: center;
 	width: 100%;
 `
+const MainCover = styled.img`
+	width: 100%;
+	height: 100vh;
+	object-fit: cover;
+`
 const Title = styled.div`
 	width: 100%;
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
-	margin: ${ ({m}) => m.isHugeDesk || m.isDesk ? '288px 0 76px 0'
-							: m.isTabletA ? '192px 0 76px 0'
-							: '192px 0 48px 0'};
+	margin: ${ ({m}) => m.isHugeDesk || m.isDesk ? '144px 0 76px 0'
+							: m.isTabletA ? '76px 0 76px 0'
+							: '144px 0 48px 0'};
 	h2 {
 		font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? 96
 									: m.isMobile ? 48
@@ -96,12 +101,6 @@ const Button = styled.a`
 		margin: 0 12px 0 0;
 	}
 `
-const MainCover = styled.img`
-	width: 100vw;
-	aspect-ratio: 16/9;
-	object-fit: cover;
-	margin-bottom: 68px;
-`
 const Case = ({ c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
@@ -118,6 +117,7 @@ const Case = ({ c, i, caseData, pageTransition }) => {
 	if (casesArr[i].id - 1 !== i) console.error('id не совпадает с порядковым номером кейса.')
 
 	return <Main>
+		<MainCover src={c.mainImage.asset.url} alt={c.slug.current} />
 		<Title m={media}>
 			<h2>{c.title}</h2>
 			<Line />
@@ -133,7 +133,7 @@ const Case = ({ c, i, caseData, pageTransition }) => {
 			</Category>
 			<Year m={media}>
 				<h4>Год</h4>
-				<span>{c.year}</span>
+				<span>{c.publishedAt.split('-')[0]}</span>
 			</Year>
 			<Button ac={accentColor} m={media} href={`${c.link}`} target='_blank' rel="noreferrer">
 				<span>Посетить</span>
@@ -142,7 +142,6 @@ const Case = ({ c, i, caseData, pageTransition }) => {
 				</svg>
 			</Button>
 		</Info>
-		<MainCover src={c.mainImage.asset.url} alt={c.slug.current} />
 		<CurrentCase i={i} caseData={caseData} />
 		<NextCase c={c} i={i} caseData={caseData} pageTransition={pageTransition} />
 	</Main>

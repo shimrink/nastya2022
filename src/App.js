@@ -4,6 +4,7 @@ import styled from "styled-components";
 import gsap from 'gsap';
 import { commonTheme } from "./styles/theme";
 import { AccentColorContext } from './AppWrap';
+// import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
 import About from "./components/About/About";
 import Portfolio from "./components/Portfolio/Portfolio";
 import Footer from "./components/Footer/Footer";
@@ -19,9 +20,19 @@ const Wrapper = styled.div`
 	align-items: center;
 	width: 100%;
 	height: ${ ({fullHeight}) => fullHeight ? '100%' : 'auto' };
-	background-color: ${ ({theme}) => theme.bg };
 	color: ${ ({theme}) => theme.text };
-	transition: background-color ${commonTheme.durations.short}s;
+	transition: color ${commonTheme.durations.short}s;
+	touch-action: none;
+	#gradient-canvas {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		--gradient-color-1: ${ ({theme}) => theme.bg };
+		--gradient-color-2: ${ ({theme}) => theme.bg };
+		--gradient-color-3: ${ ({theme}) => theme.bg };
+		--gradient-color-4: ${ ({theme, ac}) => theme.bg === '#FFF' ? ac.grad : ac.dark };
+	}
 `
 const Shtora = styled.div`
 	position: fixed;
@@ -34,12 +45,12 @@ const Shtora = styled.div`
 	height: 120%;
 	border-radius: 50% / 0 0 100% 100%;
 	transform: translateY(100%);
-	z-index: 2147000001;
+	z-index: 8;
 	.topRound,
 	.bottomRound {
 		width: 120vw;
 		height: 10%;
-		background-color: ${ ({accentColor}) => accentColor.dark };
+		background-color: ${ ({ac}) => ac.dark };
 	}
 	.topRound {
 		border-radius: 50% / 100% 100% 0 0;
@@ -50,20 +61,18 @@ const Shtora = styled.div`
 	.mainShtora {
 		width: 100%;
 		height: 100%;
-		background-color: ${ ({accentColor}) => accentColor.dark };
+		background-color: ${ ({ac}) => ac.dark };
 	}
 `
-const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => {
+const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categoriesData }) => {
 
 	const accentColor = useContext(AccentColorContext)
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
 	const [appInitialized, setAppInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
-	const [topBlockH, setTopBlockH] = useState(0)
-	const [aboutPageScroll, setAboutPageScroll] = useState(false)
-	const topBlockRef = useRef()
 	const shtoraRef = useRef()
+	const wrapperRef = useRef()
 
 	// Delete Preloader
 	useEffect(() => {
@@ -74,21 +83,31 @@ const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => 
 		}
 	}, [appInitialized])
 
-	// Calculate TopBlock height
-	useEffect(() => {
-		if (pathname === '/portfolio' || pathname === '/about') {
-			const calcTopBlockHeight = () => {
-				setTopBlockH(topBlockRef.current.getBoundingClientRect().height)
-			}
-			window.addEventListener('resize', calcTopBlockHeight)
-
-			return () => window.removeEventListener('resize', calcTopBlockHeight)
-		}
-	}, [pathname])
-
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [pathname])
+
+	// touch-action: none;
+	// useEffect(() => {
+	// 	const el = wrapperRef.current
+	// 	const onWheel = e => {
+	// 		e.preventDefault()
+	// 		console.log(window)
+	// 		// gsap.to(window, {
+	// 		// 	scrollY: e.deltaY > 0 ? 100 : -100,
+	// 		// 	duration: 0.5,
+	// 		// 	ease: 'linear'
+	// 		// })
+	// 		// window.scrollBy({
+	// 		// 	top: e.deltaY > 0 ? 100 : -100,
+	// 		// 	left: 0,
+	// 		// 	behavior: 'smooth'
+	// 		// })
+	// 	}
+	// 	el.addEventListener('wheel', onWheel)
+
+	// 	return () => el.removeEventListener('wheel', onWheel)
+	// }, [])
 
 	const pageTransition = (e, path) => {
 		if (pathname !== path) {
@@ -114,21 +133,24 @@ const App = ({ themeToggler, accentColorToggler, caseData, categoriesData }) => 
 		}
 	}
 
-	return <Wrapper fullHeight={pathname === '/' || pathname === '/contacts'}>
-		<Header isTopBlock={pathname === '/portfolio' || pathname === '/about'} aboutPageScroll={aboutPageScroll} topBlockH={topBlockH} pageTransition={pageTransition} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
+	// useEffect(() => {
+	// 	const gradient = new Gradient()
+	// 	gradient.initGradient('#gradient-canvas')
+	// }, [themeMode, accentColor])
+
+	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'} ac={accentColor}>
+		<Header pageTransition={pageTransition} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
 		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} />}
 		<Routes>
 			{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}
-			<Route path="/portfolio" element={<Portfolio ref={topBlockRef} setTopBlockH={setTopBlockH} caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
-			<Route path="/about" element={<About ref={topBlockRef} setAboutPageScroll={setAboutPageScroll} topBlockH={topBlockH} setTopBlockH={setTopBlockH} pageTransition={pageTransition} />} />
+			<Route path="/portfolio" element={<Portfolio caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
+			<Route path="/about" element={<About pageTransition={pageTransition} />} />
 			<Route path="/services" element={<Services />} />
 			<Route path="/contacts" element={<Footer />} />
 			<Route path="/" element={<Home caseData={caseData} pageTransition={pageTransition} />} />
 		</Routes>
-		{ (pathname === '/portfolio' ||
-			pathname === '/services') && <Footer />
-		}
-		<Shtora ref={shtoraRef} accentColor={accentColor}>
+		{/* <canvas id='gradient-canvas' /> */}
+		<Shtora ref={shtoraRef} ac={accentColor}>
 			<div className='topRound' />
 			<div className='mainShtora' />
 			<div className='bottomRound' />

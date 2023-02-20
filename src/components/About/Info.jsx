@@ -11,7 +11,6 @@ const Wrap = styled.div`
 	display: grid;
 	grid-template-columns: 1fr ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
 	padding-top: ${({m}) => m.isHugeDesk || m.isDesk ? '192px' : 'clamp(96px, 26.67vw, 120px)'};
-	margin-top: ${({topBlockH}) => topBlockH}px;
 	transform-style: preserve-3d;
 `
 const Content = styled.div`
@@ -55,8 +54,8 @@ const Multi = styled.h2`
 									: m.isMobile ? '1/5'
 									: '7/13'};
 	color: ${ ({accentColor}) => accentColor.dark };
-	font-family: 'AccentFontI';
-	font-weight: normal;
+	font-family: 'AccentFontM';
+	font-weight: 500;
 	font-size: clamp(30px, 3.13vw, 48px);
 	text-transform: uppercase;
 `
@@ -92,13 +91,13 @@ const Portrait = styled.img`
 	padding-top: ${({m}) => m.isMobile ? 152 : 0}px;
 	z-index: 1;
 `
-const Info = ({ topBlockH }) => {
+const Info = () => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
 	const portraitRef = useRef()
 
-	return <Wrap m={media} topBlockH={topBlockH}>
+	return <Wrap m={media}>
 		<SectionTitle info>Здрасьте, я Настя</SectionTitle>
 		<Content m={media}>
 			<Ranks m={media}>

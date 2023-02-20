@@ -7,49 +7,67 @@ import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 import CustomMaterial from '../../shaders/CustomMaterial';
 
-const Case = styled.div.attrs(({carouselSizes}) => ({
+const caseAttrs = ({ carouselSizes }) => ({
 	style: {
 		width: carouselSizes.w + 'px',
 		height: carouselSizes.h + 'px',
-	},
-}))`
+	}
+})
+const Case = styled.div.attrs(caseAttrs)`
+	display: grid;
+	align-items: end;
+	justify-items: center;
+`
+const Content = styled.div`
+	position: relative;
+	grid-row: 1/2;
+	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
-	grid-column-gap: 24px;
-	justify-items: center;
-	box-shadow: 12.3417px 117.182px 68.0764px rgba(30, 30, 30, 0.0404687), 8.59017px 81.5614px 44.0297px rgba(30, 30, 30, 0.03375), 5.63398px 53.4932px 27.3213px rgba(30, 30, 30, 0.0289063), 3.39365px 32.2218px 16.4125px rgba(30, 30, 30, 0.025), 1.78962px 16.992px 9.76465px rgba(30, 30, 30, 0.0210938), 0.74236px 7.04851px 5.83906px rgba(30, 30, 30, 0.01625), 0.172334px 1.63626px 3.09707px rgba(30, 30, 30, 0.00953125), 0px 0px 72.3514px rgba(0, 0, 0, 0.08);
-`
-const Title = styled.h2`
-	grid-row: 1/2;
-	grid-column: ${({m}) => m.isMobile ? '1/13' : '2/12'};
-	align-self: end;
-	font-size: ${ ({m}) => m.isMobile ? '10vw'
-								: m.isTabletP || m.isTabletA ? '76px'
-								: '96px'};
-	text-align: center;
-	text-transform: uppercase;
+	grid-gap: 24px;
+	align-items: end;
+	width: 100%;
+	padding: 24px;
+	color: ${commonTheme.colors.primary};
 	z-index: 2;
 `
 const Tags = styled.div`
-	grid-row: 2/3;
-	grid-column: ${({m}) => m.isMobile ? '1/13' : '3/11'};
-	align-self: start;
-	font-size: ${({m}) => m.isMobile ? 14 : 16}px;
-	text-align: center;
+	position: relative;
+	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/3'};
+	grid-column: ${({m}) => m.isMobile ? '1/7' : '1/3'};
+	display: flex;
+	flex-direction: column;
+	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	z-index: 2;
 `
-const Tag = styled.span`
-	color: ${commonTheme.colors.primary};
-	text-transform: lowercase;
+const Year = styled.span`
+	position: relative;
+	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/3'};
+	grid-column: ${({m}) => m.isMobile ? '7/13' : '3/5'};
+	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
+	text-align: ${({m}) => m.isMobile ? 'end' : 'start'};
+	z-index: 2;
+`
+const Title = styled.h2`
+	position: relative;
+	grid-row: ${({m}) => m.isMobile ? '1/2' : '1/3'};
+	grid-column: ${({m}) => m.isMobile ? '1/13' : '5/13'};
+	font-family: 'AccentFontR', sans-serif;
+	font-weight: normal;
+	font-size: ${ ({m}) => m.isMobile ? 40
+								: m.isTabletP ? 48
+								: 76}px;
+	text-align: ${({m}) => m.isMobile ? 'start' : 'end'};
+	text-transform: uppercase;
+	z-index: 2;
 `
 const FilterDiv = styled.div`
-	position: absolute;
-	grid-row: 1/3;
-	grid-column: 1/13;
+	position: relative;
+	grid-row: 1/2;
+	grid-column: 1/2;
 	width: 100%;
-	height: 100%;
-	background-color: ${commonTheme.colors.quaternary};
-	opacity: 20%;
+	height: 30%;
+	background: linear-gradient(180deg, rgba(30, 30, 30, 0) 0%, ${commonTheme.colors.quaternary} 100%);
 	z-index: 1;
 `
 extend({CustomMaterial})
@@ -78,13 +96,14 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => 
 		<customMaterial ref={materialRef} uTexture={media.isMobile ? coversMobile[index] : covers[index]} attach='material' />
 		<Html center position={[0, 0, -100]}>
 			<Case carouselSizes={carouselSizes}>
+				<Content>
+					<Tags m={media}>
+						{post.tags.map((t, i) => <span key={i}>{t}</span>)}
+					</Tags>
+					<Year m={media}>{post.publishedAt.split('-')[0]}</Year>
+					<Title m={media}>{post.title}</Title>
+				</Content>
 				<FilterDiv />
-				<Title m={media}>{post.title}</Title>
-				<Tags m={media}>{post.tags.map((t, i) =>
-					<Tag key={i}>
-						{t}{i < post.tags.length - 1 ? ', ' : ''}
-					</Tag>
-				)}</Tags>
 			</Case>
 		</Html>
 	</mesh>

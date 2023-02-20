@@ -53,16 +53,15 @@ const AppWrap = () => {
 	// Get data from Sanity
 	useEffect(() => {
 		sanityClient.fetch(
-			groq`*[_type == "post"] | order(order) {
+			groq`*[_type == "post"] | order(publishedAt desc) {
 				title,
 				slug,
 				link,
-				year,
+				publishedAt,
 				client,
 				tags,
 				isMainSlider,
 				isPortfolio,
-				order,
 				design->,
 				dev->,
 				mainImage {
@@ -102,7 +101,8 @@ const AppWrap = () => {
 			<AccentColorContext.Provider value={endCol}>
 			<MediaContext.Provider value={media}>
 				<GlobalStyles />
-				<App themeToggler={themeToggler}
+				<App themeMode={themeMode}
+					themeToggler={themeToggler}
 					accentColorToggler={accentColorToggler}
 					caseData={caseData}
 					categoriesData={categoriesData} />

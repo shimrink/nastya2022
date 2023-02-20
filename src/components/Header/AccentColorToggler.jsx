@@ -15,18 +15,17 @@ const Button = styled.button`
 	outline: ${({sn}) => sn === 0 ? '1px solid' : 'none'};
 	border: none;
 	border-radius: 50%;
-	outline-color: ${props => props.inside ? commonTheme.colors.primary : props.accentColor.dark};
+	outline-color: ${ ({ac}) => ac.dark };
 	height: 20px;
 	width: 20px;
 	cursor: pointer;
 	z-index: ${ ({sn}) => (accentTheme.length - sn) };
-	transition: margin ${commonTheme.durations.short}s,
-					outline-color ${commonTheme.durations.short}s;
+	transition: margin ${commonTheme.durations.short}s;
 	${Wrapper}:hover && {
 		margin: ${({sn, m}) => m.isHugeDesk || m.isDesk ? '0 0 0 ' + sn * 24 + 'px' : '0 ' + sn * 24 + 'px 0 0'};
 	}
 `
-const AccentColorToggler = ({ toggleAccentColor, inside }) => {
+const AccentColorToggler = ({ toggleAccentColor }) => {
 
 	const media = useContext(MediaContext)
 	const accentColor = useContext(AccentColorContext)
@@ -48,8 +47,7 @@ const AccentColorToggler = ({ toggleAccentColor, inside }) => {
 						sn={index}
 						m={media}
 						key={index}
-						inside={inside}
-						accentColor={accentColor} />
+						ac={accentColor} />
 		)}
 	</Wrapper>
 }

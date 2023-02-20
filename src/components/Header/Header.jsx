@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import ThemeToggler from './ThemeToggler';
 import AccentColorToggler from './AccentColorToggler';
@@ -22,7 +22,7 @@ const Wrapper = styled.header`
 	touch-action: none;
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
-	z-index: 2147000002;
+	z-index: 5;
 `
 const TogglersAndNav = styled.div`
 	grid-row: 1/2;
@@ -52,38 +52,17 @@ const Burger = styled.span`
 	grid-column: 3/4;
 	justify-self: end;
 	font-size: 16px;
-	color: ${ ({theme, inside}) => inside ? commonTheme.colors.primary : theme.text };
+	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.primary : theme.text };
 	cursor: pointer;
-	z-index: 2147000004;
+	z-index: 7;
 	transition: color ${commonTheme.durations.short}s;
 `
-const Header = ({ isTopBlock, aboutPageScroll, topBlockH, pageTransition, themeToggler, accentColorToggler }) => {
+const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
-	const [inside, setInside] = useState(false)
 	const [isMenuMobileOpen, setMenuMobileOpen] = useState(false)
 	const headerRef = useRef()
 	const menuMobileRef = useRef()
-
-	// Header color change
-	useEffect(() => {
-		setInside(isTopBlock)
-		if (isTopBlock) {
-			const onScroll = () => {
-				let halfHeaderHeight = media.isHugeDesk || media.isDesk ? 57.25 : 40
-				setInside(!(topBlockH - halfHeaderHeight < window.scrollY))
-			}
-			window.addEventListener('scroll', onScroll)
-
-			return () => window.removeEventListener('scroll', onScroll)
-		}
-	}, [media, isTopBlock, topBlockH])
-
-	// For About-page
-	useEffect(() => {
-		setInside(aboutPageScroll)
-	}, [aboutPageScroll])
 
 	useEffect(() => {
 		const el = headerRef.current
@@ -124,19 +103,19 @@ const Header = ({ isTopBlock, aboutPageScroll, topBlockH, pageTransition, themeT
 	}
 
 	return <Wrapper m={media} ref={headerRef}>
-		<Logo inside={isMenuMobileOpen ? true : inside} closeMenu={closeMenu} pageTransition={pageTransition} />
+		<Logo isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} pageTransition={pageTransition} />
 		<TogglersAndNav m={media}>
 			<ThemeTogglerContainer onClick={media.isHugeDesk || media.isDesk ? ()=>{} : themeToggler} m={media}>
-				<ThemeToggler toggleTheme={themeToggler} inside={inside} />
+				<ThemeToggler toggleTheme={themeToggler} />
 			</ThemeTogglerContainer>
 			<AccentColorTogglerContainer m={media}>
-				<AccentColorToggler toggleAccentColor={accentColorToggler} inside={inside} />
+				<AccentColorToggler toggleAccentColor={accentColorToggler} />
 			</AccentColorTogglerContainer>
 			{media.isHugeDesk || media.isDesk
-				? <Navigation pageTransition={pageTransition} inside={inside} accentColor={accentColor} />
+				? <Navigation pageTransition={pageTransition} />
 				: isMenuMobileOpen
-				? <Burger onClick={closeMenu} inside={true}>Закрыть</Burger>
-				: <Burger onClick={openMenu} inside={inside}>Меню</Burger>
+				? <Burger onClick={closeMenu} isMenuMobileOpen={isMenuMobileOpen}>Закрыть</Burger>
+				: <Burger onClick={openMenu} isMenuMobileOpen={isMenuMobileOpen}>Меню</Burger>
 			}
 		</TogglersAndNav>
 		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} closeMenu={closeMenu} />}

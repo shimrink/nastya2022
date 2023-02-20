@@ -23,7 +23,6 @@ body {
 	height: 100%;
 	font-family: 'BaseFont', sans-serif;
 	overflow-x: hidden;
-	background-color: ${ ({theme}) => theme.bg };
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

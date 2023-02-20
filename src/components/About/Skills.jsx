@@ -44,7 +44,7 @@ const String = styled.div`
 	}
 `
 const Skill = styled.span`
-	font-family: ${ ({bold}) => bold ? 'AccentFontI' : 'AccentFontT' }, sans-serif;
+	font-family: ${ ({bold}) => bold ? 'AccentFontM' : 'AccentFontT' }, sans-serif;
 	font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? '76px'
 								: m.isMobile ? '30px'
 								: '48px'};

@@ -1,7 +1,9 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { AccentColorContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
+import LetterByLetter from '../common/LetterByLetter';
 
 const Nav = styled.nav`
 	grid-row: ${({mobile}) => mobile ? '2/3' : '1/2'};
@@ -12,10 +14,9 @@ const Nav = styled.nav`
 	justify-self: ${({mobile}) => mobile ? 'center' : 'end'};
 	justify-content: center;
 	a {
-		font-family: ${({mobile}) => mobile ? 'AccentFontT' : 'AccentFontM'}, sans-serif;
 		font-size: ${({mobile}) => mobile ? 'clamp(48px, 15.415vw, 76px)' : '18px'};
 		margin-right: ${({mobile}) => mobile ? 0 : 24}px;
-		color: ${ ({theme, mobile, inside}) => mobile || inside ? commonTheme.colors.primary : theme.text };
+		color: ${ ({theme, mobile}) => mobile ? commonTheme.colors.primary : theme.text };
 		text-transform: ${({mobile}) => mobile ? 'uppercase' : 'none'};
 		white-space: nowrap;
 		transition: color ${commonTheme.durations.short}s;
@@ -24,37 +25,58 @@ const Nav = styled.nav`
 		margin-right: 0;
 	}
 	a.navItemActive {
-		font-family: 'AccentFontSBI', sans-serif;
-		color: ${ ({accentColor, inside}) => inside ? commonTheme.colors.primary : accentColor.dark };
-	}
-	a.navItemMobileActive {
-		font-family: 'AccentFontI', sans-serif;
-	}
-	a:after {
-		background-color: ${ ({theme, mobile, inside}) => mobile || inside ? commonTheme.colors.primary : theme.text };
-	}
-	a.navItemActive:after {
-		background-color: ${ ({accentColor, inside}) => inside ? commonTheme.colors.primary : accentColor.dark };
+		color: ${ ({ac}) => ac.dark };
 	}
 `
-const Navigation = ({ inside, mobile, closeMenu, accentColor, pageTransition }) => {
-	return <Nav mobile={mobile} accentColor={accentColor} inside={inside}>
-		<NavLink to='/portfolio' onClick={mobile ? closeMenu : e=>pageTransition(e, '/portfolio')}
-					className={navData => navData.isActive && !mobile ? 'navItemActive linkUnderLine linkUnderLineWhite' : navData.isActive && mobile ? 'navItemMobileActive linkUnderLine linkUnderLineWhite' : 'linkUnderLine linkUnderLineWhite'}>
-			Все кейсы
-		</NavLink>
-		<NavLink to='/about' onClick={mobile ? closeMenu : e=>pageTransition(e, '/about')}
-					className={navData => navData.isActive && !mobile ? 'navItemActive linkUnderLine linkUnderLineWhite' : navData.isActive && mobile ? 'navItemMobileActive linkUnderLine linkUnderLineWhite' : 'linkUnderLine linkUnderLineWhite'}>
-			Обо мне
-		</NavLink>
-		<NavLink to='/services' onClick={mobile ? closeMenu : e=>pageTransition(e, '/services')}
-					className={navData => navData.isActive && !mobile ? 'navItemActive linkUnderLine linkUnderLineWhite' : navData.isActive && mobile ? 'navItemMobileActive linkUnderLine linkUnderLineWhite' : 'linkUnderLine linkUnderLineWhite'}>
-			Услуги
-		</NavLink>
-		<NavLink to='/contacts' onClick={mobile ? closeMenu : e=>pageTransition(e, '/contacts')}
-					className={navData => navData.isActive && !mobile ? 'navItemActive linkUnderLine linkUnderLineWhite' : navData.isActive && mobile ? 'navItemMobileActive linkUnderLine linkUnderLineWhite' : 'linkUnderLine linkUnderLineWhite'}>
-			Контакты
-		</NavLink>
+const linksData = [
+	{name: 'Все кейсы', path: '/portfolio'},
+	{name: 'Обо мне', path: '/about'},
+	{name: 'Услуги', path: '/services'},
+	{name: 'Контакты', path: '/contacts'},
+]
+
+const Navigation = ({ mobile, closeMenu, pageTransition }) => {
+
+	const accentColor = useContext(AccentColorContext)
+	const {pathname} = useLocation()
+	// Замена на useRef([])?
+	const [portfolioActive, setPortfolioActive] = useState(false)
+	const [aboutActive, setAboutActive] = useState(false)
+	const [servicesActive, setServicesActive] = useState(false)
+	const [contactsActive, setContactsActive] = useState(false)
+
+	const activateLink = (num) => {
+		setPortfolioActive(num === 0)
+		setAboutActive(num === 1)
+		setServicesActive(num === 2)
+		setContactsActive(num === 3)
+	}
+
+	const switchPage = (e, path) => {
+		if (mobile) closeMenu()
+		else pageTransition(e, path)
+	}
+
+	const clickHandler = (e, path, num) => {
+		activateLink(num)
+		switchPage(e, path)
+	}
+
+	useEffect(() => {
+		if (pathname === '/') activateLink(linksData.length)
+	}, [pathname])
+
+	return <Nav mobile={mobile} ac={accentColor}>
+		{linksData.map((l, i) => (
+			<NavLink key={i} to={l.path} onClick={e=>clickHandler(e, l.path, i)} className={ navData => navData.isActive && !mobile ? 'navItem navItemActive' : 'navItem' }>
+				<LetterByLetter titleItem={mobile} active={ i === 0 ? portfolioActive
+																		: i === 1 ? aboutActive
+																		: i === 2 ? servicesActive
+																		: contactsActive}>
+					{l.name}
+				</LetterByLetter>
+			</NavLink>
+		))}
 	</Nav>
 }
 

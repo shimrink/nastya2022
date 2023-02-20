@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
+import LetterByLetter from '../../components/common/LetterByLetter';
 
 const Wrapper = styled.div`
 	display: grid;
@@ -35,8 +36,6 @@ const Links = styled.div`
 	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'center'};
 	margin-bottom: ${({m}) => m.isMobile ? 'clamp(24px, 8.125vw, 46px)' : '0'};
 	a {
-		font-family: 'AccentFontM', sans-serif;
-		font-weight: 500;
 		margin-right: ${ ({m}) => m.isMobile ? 0
 										: m.isTabletP ? 16
 										: 24}px;
@@ -56,11 +55,21 @@ const Contacts = ({ c }) => {
 			<span>ASYADULOVA</span>
 		</Copywriting>
 		<Links m={media}>
-			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
-			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
-			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig</a>
-			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">Behance</a>
-			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
+			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Vk</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Telegramm</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Ig</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Behance</LetterByLetter>
+			</a>
+			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+				<LetterByLetter>Tilda experts</LetterByLetter>
+			</a>
 		</Links>
 		<Team m={media}>
 			<span>Design {c.design.name}</span>

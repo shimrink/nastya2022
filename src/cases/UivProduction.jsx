@@ -94,7 +94,8 @@ const SpecialThanks = styled.div`
 		margin-bottom: 0;
 	}
 	.name {
-		font-family: 'AccentFontI', sans-serif;
+		font-family: 'AccentFontM', sans-serif;
+		font-weight: 500;
 		font-size: ${({m}) => m.isMobile ? 'clamp(30px, 9.165vw, 48px)' : '48px'};
 		color: ${ ({ac}) => ac.dark };
 	}

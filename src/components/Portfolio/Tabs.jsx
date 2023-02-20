@@ -4,6 +4,7 @@ import { AccentColorContext, MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
 const TabsWrapper = styled.div`
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: ${({m}) => m.isMobile || m.isTabletP ? 'space-between' : 'center'};
@@ -15,10 +16,9 @@ const TabsWrapper = styled.div`
 	div {
 		font-family: 'AccentFontM', sans-serif;
 		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-		border: 1px solid ${commonTheme.colors.primary};
+		border: 1px solid ${ ({ac}) => ac.light };
 		border-radius: 9em;
 		padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
-		color: ${commonTheme.colors.primary};
 		margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
 		margin-bottom: ${({m}) => m.isMobile ? 12 : 0}px;
 		cursor: pointer;
@@ -28,13 +28,13 @@ const TabsWrapper = styled.div`
 		margin-right: 0;
 	}
 	div:hover {
-		background-color: ${commonTheme.colors.primary};
-		color: ${ ({accentColor}) => accentColor.dark };
+		background-color: ${ ({ac}) => ac.dark };
+		color: ${commonTheme.colors.primary};
 	}
 	div.tabItemActive {
-		font-family: 'AccentFontSBI', sans-serif;
-		background-color: ${commonTheme.colors.primary};
-		color: ${ ({accentColor}) => accentColor.dark };
+		font-family: 'AccentFontB', sans-serif;
+		background-color: ${ ({ac}) => ac.dark };
+		color: ${commonTheme.colors.primary};
 	}
 `
 const Tabs = ({ caseData, categoriesData }) => {
@@ -67,7 +67,7 @@ const Tabs = ({ caseData, categoriesData }) => {
 				}
 	}
 
-	return <TabsWrapper m={media} accentColor={accentColor}>
+	return <TabsWrapper m={media} ac={accentColor}>
 		<div className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
 			<span>Все</span>
 		</div>

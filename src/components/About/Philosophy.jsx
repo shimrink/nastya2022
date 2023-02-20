@@ -15,7 +15,7 @@ const Title = styled.span`
 	margin-bottom: 24px;
 `
 const Slogan = styled.span`
-	font-family: 'AccentFontI', sans-serif;
+	font-family: 'AccentFontM', sans-serif;
 	font-size: ${({m}) => m.isMobile ? 'clamp(30px, 10vw, 48px)' : '48px'};
 	color: ${ ({accentColor}) => accentColor.dark };
 	text-transform: uppercase;
