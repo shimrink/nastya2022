@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { MediaContext } from '../../AppWrap';
 
 const Main = styled.main`
 	display: flex;
@@ -8,7 +9,7 @@ const Main = styled.main`
 `
 const Services = () => {
 
-	// const media = useContext(MediaContext)
+	const media = useContext(MediaContext)
 	// const accentColor = useContext(AccentColorContext)
 
 	return <Main></Main>

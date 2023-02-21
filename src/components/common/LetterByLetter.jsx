@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { AccentColorContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
 const LinkWrap = styled.div`
@@ -12,6 +13,7 @@ const Wave = styled.div`
 														: !titleItem && bottom ? 'AccentFontB'
 														: titleItem && !bottom ? 'AccentFontT'
 														: 'AccentFontM'}, sans-serif;
+	color: ${ ({ac, bottom}) => bottom ? ac.dark : commonTheme.colors.quaternary };
 `
 const Letter = styled.div`
 	transform: translateY(${({waveAnim}) => waveAnim ? -100 : 0}%);
@@ -26,6 +28,7 @@ const Letters = ({ child, waveAnim }) => {
 
 const LetterByLetter = ({ children, titleItem, active }) => {
 
+	const accentColor = useContext(AccentColorContext)
 	const [waveAnim, setWaveAnim] = useState(false)
 
 	const mouseEnterHandler = e => {
@@ -37,10 +40,10 @@ const LetterByLetter = ({ children, titleItem, active }) => {
 	}
 
 	return <LinkWrap onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
-		<Wave titleItem={titleItem}>
+		<Wave titleItem={titleItem} ac={accentColor}>
 			<Letters child={children} waveAnim={waveAnim || active} />
 		</Wave>
-		<Wave bottom titleItem={titleItem}>
+		<Wave bottom titleItem={titleItem} ac={accentColor}>
 			<Letters child={children} waveAnim={waveAnim || active} />
 		</Wave>
 	</LinkWrap>

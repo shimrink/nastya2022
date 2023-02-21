@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
@@ -8,18 +8,14 @@ import Tabs from './Tabs';
 import Grid from './Grid';
 import Footer from '../Footer/Footer';
 
-const Wrapper = styled.div`
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-`
 const Main = styled.main`
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: auto;
 	z-index: 3;
 `
 const TopBlock = styled.div`
@@ -47,28 +43,27 @@ const GridWrapper = styled.div`
 const Portfolio = ({ caseData, categoriesData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
+	const mainRef = useRef()
 
-	return <Wrapper>
-		<SmoothScroll>
-			<Main>
-				<TopBlock m={media}>
-					<Title m={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
-					<Tabs caseData={caseData} categoriesData={categoriesData} />
-				</TopBlock>
-				{(media.isHugeDesk || media.isDesk)
-				?
-					<Rows caseData={caseData} pageTransition={pageTransition} />
-				:
-					<GridWrapper m={media}>
-						{caseData.map((c, i) => c.isPortfolio &&
-							<Grid key={i} c={c} pageTransition={pageTransition} />
-						)}
-					</GridWrapper>
-				}
-			</Main>
+	return <Main ref={mainRef}>
+		<SmoothScroll mainRef={mainRef}>
+			<TopBlock m={media}>
+				<Title m={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
+				<Tabs caseData={caseData} categoriesData={categoriesData} />
+			</TopBlock>
+			{(media.isHugeDesk || media.isDesk)
+			?
+				<Rows mainRef={mainRef} caseData={caseData} pageTransition={pageTransition} />
+			:
+				<GridWrapper m={media}>
+					{caseData.map((c, i) => c.isPortfolio &&
+						<Grid key={i} c={c} pageTransition={pageTransition} />
+					)}
+				</GridWrapper>
+			}
 			<Footer />
 		</SmoothScroll>
-	</Wrapper>
+	</Main>
 }
 
 export default Portfolio;

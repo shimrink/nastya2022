@@ -71,12 +71,11 @@ const Contacts = styled.div`
 const About = ({ pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const wrapRef = useRef()
-	const topBlockRef = useRef()
+	const mainRef = useRef()
 
-	return <Main ref={wrapRef}>
-		<SmoothScroll>
-			<TopBlock ref={topBlockRef} m={media}>
+	return <Main ref={mainRef}>
+		<SmoothScroll mainRef={mainRef}>
+			<TopBlock m={media}>
 				<TopBlockContent m={media}>
 					<Contacts m={media}>
 						<a className='linkUnderLine' href="https://dribbble.com/asyadulova" target="_blank" rel="noreferrer">

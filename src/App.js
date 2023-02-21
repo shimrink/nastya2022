@@ -6,13 +6,13 @@ import { commonTheme } from "./styles/theme";
 import { AccentColorContext } from './AppWrap';
 // import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
 import About from "./components/About/About";
-import Portfolio from "./components/Portfolio/Portfolio";
+import Case from './cases/template/Case';
 import Footer from "./components/Footer/Footer";
 import Header from './components/Header/Header';
 import Home from "./components/Home/Home";
-import Services from "./components/Services/Services";
+import Portfolio from "./components/Portfolio/Portfolio";
 import Preloader from './components/common/Preloader';
-import Case from './cases/template/Case';
+import Services from "./components/Services/Services";
 
 const Wrapper = styled.div`
 	display: flex;
@@ -22,7 +22,6 @@ const Wrapper = styled.div`
 	height: ${ ({fullHeight}) => fullHeight ? '100%' : 'auto' };
 	color: ${ ({theme}) => theme.text };
 	transition: color ${commonTheme.durations.short}s;
-	touch-action: none;
 	#gradient-canvas {
 		position: fixed;
 		width: 100%;
@@ -86,28 +85,6 @@ const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categories
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [pathname])
-
-	// touch-action: none;
-	// useEffect(() => {
-	// 	const el = wrapperRef.current
-	// 	const onWheel = e => {
-	// 		e.preventDefault()
-	// 		console.log(window)
-	// 		// gsap.to(window, {
-	// 		// 	scrollY: e.deltaY > 0 ? 100 : -100,
-	// 		// 	duration: 0.5,
-	// 		// 	ease: 'linear'
-	// 		// })
-	// 		// window.scrollBy({
-	// 		// 	top: e.deltaY > 0 ? 100 : -100,
-	// 		// 	left: 0,
-	// 		// 	behavior: 'smooth'
-	// 		// })
-	// 	}
-	// 	el.addEventListener('wheel', onWheel)
-
-	// 	return () => el.removeEventListener('wheel', onWheel)
-	// }, [])
 
 	const pageTransition = (e, path) => {
 		if (pathname !== path) {

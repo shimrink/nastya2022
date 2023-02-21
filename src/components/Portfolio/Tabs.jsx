@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { AccentColorContext, MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
-const TabsWrapper = styled.div`
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
+const Wrapper = styled.div`
+	display: ${({m}) => m.isMobile ? 'grid' : 'flex'};
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: ${({m}) => m.isMobile ? 24 : 0}px;
 	justify-content: ${({m}) => m.isMobile || m.isTabletP ? 'space-between' : 'center'};
 	width: 100%;
 	padding: ${({m}) => m.isTabletP ? '0 40px'
@@ -14,18 +14,21 @@ const TabsWrapper = styled.div`
 							: '0'};
 	margin-bottom: 48px;
 	div {
+		width: ${({m}) => m.isMobile ? `100%` : 'auto'};
+		padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
+		margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
+		margin-bottom: ${({m}) => m.isMobile ? 24 : 0}px;
 		font-family: 'AccentFontM', sans-serif;
 		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 		border: 1px solid ${ ({ac}) => ac.light };
 		border-radius: 9em;
-		padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
-		margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
-		margin-bottom: ${({m}) => m.isMobile ? 12 : 0}px;
+		text-align: center;
 		cursor: pointer;
 		transition: all ${commonTheme.durations.short}s;
 	}
 	div:last-child {
-		margin-right: 0;
+		grid-column: 1/3;
+		margin: 0;
 	}
 	div:hover {
 		background-color: ${ ({ac}) => ac.dark };
@@ -67,18 +70,19 @@ const Tabs = ({ caseData, categoriesData }) => {
 				}
 	}
 
-	return <TabsWrapper m={media} ac={accentColor}>
-		<div className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
+	return <Wrapper m={media} ac={accentColor}>
+		<div num={0} className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
 			<span>Все</span>
 		</div>
-		{categoriesData.map((c, i) =>
+		{categoriesData.map((c, i) => (
 			<div key={i}
+			num={i + 1}
 			className={`tabItem${i + 1}`}
 			onClick={ e => {tabSwitch(`.tabItem${i + 1}`)} }>
 				<span>{c.title}</span>
 			</div>
-		)}
-	</TabsWrapper>
+		))}
+	</Wrapper>
 }
 
 export default Tabs;
