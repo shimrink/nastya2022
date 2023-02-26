@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const ThemeCircle = styled.div`
 	width: 22px;
 	height: 22px;
-	background-color: ${ ({theme}) => theme.text };
+	background-color: ${ ({theme}) => theme.mode.text };
 	border: none;
 	border-radius: 50%;
 	justify-self: end;

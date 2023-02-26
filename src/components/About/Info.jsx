@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import SectionTitle from '../common/SectionTitle';
 import asyaP from '../../assets/images/aboutInfoPortrait.jpg';
@@ -25,7 +25,7 @@ const Content = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
-	transform: ${({land, port}) => land ? 'translateZ(-1px) scale(1.1)' : port ? 'translateZ(-2px) scale(1.2)' : 'none'};
+	transform: ${({land, port}) => land ? 'translateZ(-1px) scale(1.083)' : port ? 'translateZ(-2px) scale(1.167)' : 'none'};
 	img {
 		opacity: ${({land, port}) => land || port ? 1 : 0};
 	}
@@ -53,7 +53,7 @@ const Multi = styled.h2`
 	grid-column: ${ ({m}) => m.isTabletP ? '3/5'
 									: m.isMobile ? '1/5'
 									: '7/13'};
-	color: ${ ({accentColor}) => accentColor.dark };
+	color: ${ ({theme}) => theme.ac.dark };
 	font-family: 'AccentFontM';
 	font-weight: 500;
 	font-size: clamp(30px, 3.13vw, 48px);
@@ -94,7 +94,6 @@ const Portrait = styled.img`
 const Info = () => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 	const portraitRef = useRef()
 
 	return <Wrap m={media}>
@@ -107,7 +106,7 @@ const Info = () => {
 				<span>SMM,</span>
 				<span>Графический —</span>
 			</Ranks>
-			<Multi m={media} accentColor={accentColor}>Мультидисциплинарный дизайнер</Multi>
+			<Multi m={media}>Мультидисциплинарный дизайнер</Multi>
 			<Text m={media}>Дизайнер-фрилансер с&nbsp;широким спектром навыков.<br/>Помогаю решить задачи вашего бизнеса с помощью дизайна: создаю его комплексную «упаковку» — от логотипа и презентаций до сайта.</Text>
 			<Portrait ref={portraitRef} m={media} src={asyaP} alt='Asya' />
 			<Landscape m={media} src={asyaA} alt='Asya' />

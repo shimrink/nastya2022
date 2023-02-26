@@ -1,7 +1,7 @@
 export const commonTheme = {
 	colors: {
 		primary: '#FFF',
-		secondary: '#777',
+		secondary: 'rgba(30, 30, 30, 0.5)',
 		tertiary: '#E6E6E6',
 		quaternary: '#1E1E1E',
 	},
@@ -44,8 +44,24 @@ export const darkTheme = {
 }
 
 export const accentTheme = [
-	{name: 'purple', color: {dark: '#BCAED5', light: 'rgba(188, 174, 213, 0.5)', grad: '#DDD6EA'}},
-	{name: 'blue', color: {dark: '#6997CC', light: 'rgba(105, 159, 204, 0.5)', grad: '#B4CFE5'}},
-	{name: 'green', color: {dark: '#087C7C', light: 'rgba(8, 124, 124, 0.5)', grad: '#83BDBD'}},
-	{name: 'orange', color: {dark: '#E39D58', light: 'rgba(227, 157, 88, 0.5)', grad: '#F1CEAB'}},
+	{name: 'purple', color: {dark: '#BCAED5',
+									light: 'rgba(188, 174, 213, 0.5)',
+									gradDark: '#6D6679',
+									gradLight: '#DDD6EA'}
+	},
+	{name: 'blue', color: {dark: '#6997CC',
+									light: 'rgba(105, 159, 204, 0.5)',
+									gradDark: '#435E75',
+									gradLight: '#B4CFE5'}
+	},
+	{name: 'green', color: {dark: '#087C7C',
+									light: 'rgba(8, 124, 124, 0.5)',
+									gradDark: '#134D4D',
+									gradLight: '#83BDBD'}
+	},
+	{name: 'orange', color: {dark: '#E39D58',
+									light: 'rgba(227, 157, 88, 0.5)',
+									gradDark: '#805D3B',
+									gradLight: '#F1CEAB'}
+	}
 ]

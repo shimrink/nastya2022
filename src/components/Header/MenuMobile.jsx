@@ -1,7 +1,8 @@
 import React, { forwardRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
+import LetterByLetter from '../common/LetterByLetter';
 import Navigation from './Navigation';
 
 const Wrapper = styled.div`
@@ -15,8 +16,8 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 110%;
 	touch-action: none;
-	transform: translateY(-110%);
-	z-index: 6;
+	transform: translateY(-100%);
+	z-index: 7;
 `
 const Content = styled.div`
 	display: grid;
@@ -24,7 +25,7 @@ const Content = styled.div`
 	height: 100%;
 	font-family: 'AccentFontM', sans-serif;
 	padding: ${({m}) => m.isMobile ? '24px clamp(24px, 7.5vw, 40px)' : '24px 40px'};
-	background-color: ${ ({accentColor}) => accentColor.dark };
+	background-color: ${ ({theme}) => theme.ac.dark };
 `
 const Social = styled.div`
 	grid-row: 3/4;
@@ -43,14 +44,13 @@ const Social = styled.div`
 const RoundedDiv = styled.div`
 	width: 120vw;
 	height: 10%;
-	background-color: ${ ({accentColor}) => accentColor.dark };
+	background-color: ${ ({theme}) => theme.ac.dark };
 	border-radius: 50% / 0 0 100% 100%;
 	margin-top: -4px;
 `
-const MenuMobile = forwardRef(({ closeMenu }, ref) => {
+const MenuMobile = forwardRef(({ isMenuMobileOpen, closeMenu }, ref) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	useEffect(() => {
 		const el = ref.current
@@ -62,17 +62,27 @@ const MenuMobile = forwardRef(({ closeMenu }, ref) => {
 	})
 
 	return <Wrapper ref={ref}>
-		<Content accentColor={accentColor} m={media}>
-			<Navigation mobile closeMenu={closeMenu} accentColor={accentColor} />
+		<Content m={media}>
+			<Navigation mobile isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />
 			<Social m={media}>
-				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">Vk</a>
-				<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">Telegramm</a>
-				<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">Ig</a>
-				<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">Behance</a>
-				<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">Tilda experts</a>
+				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
+					<LetterByLetter wavy>Vk</LetterByLetter>
+				</a>
+				<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
+					<LetterByLetter wavy>Telegramm</LetterByLetter>
+				</a>
+				<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+					<LetterByLetter wavy>Ig</LetterByLetter>
+				</a>
+				<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+					<LetterByLetter wavy>Behance</LetterByLetter>
+				</a>
+				<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+					<LetterByLetter wavy>Tilda experts</LetterByLetter>
+				</a>
 			</Social>
 		</Content>
-		<RoundedDiv className='roundedDivRef' accentColor={accentColor} />
+		<RoundedDiv className='roundedDivRef' />
 	</Wrapper>
 })
 

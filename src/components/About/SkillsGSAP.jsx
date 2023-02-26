@@ -1,7 +1,6 @@
-import React, { useContext, useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
-import { AccentColorContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -22,7 +21,7 @@ const HalfRow = styled.div`
 const Skill = styled.span`
 	font-family: ${ ({bold}) => bold ? 'AccentFontM' : 'AccentFontT' }, sans-serif;
 	font-size: 76px;
-	color: ${ ({accentColor, bold}) => bold ? accentColor.dark : commonTheme.colors.quaternary};
+	color: ${ ({theme, bold}) => bold ? theme.ac.dark : commonTheme.colors.quaternary};
 	margin-right: 40px;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -35,7 +34,6 @@ gsap.registerPlugin(ScrollTrigger)
 const SkillsGSAP = () => {
 
 	// const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	const topRowRef = useRef()
 	const middleRowRef = useRef()
@@ -127,28 +125,28 @@ const SkillsGSAP = () => {
 	return <SkillsWrap>
 		<MovingRow ref={topRowRef}>
 			<HalfRow ref={topHalfRowRef} className='rollingText'>
-				<Skill accentColor={accentColor}>GRAPHIC</Skill>
-				<Skill accentColor={accentColor}>UI/UX</Skill>
-				<Skill bold accentColor={accentColor}>WEB DESIGN</Skill>
-				<Skill accentColor={accentColor}>DIGITAL</Skill>
-				<Skill accentColor={accentColor}>PRODUCT</Skill>
+				<Skill>GRAPHIC</Skill>
+				<Skill>UI/UX</Skill>
+				<Skill bold>WEB DESIGN</Skill>
+				<Skill>DIGITAL</Skill>
+				<Skill>PRODUCT</Skill>
 			</HalfRow>
 		</MovingRow>
 		<MovingRow ref={middleRowRef}>
 			<HalfRow ref={middleHalfRowRef} className='rollingText02'>
-				<Skill bold accentColor={accentColor}>FIGMA</Skill>
-				<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-				<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-				<Skill bold accentColor={accentColor}>HTML/CSS/JS</Skill>
+				<Skill bold>FIGMA</Skill>
+				<Skill>PHOTOSHOP</Skill>
+				<Skill>ILLUSTRATOR</Skill>
+				<Skill bold>HTML/CSS/JS</Skill>
 			</HalfRow>
 		</MovingRow>
 		<MovingRow ref={bottomRowRef}>
 			<HalfRow ref={bottomHalfRowRef} className='rollingText03'>
-				<Skill accentColor={accentColor}>CREATIVE</Skill>
-				<Skill accentColor={accentColor}>MARKETING</Skill>
-				<Skill bold accentColor={accentColor}>SMM</Skill>
-				<Skill accentColor={accentColor}>IIIUSTRATION</Skill>
-				<Skill accentColor={accentColor}>3D</Skill>
+				<Skill>CREATIVE</Skill>
+				<Skill>MARKETING</Skill>
+				<Skill bold>SMM</Skill>
+				<Skill>IIIUSTRATION</Skill>
+				<Skill>3D</Skill>
 			</HalfRow>
 		</MovingRow>
 	</SkillsWrap>

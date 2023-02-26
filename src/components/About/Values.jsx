@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import SectionTitle from '../common/SectionTitle';
 
@@ -72,17 +72,19 @@ const Button = styled.button`
 								: m.isMobile ? 48
 								: 168}px;
 	border: 1px solid;
-	border-color: ${ ({accentColor}) => accentColor.light };
+	border-color: ${ ({theme}) => theme.ac.light };
 	border-radius: 9em;
 	background-color: rgba(0, 0, 0, 0);
 	font-family: 'AccentFontM', sans-serif;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	cursor: pointer;
 	transition: border-color ${commonTheme.durations.short}s,
-					background-color ${commonTheme.durations.short}s;
+					background-color ${commonTheme.durations.short}s,
+					color ${commonTheme.durations.short}s;
 	:hover {
-		background-color: ${ ({accentColor}) => accentColor.dark };
-		border-color: ${ ({accentColor}) => accentColor.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
+		border-color: ${ ({theme}) => theme.ac.dark };
+		color: ${commonTheme.colors.primary};
 	}
 `
 const valuesContent = [
@@ -95,7 +97,6 @@ const valuesContent = [
 const Values = ({ pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 	const rowsRef = useRef([])
 
 	// useEffect(() => {
@@ -121,7 +122,7 @@ const Values = ({ pageTransition }) => {
 					</Row>
 				))}
 			</Container>
-			<Button m={media} accentColor={accentColor} onClick={e=>pageTransition(e, '/services')}>Перейти к услугам</Button>
+			<Button m={media} onClick={e=>pageTransition(e, '/services')}>Перейти к услугам</Button>
 		</Content>
 	</Wrap>
 }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { commonTheme } from '../../styles/theme';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
 import Line from '../common/Line';
 
@@ -63,10 +63,9 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 	z-index: 2;
 `
-const RowItem = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
+const Row = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 	const [active, setActive] = useState(false)
 	const imgRef = useRef()
 
@@ -126,9 +125,9 @@ const RowItem = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 	}
 
 	return <RowWrap className='rowItem'>
-		<RowContent m={media} accentColor={accentColor}>
+		<RowContent m={media}>
 			<Name>
-				<LetterByLetter titleItem active={active}>{c.title}</LetterByLetter>
+				<LetterByLetter wavy titleSize active={active}>{c.title}</LetterByLetter>
 			</Name>
 			<Tags>
 				{c.tags.map((t, ind) => <span key={ind}> {t} <br/> </span>)}
@@ -143,4 +142,4 @@ const RowItem = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 	</RowWrap>
 }
 
-export default RowItem;
+export default Row;

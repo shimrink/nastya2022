@@ -9,7 +9,6 @@ import GlobalStyles from "./styles/global";
 import { accentTheme, darkTheme, lightTheme } from "./styles/theme";
 import App from './App';
 
-export const AccentColorContext = React.createContext()
 export const MediaContext = React.createContext()
 
 const AppWrap = () => {
@@ -97,17 +96,16 @@ const AppWrap = () => {
 
 	if (!mountedComponent) return null
 	return caseData && categoriesData && <BrowserRouter>
-		<ThemeProvider theme={themeMode}>
-			<AccentColorContext.Provider value={endCol}>
+		<ThemeProvider theme={{mode: themeMode, ac: endCol}}>
 			<MediaContext.Provider value={media}>
 				<GlobalStyles />
 				<App themeMode={themeMode}
+					accentColor={endCol}
 					themeToggler={themeToggler}
 					accentColorToggler={accentColorToggler}
 					caseData={caseData}
 					categoriesData={categoriesData} />
 			</MediaContext.Provider>
-			</AccentColorContext.Provider>
 		</ThemeProvider>
 	</BrowserRouter>
 }

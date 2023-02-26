@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 
 const Wrap = styled.div`
 	display: flex;
@@ -17,23 +17,22 @@ const Title = styled.span`
 const Slogan = styled.span`
 	font-family: 'AccentFontM', sans-serif;
 	font-size: ${({m}) => m.isMobile ? 'clamp(30px, 10vw, 48px)' : '48px'};
-	color: ${ ({accentColor}) => accentColor.dark };
+	color: ${ ({theme}) => theme.ac.dark };
 	text-transform: uppercase;
 	margin-bottom: 12px;
 `
 const Explanation = styled.span`
 	font-size: ${({m}) => m.isMobile ? 'clamp(16px, 3.75vw, 18px)' : '18px'};
-	color: ${ ({accentColor}) => accentColor.dark };
+	color: ${ ({theme}) => theme.ac.dark };
 `
 const Philosophy = () => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	return <Wrap>
 		<Title m={media}>Моя философия —</Title>
-		<Slogan m={media} accentColor={accentColor}>Less is more</Slogan>
-		<Explanation m={media} accentColor={accentColor}>(меньше значит больше)</Explanation>
+		<Slogan m={media}>Less is more</Slogan>
+		<Explanation m={media}>(меньше значит больше)</Explanation>
 	</Wrap>
 }
 

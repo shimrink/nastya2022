@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import gsap from 'gsap';
 import { commonTheme } from "./styles/theme";
-import { AccentColorContext } from './AppWrap';
 // import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
 import About from "./components/About/About";
 import Case from './cases/template/Case';
@@ -20,17 +19,17 @@ const Wrapper = styled.div`
 	align-items: center;
 	width: 100%;
 	height: ${ ({fullHeight}) => fullHeight ? '100%' : 'auto' };
-	color: ${ ({theme}) => theme.text };
+	color: ${ ({theme}) => theme.mode.text };
 	transition: color ${commonTheme.durations.short}s;
 	#gradient-canvas {
 		position: fixed;
 		width: 100%;
 		height: 100%;
 		z-index: 1;
-		--gradient-color-1: ${ ({theme}) => theme.bg };
-		--gradient-color-2: ${ ({theme}) => theme.bg };
-		--gradient-color-3: ${ ({theme}) => theme.bg };
-		--gradient-color-4: ${ ({theme, ac}) => theme.bg === '#FFF' ? ac.grad : ac.dark };
+		--gradient-color-1: ${ ({theme}) => theme.mode.bg };
+		--gradient-color-2: ${ ({theme}) => theme.mode.bg };
+		--gradient-color-3: ${ ({theme}) => theme.mode.bg };
+		--gradient-color-4: ${ ({theme}) => theme.mode.bg === '#FFF' ? theme.ac.gradLight : theme.ac.gradDark };
 	}
 `
 const Shtora = styled.div`
@@ -44,12 +43,12 @@ const Shtora = styled.div`
 	height: 120%;
 	border-radius: 50% / 0 0 100% 100%;
 	transform: translateY(100%);
-	z-index: 8;
+	z-index: 5;
 	.topRound,
 	.bottomRound {
 		width: 120vw;
 		height: 10%;
-		background-color: ${ ({ac}) => ac.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
 	}
 	.topRound {
 		border-radius: 50% / 100% 100% 0 0;
@@ -60,16 +59,16 @@ const Shtora = styled.div`
 	.mainShtora {
 		width: 100%;
 		height: 100%;
-		background-color: ${ ({ac}) => ac.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
 	}
 `
-const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categoriesData }) => {
+const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseData, categoriesData }) => {
 
-	const accentColor = useContext(AccentColorContext)
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
 	const [appInitialized, setAppInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
+	const [navDisable, setNavDisable] = useState(false)
 	const shtoraRef = useRef()
 	const wrapperRef = useRef()
 
@@ -87,7 +86,8 @@ const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categories
 	}, [pathname])
 
 	const pageTransition = (e, path) => {
-		if (pathname !== path) {
+		if (pathname !== path && !navDisable) {
+			setNavDisable(true)
 			e.preventDefault()
 			const tl = gsap.timeline()
 			tl.to(shtoraRef.current, {
@@ -107,6 +107,7 @@ const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categories
 				duration: 0,
 				ease: 'linear'
 			})
+			setTimeout(() => { setNavDisable(false) }, 700)
 		}
 	}
 
@@ -115,9 +116,9 @@ const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categories
 	// 	gradient.initGradient('#gradient-canvas')
 	// }, [themeMode, accentColor])
 
-	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'} ac={accentColor}>
-		<Header pageTransition={pageTransition} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
-		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} />}
+	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'}>
+		<Header pageTransition={pageTransition} accentColor={accentColor} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
+		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
 		<Routes>
 			{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}
 			<Route path="/portfolio" element={<Portfolio caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
@@ -127,7 +128,7 @@ const App = ({ themeMode, themeToggler, accentColorToggler, caseData, categories
 			<Route path="/" element={<Home caseData={caseData} pageTransition={pageTransition} />} />
 		</Routes>
 		{/* <canvas id='gradient-canvas' /> */}
-		<Shtora ref={shtoraRef} ac={accentColor}>
+		<Shtora ref={shtoraRef}>
 			<div className='topRound' />
 			<div className='mainShtora' />
 			<div className='bottomRound' />

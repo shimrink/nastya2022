@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
 import asyaImg from '../../assets/images/footerCover.png';
 
@@ -42,7 +42,7 @@ const TitleWrap = styled.div`
 	animation: ${moveX} 10s linear infinite;
 `
 const Title = styled.h2`
-	color: ${ ({theme}) => theme.text };
+	color: ${ ({theme}) => theme.mode.text };
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 96 : m.isTabletA ? 76 : 48}px;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -50,7 +50,7 @@ const Title = styled.h2`
 	span {
 		font-family: 'AccentFontM', sans-serif;
 		font-weight: 500;
-		color: ${ ({accentColor}) => accentColor.dark };
+		color: ${ ({theme}) => theme.ac.dark };
 	}
 `
 const Img = styled.img`
@@ -97,33 +97,32 @@ const Social = styled(Contacts)`
 const UpperFooter = () => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	return <UpperFooterWrap m={media}>
 		<TitleWrap m={media}>
-			{[...Array(4)].map((v, i) => <Title key={i} m={media} accentColor={accentColor}>Расскажите <span>о своей задаче</span> /</Title>)}
+			{[...Array(4)].map((v, i) => <Title key={i} m={media}>Расскажите <span>о своей задаче</span> /</Title>)}
 		</TitleWrap>
 		<Text m={media}>Я&nbsp;на&nbsp;связи в&nbsp;рабочее время: отвечу на&nbsp;возникшие вопросы, сориентирую в&nbsp;области онлайн-упаковки бизнеса и пойму, что вам необходимо!</Text>
 		<Messengers m={media}>
 			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Vk</LetterByLetter>
+				<LetterByLetter wavy>Vk</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Telegramm</LetterByLetter>
+				<LetterByLetter wavy>Telegramm</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="mailto:me@asyadulova.ru?subject=Запись на консультацию">
-				<LetterByLetter>Email</LetterByLetter>
+				<LetterByLetter wavy>Email</LetterByLetter>
 			</a>
 		</Messengers>
 		<Social m={media}>
 			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Ig*</LetterByLetter>
+				<LetterByLetter wavy>Ig*</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Behance</LetterByLetter>
+				<LetterByLetter wavy>Behance</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Tilda experts</LetterByLetter>
+				<LetterByLetter wavy>Tilda experts</LetterByLetter>
 			</a>
 		</Social>
 		<Img m={media} src={asyaImg} alt='Asya'/>

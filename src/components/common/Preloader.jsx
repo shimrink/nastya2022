@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import gsap from "gsap";
 import { commonTheme } from "../../styles/theme";
-import { AccentColorContext } from "../../AppWrap";
 
 const Main = styled.div`
 	position: fixed;
@@ -13,7 +12,7 @@ const Main = styled.div`
 	justify-content: center;
 	width: 100vw;
 	height: 100%;
-	background-color: ${ ({theme}) => theme.bg };
+	background-color: ${ ({theme}) => theme.mode.bg };
 	overflow: hidden;
 	z-index: 9;
 `
@@ -22,9 +21,7 @@ const Svg = styled.svg`
 	height: auto;
 	fill: none;
 `
-const Preloader = ({ categoriesData, caseData, setAppInitialized }) => {
-
-	const accentColor = useContext(AccentColorContext)
+const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor }) => {
 
 	const [arrInitialized, setArrInitialized] = useState(false)
 	const mainRef = useRef()

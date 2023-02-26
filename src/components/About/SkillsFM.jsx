@@ -1,8 +1,7 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
 import { wrap } from "@motionone/utils";
 import styled from 'styled-components';
-import { AccentColorContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
 const SkillsWrap = styled.div`
@@ -19,7 +18,7 @@ const MovingRows = styled.div`
 const Skill = styled.span`
 	font-family: ${ ({bold}) => bold ? 'AccentFontM' : 'AccentFontT' }, sans-serif;
 	font-size: 76px;
-	color: ${ ({accentColor, bold}) => bold ? accentColor.dark : commonTheme.colors.quaternary};
+	color: ${ ({theme, bold}) => bold ? theme.ac.dark : commonTheme.colors.quaternary};
 	margin-right: 40px;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -78,7 +77,6 @@ const ParallaxText = ({ children, baseVelocity = 100 }) => {
 const SkillsFM = () => {
 
 	// const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	return <SkillsWrap>
 		{/* <ParallaxText baseVelocity={-1}>
@@ -91,24 +89,24 @@ const SkillsFM = () => {
 			Creative Marketing SMM Illustration 3D
 		</ParallaxText> */}
 		<ParallaxText baseVelocity={-1}>
-			<Skill accentColor={accentColor}>Graphic</Skill>
-			<Skill accentColor={accentColor}>UI/UX</Skill>
-			<Skill accentColor={accentColor} bold>Web design</Skill>
-			<Skill accentColor={accentColor}>Digital</Skill>
-			<Skill accentColor={accentColor}>Product</Skill>
+			<Skill>Graphic</Skill>
+			<Skill>UI/UX</Skill>
+			<Skill bold>Web design</Skill>
+			<Skill>Digital</Skill>
+			<Skill>Product</Skill>
 		</ParallaxText>
 		<ParallaxText baseVelocity={1}>
-			<Skill accentColor={accentColor} bold>FIGMA</Skill>
-			<Skill accentColor={accentColor}>PHOTOSHOP</Skill>
-			<Skill accentColor={accentColor}>ILLUSTRATOR</Skill>
-			<Skill accentColor={accentColor} bold>HTML/CSS/JS</Skill>
+			<Skill bold>FIGMA</Skill>
+			<Skill>PHOTOSHOP</Skill>
+			<Skill>ILLUSTRATOR</Skill>
+			<Skill bold>HTML/CSS/JS</Skill>
 		</ParallaxText>
 		<ParallaxText baseVelocity={-1}>
-			<Skill accentColor={accentColor}>Creative</Skill>
-			<Skill accentColor={accentColor}>Marketing</Skill>
-			<Skill accentColor={accentColor} bold>SMM</Skill>
-			<Skill accentColor={accentColor}>Illustration</Skill>
-			<Skill accentColor={accentColor}>3D</Skill>
+			<Skill>Creative</Skill>
+			<Skill>Marketing</Skill>
+			<Skill bold>SMM</Skill>
+			<Skill>Illustration</Skill>
+			<Skill>3D</Skill>
 		</ParallaxText>
 	</SkillsWrap>
 }

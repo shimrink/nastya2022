@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 
 const Wrapper = styled.div`
@@ -20,30 +20,30 @@ const Wrapper = styled.div`
 		margin-bottom: ${({m}) => m.isMobile ? 24 : 0}px;
 		font-family: 'AccentFontM', sans-serif;
 		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-		border: 1px solid ${ ({ac}) => ac.light };
+		border: 1px solid ${ ({theme}) => theme.ac.light };
 		border-radius: 9em;
 		text-align: center;
 		cursor: pointer;
-		transition: all ${commonTheme.durations.short}s;
+		transition: background-color ${commonTheme.durations.short}s,
+						color ${commonTheme.durations.short}s;
 	}
 	div:last-child {
 		grid-column: 1/3;
 		margin: 0;
 	}
 	div:hover {
-		background-color: ${ ({ac}) => ac.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
 		color: ${commonTheme.colors.primary};
 	}
 	div.tabItemActive {
 		font-family: 'AccentFontB', sans-serif;
-		background-color: ${ ({ac}) => ac.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
 		color: ${commonTheme.colors.primary};
 	}
 `
 const Tabs = ({ caseData, categoriesData }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	const tabSwitch = el => {
 		const elem = document.querySelector(el)
@@ -70,7 +70,7 @@ const Tabs = ({ caseData, categoriesData }) => {
 				}
 	}
 
-	return <Wrapper m={media} ac={accentColor}>
+	return <Wrapper m={media}>
 		<div num={0} className='tabItem0 tabItemActive' onClick={ e => {tabSwitch('.tabItem0')} }>
 			<span>Все</span>
 		</div>

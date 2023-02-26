@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from "three";
 import { commonTheme } from '../../styles/theme';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
 import Scene from './Scene';
 import CaseArea from './CaseArea';
@@ -32,7 +32,7 @@ const ShowButton = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({accentColor}) => accentColor.dark};
+	background-color: ${ ({theme}) => theme.ac.dark };
 	color: ${commonTheme.colors.primary};
 	width: 146px;
 	height: 146px;
@@ -45,7 +45,6 @@ const ShowButton = styled.div`
 const Home = ({ caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	const [scrollCount, setScrollCount] = useState(1)
 	const [currentIndex, setCurrentIndex] = useState(0)
@@ -114,7 +113,7 @@ const Home = ({ caseData, pageTransition }) => {
 					hovering={hovering}
 					hoverNum={hoverNum} />
 		</Canvas>
-		{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef} accentColor={accentColor}>Смотреть</ShowButton>}
+		{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
 		<CaseArea caseData={caseData}
 					currentIndex={currentIndex}
 					scrollCount={scrollCount}

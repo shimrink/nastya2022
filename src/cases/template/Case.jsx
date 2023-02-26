@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import Line from '../../components/common/Line';
 import NextCase from './NextCase';
@@ -29,7 +29,7 @@ const Title = styled.div`
 		font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? 96
 									: m.isMobile ? 48
 									: 76}px;
-		color: ${ ({theme}) => theme.text };
+		color: ${ ({theme}) => theme.mode.text };
 		text-transform: uppercase;
 		text-align: center;
 		margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 120 : 96}px;
@@ -84,7 +84,7 @@ const Button = styled.a`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: ${ ({ac}) => ac.light };
+	background-color: ${ ({theme}) => theme.ac.light };
 	border-radius: 9em;
 	align-self: start;
 	padding: 16px 0;
@@ -95,7 +95,7 @@ const Button = styled.a`
 	cursor: pointer;
 	transition: background-color ${commonTheme.durations.short}s;
 	:hover {
-		background-color: ${ ({ac}) => ac.dark };
+		background-color: ${ ({theme}) => theme.ac.dark };
 	}
 	span {
 		margin: 0 12px 0 0;
@@ -104,7 +104,6 @@ const Button = styled.a`
 const Case = ({ c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	// id соответствует порядковому номеру кейса
 	const casesArr = [
@@ -135,7 +134,7 @@ const Case = ({ c, i, caseData, pageTransition }) => {
 				<h4>Год</h4>
 				<span>{c.publishedAt.split('-')[0]}</span>
 			</Year>
-			<Button ac={accentColor} m={media} href={`${c.link}`} target='_blank' rel="noreferrer">
+			<Button m={media} href={`${c.link}`} target='_blank' rel="noreferrer">
 				<span>Посетить</span>
 				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M0.646447 12.6464C0.451184 12.8417 0.451184 13.1583 0.646447 13.3536C0.841709 13.5488 1.15829 13.5488 1.35355 13.3536L0.646447 12.6464ZM13.5 0.999999C13.5 0.723858 13.2761 0.5 13 0.499999L8.5 0.5C8.22386 0.499999 8 0.723857 8 0.999999C8 1.27614 8.22386 1.5 8.5 1.5L12.5 1.5L12.5 5.5C12.5 5.77614 12.7239 6 13 6C13.2761 6 13.5 5.77614 13.5 5.5L13.5 0.999999ZM1.35355 13.3536L13.3536 1.35355L12.6464 0.646446L0.646447 12.6464L1.35355 13.3536Z" fill="white"/>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import gsap from 'gsap';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import LetterByLetter from "../../components/common/LetterByLetter";
 import Line from '../../components/common/Line';
@@ -83,7 +83,7 @@ const NameWrap = styled.div`
 `
 const Name = styled.h2`
 	margin-top: ${({m}) => m.isMobile ? 'clamp(-101px, -21.77vw, -81px)' : 0};
-	color: ${ ({theme}) => theme.text };
+	color: ${ ({theme}) => theme.mode.text };
 	font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? '96px'
 								: m.isTabletA ? '76px'
 								: m.isMobile ? 'clamp(30px, 9.165vw, 48px)'
@@ -103,7 +103,7 @@ const Circle = styled.div`
 	height: 146px;
 	font-family: 'AccentFontB',sans-serif;
 	color: ${commonTheme.colors.primary};
-	background-color: ${ ({ac}) => ac.dark };
+	background-color: ${ ({theme}) => theme.ac.dark };
 	border-radius: 50%;
 	cursor: none;
 	z-index: 3;
@@ -112,7 +112,6 @@ const Circle = styled.div`
 const NextCase = ({ c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 	const [nextCaseI, setNextCaseI] = useState(0)
 	const wrapperRef = useRef()
 	const cirlceRef = useRef()
@@ -171,14 +170,14 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 					ref={imgRef}
 					onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)} />
 			<NavLink to='/portfolio' onClick={e => pageTransition(e, '/portfolio')} className='allWorks linkUnderLine'>
-				<LetterByLetter>Все работы</LetterByLetter>
+				<LetterByLetter wavy>Все работы</LetterByLetter>
 			</NavLink>
 			<NavLink to='/contacts' onClick={e => pageTransition(e, '/contacts')} className='orderProject linkUnderLine'>
-				<LetterByLetter>Заказать проект</LetterByLetter>
+				<LetterByLetter wavy>Заказать проект</LetterByLetter>
 			</NavLink>
 		</Info>
 		<Contacts c={c} />
-		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)} ac={accentColor}>Смотреть</Circle>}
+		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)}>Смотреть</Circle>}
 	</Wrapper>
 }
 

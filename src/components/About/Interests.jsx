@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import Line from '../common/Line';
 import SectionTitle from '../common/SectionTitle';
 import colorsGif from '../../assets/images/Colors.webp';
 import petsGif from '../../assets/images/Cats.webp';
 import gamesGif from '../../assets/images/Games.webp';
 import neyroGif from '../../assets/images/Neyro.webp';
+import Interest from './Interest';
 
 const Wrap = styled.div`
 	display: flex;
@@ -61,27 +62,12 @@ const InnerContainer = styled.div`
 	margin-left: ${({m}) => m.isTabletP ? -20 : m.isMobile ? 0 : -24}px;
 `
 const Toggles = styled.div`
-	display: flex;
+	display: ${({m}) => m.isMobile ? 'flex' : 'grid'};
+	grid-row-gap: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : 20}px;
 	flex-direction: column;
 	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'flex-start'};
 	height: ${({m}) => m.isMobile ? '100%' : 'auto'};
 	padding-left: ${({m}) => m.isTabletP ? 20 : m.isMobile ? 0 : 24}px;
-	h3 {
-		align-self: start;
-		font-size: ${({m}) => m.isMobile ? 'clamp(26px, 7.08vw, 48px)'
-													: 'clamp(48px, 3.85vw, 76px)'};
-		text-transform: uppercase;
-		margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : m.isMobile ? 0 : 20}px;
-		cursor: pointer;
-	}
-	h3:last-child {
-		margin-bottom: 0;
-	}
-	h3.active {
-		font-family: 'AccentFontM';
-		font-weight: 500;
-		color: ${({accentColor}) => accentColor.dark};
-	}
 `
 const Text = styled.div`
 	grid-row: 2/3;
@@ -107,10 +93,28 @@ const Text = styled.div`
 		opacity: 1;
 	}
 `
-const Interests = () => {
+const Circle = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 146px;
+	height: 146px;
+	font-family: 'AccentFontB',sans-serif;
+	color: ${commonTheme.colors.primary};
+	background-color: ${ ({theme}) => theme.ac.dark };
+	border-radius: 50%;
+	cursor: none;
+	z-index: 2;
+	transform: translate(-50%, -50%) scale(0);
+`
+const Interests = ({ mainRef }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
+	const wrapperRef = useRef()
+	const cirlceRef = useRef()
 	const gifs = [
 		{title: 'Цвета', url: colorsGif, alt: 'Colors', text: 'Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.\nВ своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!'},
 		{title: 'Питомцы', url: petsGif, alt: 'Pets', text: 'В моей жизни всегда было много питомцев. Сейчас у меня 3 любимых кошки: мамины Мишка и Марси, и самая-самая – моя кошка, Клипса!\nА еще мы с моим молодым человеком хотим завести собаку.'},
@@ -118,23 +122,7 @@ const Interests = () => {
 		{title: 'Нейросети', url: neyroGif, alt: 'Handiwork', text: 'С появлением искусственного интеллекта появилось целое поле для творческих экспериментов. А когда нейросети научились «рисовать» арты — они стали моими незаменимыми помощниками в тренировке навыков и создании дизайн-концептов!'},
 	]
 
-	const switchGif = e => {
-		const titlesArr = document.querySelectorAll('.interest')
-		const gifsArr = document.querySelectorAll('.gif')
-		const textsArr = document.querySelectorAll('.text')
-		for (let i = 0; i < titlesArr.length; i++) {
-			titlesArr[i].classList.remove('active')
-			gifsArr[i].classList.remove('active')
-			textsArr[i].classList.remove('active')
-			if (e.target === titlesArr[i]) {
-				gifsArr[i].classList.add('active')
-				textsArr[i].classList.add('active')
-			}
-		}
-		e.target.classList.add('active')
-	}
-
-	return <Wrap>
+	return <Wrap ref={wrapperRef}>
 		<SectionTitle interests>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
@@ -142,8 +130,8 @@ const Interests = () => {
 			</Gifs>
 			<Container m={media}>
 				<InnerContainer m={media}>
-					<Toggles accentColor={accentColor} m={media}>
-						{gifs.map((g, i) => <h3 className={i === 0 ? 'interest active' : 'interest'} onClick={switchGif} key={i}>{g.title}</h3>)}
+					<Toggles m={media}>
+						{gifs.map((g, i) => <Interest key={i} i={i} mainRef={mainRef} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
 					</Toggles>
 					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>
@@ -155,6 +143,7 @@ const Interests = () => {
 				<p>Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.<br/>В своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!</p>
 			</Text>}
 		</Content>
+		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Смотреть</Circle>}
 	</Wrap>
 }
 

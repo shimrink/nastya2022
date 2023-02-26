@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { AccentColorContext } from '../../AppWrap';
 
 const LineDiv = styled.div`
 	grid-column: 1/13;
 	width: 100%;
 	height: 1px;
-	background-color: ${ ({accentColor}) => accentColor.light };
+	background-color: ${ ({theme}) => theme.ac.light };
 `
 const Line = ({ top }) => {
-
-	const accentColor = useContext(AccentColorContext)
-
-	return <LineDiv top={top} accentColor={accentColor} />
+	return <LineDiv top={top} />
 }
 
 export default Line;

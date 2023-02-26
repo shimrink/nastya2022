@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
-import SmoothScroll from '../../SmoothScroll';
+import SmoothScroll from '../common/SmoothScroll';
 import Rows from './Rows';
 import Tabs from './Tabs';
 import Grid from './Grid';
@@ -24,7 +24,7 @@ const TopBlock = styled.div`
 `
 const Title = styled.h2`
 	font-size: ${({m}) => m.isMobile ? 30 : 48}px;
-	color: ${ ({theme}) => theme.text };
+	color: ${ ({theme}) => theme.mode.text };
 	text-transform: uppercase;
 	text-align: center;
 	margin-bottom: 48px;

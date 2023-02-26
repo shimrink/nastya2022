@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../../AppWrap';
+import { MediaContext } from '../../AppWrap';
 import { accentTheme, commonTheme } from '../../styles/theme';
 
 const Wrapper = styled.div`
@@ -15,7 +15,7 @@ const Button = styled.button`
 	outline: ${({sn}) => sn === 0 ? '1px solid' : 'none'};
 	border: none;
 	border-radius: 50%;
-	outline-color: ${ ({ac}) => ac.dark };
+	outline-color: ${ ({theme}) => theme.ac.dark };
 	height: 20px;
 	width: 20px;
 	cursor: pointer;
@@ -25,10 +25,9 @@ const Button = styled.button`
 		margin: ${({sn, m}) => m.isHugeDesk || m.isDesk ? '0 0 0 ' + sn * 24 + 'px' : '0 ' + sn * 24 + 'px 0 0'};
 	}
 `
-const AccentColorToggler = ({ toggleAccentColor }) => {
+const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	const accentThemeLocal = [...accentTheme]
 	accentTheme.map( (ac, index) => {
@@ -46,8 +45,7 @@ const AccentColorToggler = ({ toggleAccentColor }) => {
 						col={ac.color.dark}
 						sn={index}
 						m={media}
-						key={index}
-						ac={accentColor} />
+						key={index} />
 		)}
 	</Wrapper>
 }

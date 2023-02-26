@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
-import SmoothScroll from '../../SmoothScroll';
+import SmoothScroll from '../common/SmoothScroll';
 import LetterByLetter from '../common/LetterByLetter';
 import Info from './Info';
 import Skills from './Skills';
@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 import coverImg from '../../assets/images/aboutCover.png';
 
 const Main = styled.main`
-	perspective: 10px;
+	perspective: 12px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -38,7 +38,7 @@ const TopBlockContent = styled.div`
 	align-items: end;
 	width: 100%;
 `
-const Title = styled.h2`
+const Title = styled.div`
 	grid-row: ${({m}) => m.isMobile ? '1/2' : '1/3'};
 	grid-column: 1/2;
 	justify-self: ${({m}) => m.isMobile ? 'start' : 'end'};
@@ -49,6 +49,7 @@ const Title = styled.h2`
 	font-weight: normal;
 	font-size: ${({m}) => m.isMobile ? 14 : 7.9}vw;
 	text-transform: uppercase;
+	line-height: 0.8;
 `
 const Contacts = styled.div`
 	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/3'};
@@ -77,27 +78,29 @@ const About = ({ pageTransition }) => {
 		<SmoothScroll mainRef={mainRef}>
 			<TopBlock m={media}>
 				<TopBlockContent m={media}>
-					<Contacts m={media}>
+					<Contacts m={media} className='animItems _anim-show-opacity'>
 						<a className='linkUnderLine' href="https://dribbble.com/asyadulova" target="_blank" rel="noreferrer">
-							<LetterByLetter>Dribble</LetterByLetter>
+							<LetterByLetter wavy>Dribble</LetterByLetter>
 						</a>
 						<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
-							<LetterByLetter>Behance</LetterByLetter>
+							<LetterByLetter wavy>Behance</LetterByLetter>
 						</a>
 						<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
-							<LetterByLetter>Instagram*</LetterByLetter>
+							<LetterByLetter wavy>Instagram*</LetterByLetter>
 						</a>
 						<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
-							<LetterByLetter>Tilda experts</LetterByLetter>
+							<LetterByLetter wavy>Tilda experts</LetterByLetter>
 						</a>
 					</Contacts>
-					<Title m={media}>AsyaDulova</Title>
+					<Title m={media}>
+						<LetterByLetter showAnim pageName>AsyaDulova</LetterByLetter>
+					</Title>
 				</TopBlockContent>
 			</TopBlock>
 			<Info />
 			<Skills />
 			<Values pageTransition={pageTransition} />
-			<Interests />
+			<Interests mainRef={mainRef} />
 			<Philosophy />
 			<Footer about />
 		</SmoothScroll>

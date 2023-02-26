@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { AccentColorContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import LetterByLetter from '../common/LetterByLetter';
 
@@ -16,7 +15,7 @@ const Nav = styled.nav`
 	a {
 		font-size: ${({mobile}) => mobile ? 'clamp(48px, 15.415vw, 76px)' : '18px'};
 		margin-right: ${({mobile}) => mobile ? 0 : 24}px;
-		color: ${ ({theme, mobile}) => mobile ? commonTheme.colors.primary : theme.text };
+		color: ${ ({theme, mobile}) => mobile ? commonTheme.colors.primary : theme.mode.text };
 		text-transform: ${({mobile}) => mobile ? 'uppercase' : 'none'};
 		white-space: nowrap;
 		transition: color ${commonTheme.durations.short}s;
@@ -25,7 +24,7 @@ const Nav = styled.nav`
 		margin-right: 0;
 	}
 	a.navItemActive {
-		color: ${ ({ac}) => ac.dark };
+		color: ${ ({theme}) => theme.ac.dark };
 	}
 `
 const linksData = [
@@ -35,15 +34,14 @@ const linksData = [
 	{name: 'Контакты', path: '/contacts'},
 ]
 
-const Navigation = ({ mobile, closeMenu, pageTransition }) => {
+const Navigation = ({ mobile, isMenuMobileOpen, closeMenu, pageTransition }) => {
 
-	const accentColor = useContext(AccentColorContext)
 	const {pathname} = useLocation()
-	// Замена на useRef([])?
-	const [portfolioActive, setPortfolioActive] = useState(false)
-	const [aboutActive, setAboutActive] = useState(false)
-	const [servicesActive, setServicesActive] = useState(false)
-	const [contactsActive, setContactsActive] = useState(false)
+	// Замена на useRef([]) или className
+	const [portfolioActive, setPortfolioActive] = useState(pathname === '/portfolio')
+	const [aboutActive, setAboutActive] = useState(pathname === '/about')
+	const [servicesActive, setServicesActive] = useState(pathname === '/services')
+	const [contactsActive, setContactsActive] = useState(pathname === '/contacts')
 
 	const activateLink = (num) => {
 		setPortfolioActive(num === 0)
@@ -63,16 +61,24 @@ const Navigation = ({ mobile, closeMenu, pageTransition }) => {
 	}
 
 	useEffect(() => {
-		if (pathname === '/') activateLink(linksData.length)
+		if (pathname !== '/portfolio'
+		 && pathname !== '/about'
+		 && pathname !== '/services'
+		 && pathname !== '/contacts') activateLink(linksData.length)
 	}, [pathname])
 
-	return <Nav mobile={mobile} ac={accentColor}>
+	return <Nav mobile={mobile}>
 		{linksData.map((l, i) => (
 			<NavLink key={i} to={l.path} onClick={e=>clickHandler(e, l.path, i)} className={ navData => navData.isActive && !mobile ? 'navItem navItemActive' : 'navItem' }>
-				<LetterByLetter titleItem={mobile} active={ i === 0 ? portfolioActive
-																		: i === 1 ? aboutActive
-																		: i === 2 ? servicesActive
-																		: contactsActive}>
+				<LetterByLetter mobile={mobile}
+									wavy
+									isMenuMobileOpen={isMenuMobileOpen}
+									showAnim={mobile}
+									titleSize={mobile}
+									active={i === 0 ? portfolioActive
+											: i === 1 ? aboutActive
+											: i === 2 ? servicesActive
+											: contactsActive}>
 					{l.name}
 				</LetterByLetter>
 			</NavLink>

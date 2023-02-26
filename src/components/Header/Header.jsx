@@ -22,7 +22,7 @@ const Wrapper = styled.header`
 	touch-action: none;
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
-	z-index: 5;
+	z-index: 6;
 `
 const TogglersAndNav = styled.div`
 	grid-row: 1/2;
@@ -52,12 +52,12 @@ const Burger = styled.span`
 	grid-column: 3/4;
 	justify-self: end;
 	font-size: 16px;
-	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.primary : theme.text };
+	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.primary : theme.mode.text };
 	cursor: pointer;
-	z-index: 7;
+	z-index: 8;
 	transition: color ${commonTheme.durations.short}s;
 `
-const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
+const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler }) => {
 
 	const media = useContext(MediaContext)
 	const [isMenuMobileOpen, setMenuMobileOpen] = useState(false)
@@ -76,14 +76,14 @@ const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
 
 	const openMenu = () => {
 		gsap.to(menuMobileRef.current, {
-			yPercent: 110,
-			duration: commonTheme.durations.short,
-			ease: 'linear'
+			yPercent: 100,
+			duration: 0.7,
+			ease: 'power4.inOut'
 		})
 		gsap.to(document.querySelector('.roundedDivRef'), {
 			height: '10%',
-			duration: commonTheme.durations.short,
-			ease: 'linear'
+			duration: 0.7,
+			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(true)
 	}
@@ -91,13 +91,13 @@ const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
 	const closeMenu = () => {
 		gsap.to(menuMobileRef.current, {
 			yPercent: 0,
-			duration: commonTheme.durations.short,
-			ease: 'linear'
+			duration: 0.7,
+			ease: 'power4.inOut'
 		})
 		gsap.to(document.querySelector('.roundedDivRef'), {
 			height: 0,
-			duration: commonTheme.durations.short,
-			ease: 'linear'
+			duration: 0.7,
+			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(false)
 	}
@@ -109,7 +109,7 @@ const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
 				<ThemeToggler toggleTheme={themeToggler} />
 			</ThemeTogglerContainer>
 			<AccentColorTogglerContainer m={media}>
-				<AccentColorToggler toggleAccentColor={accentColorToggler} />
+				<AccentColorToggler accentColor={accentColor} toggleAccentColor={accentColorToggler} />
 			</AccentColorTogglerContainer>
 			{media.isHugeDesk || media.isDesk
 				? <Navigation pageTransition={pageTransition} />
@@ -118,7 +118,7 @@ const Header = ({ pageTransition, themeToggler, accentColorToggler }) => {
 				: <Burger onClick={openMenu} isMenuMobileOpen={isMenuMobileOpen}>Меню</Burger>
 			}
 		</TogglersAndNav>
-		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} closeMenu={closeMenu} />}
+		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />}
 	</Wrapper>
 }
 

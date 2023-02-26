@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { AccentColorContext, MediaContext } from '../AppWrap';
+import { MediaContext } from '../AppWrap';
 import { commonTheme } from '../styles/theme';
 import SectionTitle from '../components/common/SectionTitle';
 import desk from '../assets/images/devices/desk.png';
@@ -97,13 +97,12 @@ const SpecialThanks = styled.div`
 		font-family: 'AccentFontM', sans-serif;
 		font-weight: 500;
 		font-size: ${({m}) => m.isMobile ? 'clamp(30px, 9.165vw, 48px)' : '48px'};
-		color: ${ ({ac}) => ac.dark };
+		color: ${ ({theme}) => theme.ac.dark };
 	}
 `
 const UivProduction = ({ i, caseData }) => {
 
 	const media = useContext(MediaContext)
-	const accentColor = useContext(AccentColorContext)
 
 	return <Main>
 

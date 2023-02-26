@@ -56,19 +56,19 @@ const Contacts = ({ c }) => {
 		</Copywriting>
 		<Links m={media}>
 			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Vk</LetterByLetter>
+				<LetterByLetter wavy>Vk</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Telegramm</LetterByLetter>
+				<LetterByLetter wavy>Telegramm</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Ig</LetterByLetter>
+				<LetterByLetter wavy>Ig</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Behance</LetterByLetter>
+				<LetterByLetter wavy>Behance</LetterByLetter>
 			</a>
 			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
-				<LetterByLetter>Tilda experts</LetterByLetter>
+				<LetterByLetter wavy>Tilda experts</LetterByLetter>
 			</a>
 		</Links>
 		<Team m={media}>

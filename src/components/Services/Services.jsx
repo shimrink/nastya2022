@@ -10,7 +10,6 @@ const Main = styled.main`
 const Services = () => {
 
 	const media = useContext(MediaContext)
-	// const accentColor = useContext(AccentColorContext)
 
 	return <Main></Main>
 }
