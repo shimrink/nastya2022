@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
 import asyaImg from '../../assets/images/footerCover.png';
+import { commonTheme } from '../../styles/theme';
 
 const moveX = keyframes`
 	from {
@@ -12,7 +13,7 @@ const moveX = keyframes`
 		transform: translateX(-25%);
 	}
 `
-const UpperFooterWrap = styled.div`
+const Wrap = styled.div`
 	display: grid;
 	grid-template-rows: ${({m}) => m.isMobile ? 'auto' : '1fr 1fr 1fr'};
 	grid-template-columns: ${({m}) => m.isTabletP ? 'repeat(4, 1fr)'
@@ -22,6 +23,7 @@ const UpperFooterWrap = styled.div`
 	grid-column-gap: ${({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
 										: m.isTabletP ? '40px'
 										: '24px'};
+	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	padding: ${({m}) => m.isHugeDesk ? '0'
 							: m.isDesk ? '0 80px'
@@ -98,7 +100,7 @@ const UpperFooter = () => {
 
 	const media = useContext(MediaContext)
 
-	return <UpperFooterWrap m={media}>
+	return <Wrap m={media}>
 		<TitleWrap m={media}>
 			{[...Array(4)].map((v, i) => <Title key={i} m={media}>Расскажите <span>о своей задаче</span> /</Title>)}
 		</TitleWrap>
@@ -126,7 +128,7 @@ const UpperFooter = () => {
 			</a>
 		</Social>
 		<Img m={media} src={asyaImg} alt='Asya'/>
-	</UpperFooterWrap>
+	</Wrap>
 }
 
 export default UpperFooter;

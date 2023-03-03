@@ -1,13 +1,10 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
+import { commonTheme } from '../../styles/theme';
+import { state } from '../../store';
 import Line from '../common/Line';
 import SectionTitle from '../common/SectionTitle';
-import colorsGif from '../../assets/images/Colors.webp';
-import petsGif from '../../assets/images/Cats.webp';
-import gamesGif from '../../assets/images/Games.webp';
-import neyroGif from '../../assets/images/Neyro.webp';
 import Interest from './Interest';
 
 const Wrap = styled.div`
@@ -56,7 +53,6 @@ const InnerContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	padding-right: ${({m}) => m.isHugeDesk ? '0'
-									: m.isDesk ? '80px'
 									: m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
 									: '40px'};
 	margin-left: ${({m}) => m.isTabletP ? -20 : m.isMobile ? 0 : -24}px;
@@ -65,7 +61,7 @@ const Toggles = styled.div`
 	display: ${({m}) => m.isMobile ? 'flex' : 'grid'};
 	grid-row-gap: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : 20}px;
 	flex-direction: column;
-	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'flex-start'};
+	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'normal'};
 	height: ${({m}) => m.isMobile ? '100%' : 'auto'};
 	padding-left: ${({m}) => m.isTabletP ? 20 : m.isMobile ? 0 : 24}px;
 `
@@ -103,7 +99,7 @@ const Circle = styled.div`
 	width: 146px;
 	height: 146px;
 	font-family: 'AccentFontB',sans-serif;
-	color: ${commonTheme.colors.primary};
+	color: ${commonTheme.colors.white};
 	background-color: ${ ({theme}) => theme.ac.dark };
 	border-radius: 50%;
 	cursor: none;
@@ -115,27 +111,21 @@ const Interests = ({ mainRef }) => {
 	const media = useContext(MediaContext)
 	const wrapperRef = useRef()
 	const cirlceRef = useRef()
-	const gifs = [
-		{title: 'Цвета', url: colorsGif, alt: 'Colors', text: 'Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.\nВ своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!'},
-		{title: 'Питомцы', url: petsGif, alt: 'Pets', text: 'В моей жизни всегда было много питомцев. Сейчас у меня 3 любимых кошки: мамины Мишка и Марси, и самая-самая – моя кошка, Клипса!\nА еще мы с моим молодым человеком хотим завести собаку.'},
-		{title: 'Игры', url: gamesGif, alt: 'Games', text: 'Иногда в свободное время я позволяю себе немного поиграть. Чаще всего зависаю в многопользовательских шутерах Apex Legends и Overwatch, но иногда прохожу одиночки вроде Life is Strange, Detroit, Ori.'},
-		{title: 'Нейросети', url: neyroGif, alt: 'Handiwork', text: 'С появлением искусственного интеллекта появилось целое поле для творческих экспериментов. А когда нейросети научились «рисовать» арты — они стали моими незаменимыми помощниками в тренировке навыков и создании дизайн-концептов!'},
-	]
 
 	return <Wrap ref={wrapperRef}>
 		<SectionTitle interests>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
-				{gifs.map((g, i) => <img className={i === 0 ? 'gif active' : 'gif'} key={i} src={g.url} alt={g.alt} />)}
+				{state.gifs.map((g, i) => <img className={i === 0 ? 'gif active' : 'gif'} key={i} src={g.url} alt={g.alt} />)}
 			</Gifs>
 			<Container m={media}>
 				<InnerContainer m={media}>
 					<Toggles m={media}>
-						{gifs.map((g, i) => <Interest key={i} i={i} mainRef={mainRef} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
+						{state.gifs.map((g, i) => <Interest key={i} i={i} mainRef={mainRef} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
 					</Toggles>
 					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>
-						{gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
+						{state.gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
 					</Text>}
 				</InnerContainer>
 			</Container>
@@ -143,7 +133,7 @@ const Interests = ({ mainRef }) => {
 				<p>Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.<br/>В своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!</p>
 			</Text>}
 		</Content>
-		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Смотреть</Circle>}
+		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Тык</Circle>}
 	</Wrap>
 }
 

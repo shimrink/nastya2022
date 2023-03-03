@@ -30,7 +30,7 @@ const SectionTitle = ({ children, info, skills, valuesInWork, interests, cases }
 	const media = useContext(MediaContext)
 
 	return <Title m={media} info={info} skills={skills} valuesInWork={valuesInWork} interests={interests} cases={cases}>
-		<h3>{children}</h3>
+		<h3 className='animItems _anim-show-opacity'>{children}</h3>
 		<Line />
 	</Title>
 }

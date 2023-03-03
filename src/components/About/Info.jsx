@@ -25,7 +25,7 @@ const Content = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
-	transform: ${({land, port}) => land ? 'translateZ(-1px) scale(1.083)' : port ? 'translateZ(-2px) scale(1.167)' : 'none'};
+	transform: ${({land, port}) => land ? 'translateZ(-1px) scale(1.077)' : port ? 'translateZ(-2px) scale(1.154)' : 'none'};
 	img {
 		opacity: ${({land, port}) => land || port ? 1 : 0};
 	}
@@ -100,14 +100,14 @@ const Info = () => {
 		<SectionTitle info>Здрасьте, я Настя</SectionTitle>
 		<Content m={media}>
 			<Ranks m={media}>
-				<span>Digital,</span>
-				<span>Веб,</span>
-				<span>UX/UI,</span>
-				<span>SMM,</span>
-				<span>Графический —</span>
+				<span className='animItems _anim-show-opacity'>Digital,</span>
+				<span className='animItems _anim-show-opacity'>Веб,</span>
+				<span className='animItems _anim-show-opacity'>UX/UI,</span>
+				<span className='animItems _anim-show-opacity'>SMM,</span>
+				<span className='animItems _anim-show-opacity'>Графический —</span>
 			</Ranks>
-			<Multi m={media}>Мультидисциплинарный дизайнер</Multi>
-			<Text m={media}>Дизайнер-фрилансер с&nbsp;широким спектром навыков.<br/>Помогаю решить задачи вашего бизнеса с помощью дизайна: создаю его комплексную «упаковку» — от логотипа и презентаций до сайта.</Text>
+			<Multi m={media} className='animItems _anim-show-opacity'>Мультидисциплинарный дизайнер</Multi>
+			<Text m={media} className='animItems _anim-show-opacity'>Дизайнер-фрилансер с&nbsp;широким спектром навыков.<br/>Помогаю решить задачи вашего бизнеса с помощью дизайна: создаю его комплексную «упаковку» — от логотипа и презентаций до сайта.</Text>
 			<Portrait ref={portraitRef} m={media} src={asyaP} alt='Asya' />
 			<Landscape m={media} src={asyaA} alt='Asya' />
 		</Content>

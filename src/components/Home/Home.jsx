@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
-import * as THREE from "three";
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
@@ -33,7 +32,7 @@ const ShowButton = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: ${ ({theme}) => theme.ac.dark };
-	color: ${commonTheme.colors.primary};
+	color: ${commonTheme.colors.white};
 	width: 146px;
 	height: 146px;
 	font-family: 'AccentFontB', sans-serif;
@@ -54,20 +53,25 @@ const Home = ({ caseData, pageTransition }) => {
 	const [touchPosition, setTouchPosition] = useState(null)
 	const showButtonRef = useRef()
 	const mainRef = useRef()
+	let casesCount = 0
+	caseData.forEach(c => {
+		if (c.isMainSlider) casesCount++
+	})
 
 	useEffect(() => {
-		if (media.isHugeDesk || media.isDesk) { setScrollCount(5) }
-		else { setScrollCount(1) }
+		setScrollCount(media.isHugeDesk || media.isDesk ? 5 : 1)
 	}, [media])
 
 	const next = useCallback(() => {
-		if (currentIndex < ((caseData.length - 1) * scrollCount))
+		if (currentIndex < ((casesCount - 1) * scrollCount)) {
 			setCurrentIndex(prevState => prevState + 1)
-	}, [currentIndex, caseData, scrollCount])
+		}
+	}, [currentIndex, casesCount, scrollCount])
 
 	const prev = useCallback(() => {
-		if (currentIndex > 0)
+		if (currentIndex > 0) {
 			setCurrentIndex(prevState => prevState - 1)
+		}
 	}, [currentIndex])
 
 	useEffect(() => {
@@ -100,12 +104,12 @@ const Home = ({ caseData, pageTransition }) => {
 			setTouchPosition(null)
 		}
 	}
-
+// Попробовать заменить gl={{toneMapping: THREE.NoToneMapping}} на flat
 	return <Main ref={mainRef}
 					m={media}
 					onTouchStart={touchStartHandler}
 					onTouchMove={touchMoveHandler}>
-		<Canvas linear gl={{toneMapping: THREE.NoToneMapping}} className='canvas-main'>
+		<Canvas linear flat className='canvas-main'>
 			<Scene currentIndex={currentIndex}
 					caseData={caseData}
 					scrollCount={scrollCount}
@@ -122,7 +126,7 @@ const Home = ({ caseData, pageTransition }) => {
 					setHovering={setHovering}
 					setHoverNum={setHoverNum}
 					pageTransition={pageTransition} />
-		<ScrollProgress caseData={caseData}
+		<ScrollProgress casesCount={casesCount}
 							currentIndex={currentIndex}
 							scrollCount={scrollCount} />
 	</Main>

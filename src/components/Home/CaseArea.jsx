@@ -70,8 +70,8 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 			const el = containerRef.current
 			const onMouseMove = e => {
 				gsap.to(showButtonRef.current, {
-					left: e.pageX + 'px',
-					top: e.pageY + 'px',
+					left: e.pageX,
+					top: e.pageY,
 					duration: commonTheme.durations.middle,
 					ease: 'power4.out',
 				})
@@ -106,19 +106,24 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 		}
 	}
 
+	let count = -1
 	return <CarouselContainer ref={containerRef} m={media}>
 		<Carousel ref={carouselRef}
 					m={media}
 					currentIndex={currentIndex}
 					scrollCount={scrollCount}>
-			{caseData.map((p, i) => p.isMainSlider &&
-				<CaseWrapper key={p.slug.current}
-								m={media}
-								i={i}
-								onMouseOver={e => mouseOverHandler(i)}
-								onMouseOut={mouseOutHandler}
-								onClick={e => pageTransition(e, `cases/${p.slug.current}`)} />
-			)}
+			{caseData.map((p, i) => {
+				if (p.isMainSlider) {
+					count++
+					return <CaseWrapper key={p.slug.current}
+									m={media}
+									i={count}
+									onMouseOver={e => mouseOverHandler(i)}
+									onMouseOut={mouseOutHandler}
+									onClick={e => pageTransition(e, `cases/${p.slug.current}`)} />
+				}
+				return null
+			})}
 		</Carousel>
 	</CarouselContainer>
 }

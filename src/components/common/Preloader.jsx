@@ -27,15 +27,18 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor })
 	const mainRef = useRef()
 	const darkColRef = useRef()
 
+	// Set the loading value by 1%
 	useEffect(() => {
-		document.querySelector('body').style.overflowY = 'hidden'
-		// Set the loading value by 1%
 		gsap.to(darkColRef.current.offset, {
 			baseVal: 0.01,
 			duration: 1,
 			ease: 'power3.inOut',
 			delay: commonTheme.durations.short,
 		})
+	}, [])
+
+	useEffect(() => {
+		document.querySelector('body').style.overflowY = 'hidden'
 
 		// Fill in the array with images URLs from Sanity
 		let imgArr = []
@@ -67,7 +70,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor })
 				const tl = gsap.timeline()
 				tl.to(mainRef.current, {
 					opacity: 0,
-					duration: commonTheme.durations.long,
+					duration: commonTheme.durations.middle,
 					ease: 'linear',
 					delay: 1.5,
 				})

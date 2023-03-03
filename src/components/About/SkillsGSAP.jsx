@@ -21,7 +21,7 @@ const HalfRow = styled.div`
 const Skill = styled.span`
 	font-family: ${ ({bold}) => bold ? 'AccentFontM' : 'AccentFontT' }, sans-serif;
 	font-size: 76px;
-	color: ${ ({theme, bold}) => bold ? theme.ac.dark : commonTheme.colors.quaternary};
+	color: ${ ({theme, bold}) => bold ? theme.ac.dark : commonTheme.colors.balck};
 	margin-right: 40px;
 	text-transform: uppercase;
 	white-space: nowrap;

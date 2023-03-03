@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 import coverImg from '../../assets/images/aboutCover.png';
 
 const Main = styled.main`
-	perspective: 12px;
+	perspective: 13px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -93,7 +93,7 @@ const About = ({ pageTransition }) => {
 						</a>
 					</Contacts>
 					<Title m={media}>
-						<LetterByLetter showAnim pageName>AsyaDulova</LetterByLetter>
+						<LetterByLetter showAnim regular whiteCol>AsyaDulova</LetterByLetter>
 					</Title>
 				</TopBlockContent>
 			</TopBlock>

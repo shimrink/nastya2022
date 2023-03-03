@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	color: ${commonTheme.colors.primary};
+	color: ${commonTheme.colors.white};
 	width: 100%;
 	height: 110%;
 	touch-action: none;
@@ -37,7 +37,7 @@ const Social = styled.div`
 	height: 100%;
 	a {
 		font-size: ${({m}) => m.isMobile ? 'clamp(14px, 3.855vw, 16px)' : '16px'};
-		color: ${commonTheme.colors.primary};
+		color: ${commonTheme.colors.white};
 		margin: ${({m}) => m.isMobile ? '0' : '0 12px'};
 	}
 `
@@ -66,19 +66,19 @@ const MenuMobile = forwardRef(({ isMenuMobileOpen, closeMenu }, ref) => {
 			<Navigation mobile isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />
 			<Social m={media}>
 				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
-					<LetterByLetter wavy>Vk</LetterByLetter>
+					<LetterByLetter wavy whiteCol>Vk</LetterByLetter>
 				</a>
 				<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
-					<LetterByLetter wavy>Telegramm</LetterByLetter>
+					<LetterByLetter wavy whiteCol>Telegramm</LetterByLetter>
 				</a>
 				<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
-					<LetterByLetter wavy>Ig</LetterByLetter>
+					<LetterByLetter wavy whiteCol>Ig</LetterByLetter>
 				</a>
 				<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
-					<LetterByLetter wavy>Behance</LetterByLetter>
+					<LetterByLetter wavy whiteCol>Behance</LetterByLetter>
 				</a>
 				<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
-					<LetterByLetter wavy>Tilda experts</LetterByLetter>
+					<LetterByLetter wavy whiteCol>Tilda experts</LetterByLetter>
 				</a>
 			</Social>
 		</Content>

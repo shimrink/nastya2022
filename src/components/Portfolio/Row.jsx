@@ -7,12 +7,15 @@ import LetterByLetter from '../common/LetterByLetter';
 import Line from '../common/Line';
 
 const RowWrap = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	justify-items: center;
 	width: 100%;
+	overflow: hidden;
+	transition: height ${commonTheme.durations.short}s;
 `
 const RowContent = styled.div`
+	grid-row: 1/2;
+	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
@@ -42,6 +45,8 @@ const Tags = styled.div`
 	grid-row: 1/2;
 	grid-column: 10/12;
 	position: relative;
+	display: flex;
+	flex-direction: column;
 	font-size: clamp(16px, 1.1vw, 18px);
 	z-index: 1;
 `
@@ -63,10 +68,18 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 	z-index: 2;
 `
+const LineWrap = styled.div`
+	position: absolute;
+	grid-row: 1/2;
+	grid-column: 1/2;
+	align-self: end;
+	width: 100%;
+	padding: 0 40px;
+`
 const Row = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const [active, setActive] = useState(false)
+	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
 	useEffect(() => {
@@ -112,7 +125,7 @@ const Row = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 			duration: commonTheme.durations.short,
 			ease: 'power4.out',
 		})
-		setActive(true)
+		setHovering(true)
 	}
 
 	const hideImg = e => {
@@ -121,24 +134,24 @@ const Row = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
 			duration: commonTheme.durations.short,
 			ease: 'power4.out',
 		})
-		setActive(false)
+		setHovering(false)
 	}
 
 	return <RowWrap className='rowItem'>
 		<RowContent m={media}>
 			<Name>
-				<LetterByLetter wavy titleSize active={active}>{c.title}</LetterByLetter>
+				<LetterByLetter wavy showAnim titleSize hovering={hovering}>{c.title}</LetterByLetter>
 			</Name>
-			<Tags>
-				{c.tags.map((t, ind) => <span key={ind}> {t} <br/> </span>)}
+			<Tags className='animItems _anim-show-opacity'>
+				{c.tags.map((t, ind) => <span key={ind}>{t}</span>)}
 			</Tags>
-			<Year>{c.publishedAt.split('-')[0]}</Year>
+			<Year className='animItems _anim-show-opacity'>{c.publishedAt.split('-')[0]}</Year>
 			<Img ref={imgRef} src={c.mobileImage.asset.url} alt={c.slug.current} />
 			<RowArea onMouseOver={showImg}
 						onMouseOut={hideImg}
 						onClick={e => pageTransition(e, `/cases/${c.slug.current}`)} />
 		</RowContent>
-		<Line />
+		<LineWrap><Line /></LineWrap>
 	</RowWrap>
 }
 

@@ -30,9 +30,9 @@ const Philosophy = () => {
 	const media = useContext(MediaContext)
 
 	return <Wrap>
-		<Title m={media}>Моя философия —</Title>
-		<Slogan m={media}>Less is more</Slogan>
-		<Explanation m={media}>(меньше значит больше)</Explanation>
+		<Title m={media} className='animItems _anim-show-opacity'>Моя философия —</Title>
+		<Slogan m={media} className='animItems _anim-show-opacity'>Less is more</Slogan>
+		<Explanation m={media} className='animItems _anim-show-opacity'>(меньше значит больше)</Explanation>
 	</Wrap>
 }
 

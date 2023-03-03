@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import gsap from 'gsap';
+import { MediaContext } from './AppWrap';
 import { commonTheme } from "./styles/theme";
 // import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
 import About from "./components/About/About";
@@ -20,6 +21,7 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: ${ ({fullHeight}) => fullHeight ? '100%' : 'auto' };
 	color: ${ ({theme}) => theme.mode.text };
+	background-color: ${ ({theme}) => theme.mode.bg };
 	transition: color ${commonTheme.durations.short}s;
 	#gradient-canvas {
 		position: fixed;
@@ -52,9 +54,11 @@ const Shtora = styled.div`
 	}
 	.topRound {
 		border-radius: 50% / 100% 100% 0 0;
+		margin-bottom: -4px;
 	}
 	.bottomRound {
 		border-radius: 50% / 0 0 100% 100%;
+		margin-top: -4px;
 	}
 	.mainShtora {
 		width: 100%;
@@ -64,6 +68,7 @@ const Shtora = styled.div`
 `
 const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseData, categoriesData }) => {
 
+	const media = useContext(MediaContext)
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
 	const [appInitialized, setAppInitialized] = useState(false)
@@ -117,6 +122,7 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 	// }, [themeMode, accentColor])
 
 	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'}>
+		{/* <canvas id='gradient-canvas' data-transition-in width={media.isHugeDesk || media.isDesk ? 1920 : 1280} height={media.isHugeDesk || media.isDesk ? 960 : 600} /> */}
 		<Header pageTransition={pageTransition} accentColor={accentColor} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
 		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
 		<Routes>
@@ -127,7 +133,6 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 			<Route path="/contacts" element={<Footer />} />
 			<Route path="/" element={<Home caseData={caseData} pageTransition={pageTransition} />} />
 		</Routes>
-		{/* <canvas id='gradient-canvas' /> */}
 		<Shtora ref={shtoraRef}>
 			<div className='topRound' />
 			<div className='mainShtora' />

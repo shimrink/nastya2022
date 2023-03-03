@@ -47,7 +47,7 @@ const Portfolio = ({ caseData, categoriesData, pageTransition }) => {
 
 	return <Main ref={mainRef}>
 		<SmoothScroll mainRef={mainRef}>
-			<TopBlock m={media}>
+			<TopBlock m={media} className='animItems _anim-show-opacity'>
 				<Title m={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
 				<Tabs caseData={caseData} categoriesData={categoriesData} />
 			</TopBlock>

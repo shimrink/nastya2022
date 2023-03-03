@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
+import { state } from '../../store';
 import SectionTitle from '../common/SectionTitle';
 
 const moveX = keyframes`
@@ -64,10 +65,6 @@ const Skill = styled.span`
 	white-space: nowrap;
 	transition: color ${commonTheme.durations.short}s;
 `
-const topWords = ["GRAPHIC", "UI/UX", "WEB DESIGN", "DIGITAL", "PRODUCT"]
-const middleWords = ["FIGMA", "PHOTOSHOP", "ILLUSTRATOR", "HTML/CSS/JS"]
-const bottomWords = ["CREATIVE", "MARKETING", "SMM", "IIIUSTRATION", "3D"]
-
 const Skills = () => {
 
 	const media = useContext(MediaContext)
@@ -78,21 +75,21 @@ const Skills = () => {
 			<MovingRow row={0} m={media}>
 				{[...Array(4)].map((v, ind) => (
 					<String key={ind} m={media}>
-						{topWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} m={media}>{w}</Skill>)}
+						{state.skillsWords.top.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} m={media}>{w}</Skill>)}
 					</String>
 				))}
 			</MovingRow>
 			<MovingRow row={1} reverse m={media}>
 				{[...Array(4)].map((v, ind) => (
 					<String key={ind} m={media}>
-						{middleWords.map((w, i) => <Skill bold={i === 0 || i === 3 ? true : false} key={i} m={media}>{w}</Skill>)}
+						{state.skillsWords.middle.map((w, i) => <Skill bold={i === 0 || i === 3 ? true : false} key={i} m={media}>{w}</Skill>)}
 					</String>
 				))}
 			</MovingRow>
 			<MovingRow row={2} m={media}>
 				{[...Array(4)].map((v, ind) => (
 					<String key={ind} m={media}>
-						{bottomWords.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} m={media}>{w}</Skill>)}
+						{state.skillsWords.bottom.map((w, i) => <Skill bold={i === 2 ? true : false} key={i} m={media}>{w}</Skill>)}
 					</String>
 				))}
 			</MovingRow>

@@ -16,7 +16,7 @@ const Svg = styled.svg`
 	fill: none;
 `
 const Path = styled.path`
-	fill: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.primary : theme.ac.dark };
+	fill: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.white : theme.ac.dark };
 	transition: fill ${commonTheme.durations.short}s;
 `
 const Logo = ({ isMenuMobileOpen, closeMenu, pageTransition }) => {

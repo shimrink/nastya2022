@@ -6,12 +6,12 @@ import { MediaContext } from '../../AppWrap';
 
 const Wrap = styled.div`
 	display: grid;
+	width: 100%;
 `
 const Title = styled.h3`
 	position: relative;
 	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
 	grid-column: 1/2;
-	align-self: start;
 	font-size: ${({m}) => m.isMobile ? 'clamp(26px, 7.08vw, 48px)' : 'clamp(48px, 3.85vw, 76px)'};
 	text-transform: uppercase;
 	cursor: pointer;
@@ -26,6 +26,7 @@ const TitleArea = styled.div`
 	position: relative;
 	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
 	grid-column: 1/2;
+	width: 100%;
 	cursor: none;
 	z-index: 3;
 `

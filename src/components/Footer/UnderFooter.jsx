@@ -1,18 +1,16 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
-import { commonTheme } from '../../styles/theme';
 
 const UnderFooterContainer = styled.div`
 	position: absolute;
-	left: 0;
 	display: ${({m}) => m.isMobile || m.isTabletP ? 'grid' : 'flex'};
 	grid-row-gap: 24px;
 	align-items: flex-end;
 	justify-content: space-between;
 	width: 100%;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 16 : 14}px;
-	color: ${commonTheme.colors.secondary};
+	color: ${ ({theme}) => theme.mode.subText };
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
 `

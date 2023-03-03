@@ -21,6 +21,7 @@ html {
 body {
 	margin: 0;
 	height: 100%;
+	background-color: ${ ({theme}) => theme.mode.bg };
 	font-family: 'BaseFont', sans-serif;
 	overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
@@ -37,11 +38,11 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 h2 {
-	color: ${commonTheme.colors.primary};
+	color: ${commonTheme.colors.white};
 	line-height: 110%;
 }
 h3 {
-	font-family: ${({theme}) => theme.mode.text === lightTheme.text ? 'AccentFontT' : 'AccentFontR'} , sans-serif;
+	font-family: ${({theme}) => theme.mode.text === lightTheme.text ? 'AccentFontT' : 'AccentFontR'}, sans-serif;
 	font-weight: ${({theme}) => theme.mode.text === lightTheme.text ? 100 : 400};
 }
 
@@ -82,19 +83,7 @@ a {
 	opacity: 1;
 }
 ._anim-show {
-	transform: translateY(15%) scaleX(100%);
-	opacity: 0;
-	transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-}
-._anim-show-huge {
-	transform: translateY(60%) scaleX(100%);
-	opacity: 0;
-	transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-}
-._anim-show-big {
-	transform: translateY(30%) scaleX(100%);
-	opacity: 0;
-	transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+	transform: translateY(100%) scaleX(100%);
 }
 ._anim-show-right {
 	transform: translateX(70%) scaleX(100%);

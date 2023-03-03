@@ -1,9 +1,7 @@
 export const commonTheme = {
 	colors: {
-		primary: '#FFF',
-		secondary: 'rgba(30, 30, 30, 0.5)',
-		tertiary: '#E6E6E6',
-		quaternary: '#1E1E1E',
+		white: '#FFF',
+		balck: '#1E1E1E',
 	},
 
 	// in px
@@ -31,16 +29,22 @@ export const commonTheme = {
 		middle: 0.6,
 		long: 1,
 	},
+
+	easings: {
+		out: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
+	},
 }
 
 export const lightTheme = {
 	bg: '#FFF',
 	text: '#1E1E1E',
+	subText: 'rgba(30, 30, 30, 0.5)',
 }
 
 export const darkTheme = {
 	bg: '#1E1E1E',
 	text: '#FFF',
+	subText: 'rgba(255, 255, 255, 0.5)',
 }
 
 export const accentTheme = [

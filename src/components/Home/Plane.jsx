@@ -17,9 +17,9 @@ const Case = styled.div.attrs(caseAttrs)`
 	display: grid;
 	align-items: end;
 	justify-items: center;
+	overflow: hidden;
 `
 const Content = styled.div`
-	position: relative;
 	grid-row: 1/2;
 	grid-column: 1/2;
 	display: grid;
@@ -28,28 +28,22 @@ const Content = styled.div`
 	align-items: end;
 	width: 100%;
 	padding: 24px;
-	color: ${commonTheme.colors.primary};
-	z-index: 2;
+	color: ${commonTheme.colors.white};
 `
 const Tags = styled.div`
-	position: relative;
 	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/3'};
 	grid-column: ${({m}) => m.isMobile ? '1/7' : '1/3'};
 	display: flex;
 	flex-direction: column;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-	z-index: 2;
 `
 const Year = styled.span`
-	position: relative;
 	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/3'};
 	grid-column: ${({m}) => m.isMobile ? '7/13' : '3/5'};
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	text-align: ${({m}) => m.isMobile ? 'end' : 'start'};
-	z-index: 2;
 `
 const Title = styled.h2`
-	position: relative;
 	grid-row: ${({m}) => m.isMobile ? '1/2' : '1/3'};
 	grid-column: ${({m}) => m.isMobile ? '1/13' : '5/13'};
 	font-family: 'AccentFontR', sans-serif;
@@ -59,20 +53,10 @@ const Title = styled.h2`
 								: 76}px;
 	text-align: ${({m}) => m.isMobile ? 'start' : 'end'};
 	text-transform: uppercase;
-	z-index: 2;
-`
-const FilterDiv = styled.div`
-	position: relative;
-	grid-row: 1/2;
-	grid-column: 1/2;
-	width: 100%;
-	height: 30%;
-	background: linear-gradient(180deg, rgba(30, 30, 30, 0) 0%, ${commonTheme.colors.quaternary} 100%);
-	z-index: 1;
 `
 extend({CustomMaterial})
 
-const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => {
+const Plane = ({ post, index, count, caseData, carouselSizes, hovering, hoverNum }) => {
 
 	const media = useContext(MediaContext)
 	const covers = useTexture(caseData.map(c => c.mainImage.asset.url))
@@ -84,14 +68,14 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => 
 		let zoom = 1
 		media.isMobile ? zoom = 0.95 : zoom = 0.8
 		hovering && hoverNum === index
-		? materialRef.current.uZoom = lerp(materialRef.current.uZoom, 0.9, 0.05)
-		: materialRef.current.uZoom = lerp(materialRef.current.uZoom, zoom, 0.05)
-		materialRef.current.uScale = lerp(materialRef.current.uScale, (camera.position.x - carouselSizes.i * index) / 4000, 0.05)
-		materialRef.current.uShift = lerp(materialRef.current.uShift, ((camera.position.x - carouselSizes.i * index) - last) / 2000, 0.05)
-		last = (camera.position.x - carouselSizes.i * index)
+			? materialRef.current.uZoom = lerp(materialRef.current.uZoom, 0.9, 0.05)
+			: materialRef.current.uZoom = lerp(materialRef.current.uZoom, zoom, 0.05)
+		materialRef.current.uScale = lerp(materialRef.current.uScale, (camera.position.x - carouselSizes.i * count) / 4000, 0.05)
+		materialRef.current.uShift = lerp(materialRef.current.uShift, ((camera.position.x - carouselSizes.i * count) - last) / 2000, 0.05)
+		last = (camera.position.x - carouselSizes.i * count)
 	})
 
-	return <mesh position={[index * carouselSizes.i, -index * carouselSizes.h, -110]}>
+	return <mesh position={[count * carouselSizes.i, -count * carouselSizes.h, -110]}>
 		<planeGeometry args={[carouselSizes.w, carouselSizes.h, 16, 16]} attach='geometry' />
 		<customMaterial ref={materialRef} uTexture={media.isMobile ? coversMobile[index] : covers[index]} attach='material' />
 		<Html center position={[0, 0, -100]}>
@@ -103,7 +87,6 @@ const Plane = ({ post, index, caseData, carouselSizes, hovering, hoverNum }) => 
 					<Year m={media}>{post.publishedAt.split('-')[0]}</Year>
 					<Title m={media}>{post.title}</Title>
 				</Content>
-				<FilterDiv />
 			</Case>
 		</Html>
 	</mesh>

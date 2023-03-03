@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 
@@ -8,68 +8,139 @@ const LinkWrap = styled.div`
 `
 const Wave = styled.div`
 	display: flex;
-	font-family: ${({bottom, titleSize, pageName}) => pageName ? 'AccentFontR'
-																	: !titleSize && bottom ? 'AccentFontB'
-																	: titleSize && !bottom ? 'AccentFontT'
-																	: 'AccentFontM'}, sans-serif;
-	color: ${({theme, bottom, mobile, pageName}) => mobile || pageName ? commonTheme.colors.primary
-																: !mobile && bottom ? theme.ac.dark
-																: theme.mode.text };
+	font-family: ${ props => !props.titleSize && props.bottom ? 'AccentFontB'
+									: props.titleSize && !props.bottom ? 'AccentFontT'
+									: props.regular || (props.titleSize && props.bottom) ? 'AccentFontR'
+									: 'AccentFontM'}, sans-serif;
+	color: ${ props => props.mobile || props.whiteCol ? commonTheme.colors.white
+							: !props.mobile && props.bottom ? props.theme.ac.dark
+							: props.theme.mode.text};
 	transition: color ${commonTheme.durations.short}s;
 `
 const Letter = styled.div`
-	transform: translateY(${({waveAnim, showAnim, isMenuMobileOpen}) => waveAnim ? -100
-																							: isMenuMobileOpen ? 0
-																							: showAnim ? 100
-																							: 0}%);
-	transition: transform ${commonTheme.durations.short}s ${({delay}) => delay * 30}ms;
+	transform: translateY( ${ props => props.waveAnim ? -100
+												: props.isMenuMobileOpen ? 0
+												: !props.showAnimFinish ? 100
+												: 0}%);
+	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.out} ${({delay}) => delay * 30}ms;
 `
-const Letters = ({ child, waveAnim, showAnim, isMenuMobileOpen }) => {
-
-	const letterRef = useRef()
-
+const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	return child.split('').map((l, i) => {
-		if (l === ' ') return <Letter key={i}
-												isMenuMobileOpen={isMenuMobileOpen}
-												className={showAnim ? 'animItems' : ''}
-												delay={i}
-												waveAnim={waveAnim}
-												showAnim={showAnim}>&nbsp;</Letter>
+		if (l === ' ') {
+			return <Letter key={i}
+								isMenuMobileOpen={isMenuMobileOpen}
+								delay={i}
+								waveAnim={waveAnim}
+								showAnimFinish={showAnimFinish}>&thinsp;&thinsp;</Letter>
+		}
 		return <Letter key={i}
-							ref={letterRef}
 							isMenuMobileOpen={isMenuMobileOpen}
-							className={showAnim ? 'animItems' : ''}
 							delay={i}
 							waveAnim={waveAnim}
-							showAnim={showAnim}>{l}</Letter>
+							showAnimFinish={showAnimFinish}>{l}</Letter>
 	})
 }
 
-const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, pageName, isMenuMobileOpen, active }) => {
+const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
 
 	const [waveAnim, setWaveAnim] = useState(false)
+	const [selfHovering, setSelfHovering] = useState(false)
+	const [upAnim, setUpAnim] = useState(false)
+	const [downAnim, setDownAnim] = useState(false)
+	const [endUpAnim, setEndUpAnim] = useState(false)
 	const [mMOpen, setMMOpen] = useState(false)
+	const LBLRef = useRef()
+	const [showAnimFinish, setShowAnimFinish] = useState(!showAnim)
 
-	const mouseEnterHandler = e => {
-		setWaveAnim(wavy)
+	let delay = commonTheme.durations.middle * 1000 + (children.split('').length - 2) * 30
+
+	useEffect(() => {
+		if (wavy) {
+			if (hovering || selfHovering) {
+				if (!upAnim && !downAnim) {
+					setUpAnim(true)
+
+					setTimeout(() => {
+						setUpAnim(false)
+						setEndUpAnim(true)
+					}, delay)
+				}
+
+				if (endUpAnim) {
+					setUpAnim(true)
+				}
+
+			} else {
+				if (endUpAnim) {
+					setEndUpAnim(false)
+					setDownAnim(true)
+
+					setTimeout(() => {
+						setDownAnim(false)
+					}, delay)
+				}
+			}
+		}
+	}, [wavy, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
+
+	useEffect(() => {
+		if (wavy) {
+			upAnim && setWaveAnim(wavy)
+			downAnim && setWaveAnim(false)
+		}
+	}, [wavy, upAnim, downAnim])
+
+	useEffect(() => {
+		if (mobile) {
+			setTimeout(() => {
+				setMMOpen(isMenuMobileOpen)
+			}, 450)
+		}
+	}, [mobile, isMenuMobileOpen])
+
+	const offset = (el) => {
+		const rect = el.getBoundingClientRect()
+		const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+		const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+		return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 	}
 
-	const mouseLeaveHandler = e => {
-		setWaveAnim(false)
-	}
+	const textAnimate = useCallback(() => {
+		if (showAnim) {
+			const animItem = LBLRef.current
+			const animItemHeight = animItem.offsetHeight
+			const animItemOffset = offset(animItem).top
+			const animStart = 4 // the animation will work when (1/animStart) of the element height enters the viewport
+
+			let animItemPoint = window.innerHeight - animItemHeight / animStart
+			if (animItemHeight > window.innerHeight) {
+				animItemPoint = window.innerHeight - window.innerHeight / animStart
+			}
+
+			if ((window.scrollY > animItemOffset - animItemPoint) && window.scrollY < (animItemOffset + animItemHeight)) {
+				setShowAnimFinish(true)
+			}
+		}
+	}, [showAnim])
+
+	useEffect(() => {
+		window.addEventListener('wheel', textAnimate)
+
+		return () => window.removeEventListener('wheel', textAnimate)
+	}, [textAnimate])
 
 	useEffect(() => {
 		setTimeout(() => {
-			setMMOpen(isMenuMobileOpen)
-		}, 300)
-	}, [isMenuMobileOpen])
+			textAnimate()
+		}, 600)
+	}, [textAnimate])
 
-	return <LinkWrap wavy={wavy} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
-		<Wave mobile={mobile} titleSize={titleSize} showAnim={showAnim} pageName={pageName}>
-			<Letters child={children} waveAnim={waveAnim || active} showAnim={showAnim} isMenuMobileOpen={mMOpen} />
+	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseEnter={e=>setSelfHovering(true)} onMouseLeave={e=>setSelfHovering(false)}>
+		<Wave mobile={mobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>
-		{wavy && <Wave bottom mobile={mobile} titleSize={titleSize}>
-			<Letters child={children} waveAnim={waveAnim || active} isMenuMobileOpen={mMOpen} />
+		{wavy && <Wave bottom mobile={mobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>}
 	</LinkWrap>
 }

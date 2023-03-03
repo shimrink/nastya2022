@@ -102,14 +102,14 @@ const Circle = styled.div`
 	width: 146px;
 	height: 146px;
 	font-family: 'AccentFontB',sans-serif;
-	color: ${commonTheme.colors.primary};
+	color: ${commonTheme.colors.white};
 	background-color: ${ ({theme}) => theme.ac.dark };
 	border-radius: 50%;
 	cursor: none;
 	z-index: 3;
 	transform: translate(-50%, -50%) scale(0);
 `
-const NextCase = ({ c, i, caseData, pageTransition }) => {
+const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [nextCaseI, setNextCaseI] = useState(0)
@@ -127,8 +127,8 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 			const el = wrapperRef.current
 			const moveCirc = e => {
 				gsap.to(cirlceRef.current, {
-					top: e.pageY,
-					left: e.pageX,
+					top: e.clientY + mainRef.current.scrollTop,
+					left: e.clientX,
 					duration: commonTheme.durations.middle,
 					ease: 'power4.out',
 				})
@@ -153,7 +153,7 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 			el.addEventListener('mousemove', moveCirc)
 			return () => el.removeEventListener('mousemove', moveCirc)
 		}
-	}, [media])
+	}, [media, mainRef])
 
 	return <Wrapper ref={wrapperRef}>
 		<Title m={media}>

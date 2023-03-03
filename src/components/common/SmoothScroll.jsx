@@ -33,7 +33,6 @@ const SmoothScroll = ({ children, mainRef }) => {
 	}, [scrollTopValue])
 
 	const textAnimate = () => {
-		// Text animate
 		const animItems = document.querySelectorAll('.animItems')
 
 		if (animItems.length > 0) {

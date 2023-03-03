@@ -20,17 +20,23 @@ const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering, h
 		}
 	})
 
+	let count = -1
 	return <Suspense fallback={null}>
 		<OrthographicCamera makeDefault position={[0, 0, 100]} />
-		{caseData.map((p, i) => p.isMainSlider &&
-			<Plane key={p.slug.current}
-						post={p}
-						index={i}
-						caseData={caseData}
-						carouselSizes={carouselSizes}
-						hovering={hovering}
-						hoverNum={hoverNum} />
-		)}
+		{caseData.map((p, i) => {
+			if (p.isMainSlider) {
+				count++
+				return <Plane key={p.slug.current}
+									post={p}
+									index={i}
+									count={count}
+									caseData={caseData}
+									carouselSizes={carouselSizes}
+									hovering={hovering}
+									hoverNum={hoverNum} />
+			}
+			return null
+		})}
 	</Suspense>
 }
 

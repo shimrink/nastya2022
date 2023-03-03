@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
-import { commonTheme } from '../../styles/theme';
 import LetterByLetter from '../../components/common/LetterByLetter';
 
 const Wrapper = styled.div`
@@ -23,7 +22,7 @@ const Copywriting = styled.div`
 	font-size: ${ ({m}) => m.isHugeDesk || m.isDesk ? '16px'
 								: m.isMobile ? 'clamp(12px, 3.125vw, 14px)'
 								: '14px'};
-	color: ${commonTheme.colors.secondary};
+	color: ${ ({theme}) => theme.mode.subText };
 `
 const Team = styled(Copywriting)`
 	grid-column: ${({m}) => m.isMobile ? '3/5' : '4/5'};

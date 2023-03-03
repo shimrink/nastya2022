@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
-import { commonTheme } from '../../styles/theme';
 import UpperFooter from './UpperFooter';
 import UnderFooter from './UnderFooter';
 
@@ -10,8 +9,9 @@ const FooterWrapper = styled.footer`
 	display: flex;
 	flex-direction: column;
 	align-self: center;
+	align-items: center;
 	justify-content: flex-end;
-	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
+	width: 100%;
 	height: 100%;
 	margin-top: ${({m}) => m.isMobile ? 25 : 15}vh;
 	z-index: 3;
@@ -41,7 +41,7 @@ const Dev = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 16 : 14}px;
-	color: ${commonTheme.colors.secondary};
+	color: ${ ({theme}) => theme.mode.subText };
 `
 const Footer = () => {
 

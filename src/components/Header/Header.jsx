@@ -52,7 +52,7 @@ const Burger = styled.span`
 	grid-column: 3/4;
 	justify-self: end;
 	font-size: 16px;
-	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.primary : theme.mode.text };
+	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.white : theme.mode.text };
 	cursor: pointer;
 	z-index: 8;
 	transition: color ${commonTheme.durations.short}s;

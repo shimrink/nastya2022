@@ -31,17 +31,15 @@ const ProgressLine = styled.div`
 	background-color: ${ ({theme}) => theme.ac.dark };
 	transition: width ${commonTheme.durations.middle}s;
 `
-const ScrollProgress = ({ caseData, currentIndex, scrollCount }) => {
+const ScrollProgress = ({ casesCount, currentIndex, scrollCount }) => {
 
 	const media = useContext(MediaContext)
 
 	const [scrollValue, setScrollValue] = useState(null)
 
 	useEffect(() => {
-		if (caseData) {
-			setScrollValue(mapRange(0, caseData.length * scrollCount, 0, 100, currentIndex + scrollCount))
-		}
-	}, [currentIndex, caseData, scrollCount])
+		setScrollValue(mapRange(0, casesCount * scrollCount, 0, 100, currentIndex + scrollCount))
+	}, [currentIndex, casesCount, scrollCount])
 
 	return <ProgressLineWrapper m={media}>
 		<ProgressLineContainer />

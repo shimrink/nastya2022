@@ -45,13 +45,13 @@ const Grid = ({ c, pageTransition }) => {
 
 	return <Case className='rowItem' m={media} onClick={e => pageTransition(e, `cases/${c.slug.current}`)}>
 		<Img src={c.mobileImage.asset.url} alt={c.slug.current} />
-		<Name>{c.title}</Name>
+		<Name className='animItems _anim-show-opacity'>{c.title}</Name>
 		<Line />
 		<CaseInfo>
 			<Tags>
-				{c.tags.map((t, i) => <span key={i}> {t} <br/> </span>)}
+				{c.tags.map((t, i) => <span key={i} className='animItems _anim-show-opacity'>{t}</span>)}
 			</Tags>
-			<Year>{c.publishedAt.split('-')[0]}</Year>
+			<Year className='animItems _anim-show-opacity'>{c.publishedAt.split('-')[0]}</Year>
 		</CaseInfo>
 	</Case>
 }
