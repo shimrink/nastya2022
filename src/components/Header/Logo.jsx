@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 	grid-row: 1/2;
 	grid-column: ${({m}) => m.isHugeDesk || m.isDesk ? '1/6' : '1/2'};
 	justify-self: start;
-	z-index: 8;
+	z-index: 7;
 `
 const Svg = styled.svg`
 	width: auto;

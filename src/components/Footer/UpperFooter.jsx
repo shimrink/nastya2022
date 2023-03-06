@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
-import asyaImg from '../../assets/images/footerCover.png';
+import asyaImg from '../../assets/images/footerCover.webp';
 import { commonTheme } from '../../styles/theme';
 
 const moveX = keyframes`
@@ -49,10 +49,12 @@ const Title = styled.h2`
 	text-transform: uppercase;
 	white-space: nowrap;
 	margin-right: ${({m}) => m.isHugeDesk || m.isDesk ? 30 : 22}px;
+	transition: color ${commonTheme.durations.short}s;
 	span {
 		font-family: 'AccentFontM', sans-serif;
 		font-weight: 500;
 		color: ${ ({theme}) => theme.ac.dark };
+		transition: color ${commonTheme.durations.short}s;
 	}
 `
 const Img = styled.img`

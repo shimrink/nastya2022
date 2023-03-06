@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useContext, useEffect, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import gsap from 'gsap';
 import { MediaContext } from './AppWrap';
 import { commonTheme } from "./styles/theme";
 // import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
-import About from "./components/About/About";
+import Preloader from './components/common/Preloader';
 import Case from './cases/template/Case';
-import Footer from "./components/Footer/Footer";
 import Header from './components/Header/Header';
 import Home from "./components/Home/Home";
+import About from "./components/About/About";
 import Portfolio from "./components/Portfolio/Portfolio";
-import Preloader from './components/common/Preloader';
 import Services from "./components/Services/Services";
+import Contacts from './components/Contacts/Contacts';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -45,7 +45,7 @@ const Shtora = styled.div`
 	height: 120%;
 	border-radius: 50% / 0 0 100% 100%;
 	transform: translateY(100%);
-	z-index: 5;
+	z-index: 8;
 	.topRound,
 	.bottomRound {
 		width: 120vw;
@@ -72,6 +72,7 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
 	const [appInitialized, setAppInitialized] = useState(false)
+	const [pageInitialized, setPageInitialized] = useState(true)
 	const [showPreloader, setShowPreloader] = useState(true)
 	const [navDisable, setNavDisable] = useState(false)
 	const shtoraRef = useRef()
@@ -92,19 +93,27 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 
 	const pageTransition = (e, path) => {
 		if (pathname !== path && !navDisable) {
+			setPageInitialized(false)
 			setNavDisable(true)
 			e.preventDefault()
+
+			gsap.to(shtoraRef.current, {
+				yPercent: -110,
+				duration: commonTheme.durations.middle,
+				ease: 'power3.in'
+			})
+
+			setTimeout(() => { navigate(path) }, 600)
+		}
+	}
+
+	useEffect(() => {
+		if (pageInitialized) {
 			const tl = gsap.timeline()
 			tl.to(shtoraRef.current, {
-				yPercent: -110,
-				duration: 0.2,
-				ease: 'linear'
-			})
-			setTimeout(() => { navigate(path) }, 300)
-			tl.to(shtoraRef.current, {
 				yPercent: -200,
-				duration: 0.2,
-				ease: 'linear',
+				duration: commonTheme.durations.middle,
+				ease: 'power3.out',
 				delay: 0.3
 			})
 			tl.to(shtoraRef.current, {
@@ -112,27 +121,29 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 				duration: 0,
 				ease: 'linear'
 			})
-			setTimeout(() => { setNavDisable(false) }, 700)
+			setNavDisable(false)
 		}
-	}
+	}, [pageInitialized])
 
 	// useEffect(() => {
 	// 	const gradient = new Gradient()
 	// 	gradient.initGradient('#gradient-canvas')
-	// }, [themeMode, accentColor])
+	// }, [pathname, themeMode, accentColor])
 
 	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'}>
 		{/* <canvas id='gradient-canvas' data-transition-in width={media.isHugeDesk || media.isDesk ? 1920 : 1280} height={media.isHugeDesk || media.isDesk ? 960 : 600} /> */}
 		<Header pageTransition={pageTransition} accentColor={accentColor} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
 		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
-		<Routes>
-			{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}
-			<Route path="/portfolio" element={<Portfolio caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
-			<Route path="/about" element={<About pageTransition={pageTransition} />} />
-			<Route path="/services" element={<Services />} />
-			<Route path="/contacts" element={<Footer />} />
-			<Route path="/" element={<Home caseData={caseData} pageTransition={pageTransition} />} />
-		</Routes>
+		<Suspense fallback={null}>
+			<Routes>
+				{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case setPageInitialized={setPageInitialized} c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}
+				<Route path="/portfolio" element={<Portfolio setPageInitialized={setPageInitialized} caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
+				<Route path="/about" element={<About setPageInitialized={setPageInitialized} pageTransition={pageTransition} />} />
+				<Route path="/services" element={<Services setPageInitialized={setPageInitialized} />} />
+				<Route path="/contacts" element={<Contacts setPageInitialized={setPageInitialized} />} />
+				<Route path="/" element={<Home setPageInitialized={setPageInitialized} caseData={caseData} pageTransition={pageTransition} />} />
+			</Routes>
+		</Suspense>
 		<Shtora ref={shtoraRef}>
 			<div className='topRound' />
 			<div className='mainShtora' />

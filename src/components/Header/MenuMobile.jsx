@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 	height: 110%;
 	touch-action: none;
 	transform: translateY(-100%);
-	z-index: 7;
+	z-index: 6;
 `
 const Content = styled.div`
 	display: grid;
@@ -63,7 +63,7 @@ const MenuMobile = forwardRef(({ isMenuMobileOpen, closeMenu }, ref) => {
 
 	return <Wrapper ref={ref}>
 		<Content m={media}>
-			<Navigation mobile isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />
+			<Navigation navMobile isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />
 			<Social m={media}>
 				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
 					<LetterByLetter wavy whiteCol>Vk</LetterByLetter>

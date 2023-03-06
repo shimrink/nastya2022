@@ -16,6 +16,7 @@ const Title = styled.h3`
 	text-transform: uppercase;
 	cursor: pointer;
 	z-index: 1;
+	transition: color ${commonTheme.durations.short}s;
 	&.active {
 		font-family: 'AccentFontM';
 		font-weight: 500;
@@ -27,7 +28,7 @@ const TitleArea = styled.div`
 	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
 	grid-column: 1/2;
 	width: 100%;
-	cursor: none;
+	cursor: ${({m}) => m.isHugeDesk || m.isDesk ? 'none' : 'pointer'};
 	z-index: 3;
 `
 const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
@@ -53,19 +54,23 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 	}
 
 	const showCirc = () => {
-		gsap.to(cirlceRef.current, {
-			scale: 1,
-			duration: commonTheme.durations.short,
-			ease: 'power4.out',
-		})
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(cirlceRef.current, {
+				scale: 1,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		}
 	}
 
 	const hideCirc = () => {
-		gsap.to(cirlceRef.current, {
-			scale: 0,
-			duration: commonTheme.durations.short,
-			ease: 'power4.out',
-		})
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(cirlceRef.current, {
+				scale: 0,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		}
 	}
 
 	useEffect(() => {
@@ -88,6 +93,7 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 	return <Wrap>
 		<Title i={i} className={i === 0 ? 'interest active' : 'interest'} m={media}>{children}</Title>
 		<TitleArea i={i}
+					m={media}
 					className={i === 0 ? 'interestArea active' : 'interestArea'}
 					onClick={switchGif}
 					onMouseOver={showCirc}

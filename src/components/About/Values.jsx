@@ -9,7 +9,10 @@ import Value from './Value';
 const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-top: clamp(356px, 26.095vw, 468px);
+	margin-top: ${({m}) => m.isMobile ? '264px'
+								: m.isTabletP ? '354px'
+								: m.isTabletA ? '328px'
+								: 'clamp(376px, 26.88vw, 468px)'};
 `
 const Content = styled.div`
 	display: grid;
@@ -57,7 +60,7 @@ const Values = ({ pageTransition }) => {
 
 	const media = useContext(MediaContext)
 
-	return <Wrap>
+	return <Wrap m={media}>
 		<SectionTitle valuesInWork>Ценности в работе</SectionTitle>
 		<Content m={media}>
 			<Container m={media}>

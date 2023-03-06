@@ -31,7 +31,8 @@ export const commonTheme = {
 	},
 
 	easings: {
-		out: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
+		outPower3: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
+		outPower4: 'cubic-bezier(0.230, 1.000, 0.320, 1.000)',
 	},
 }
 

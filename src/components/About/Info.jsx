@@ -3,14 +3,16 @@ import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import SectionTitle from '../common/SectionTitle';
-import asyaP from '../../assets/images/aboutInfoPortrait.jpg';
-import asyaA from '../../assets/images/aboutInfoAlbum.jpg';
+import asyaP from '../../assets/images/aboutInfoPortrait.webp';
+import asyaA from '../../assets/images/aboutInfoAlbum.webp';
 
 const Wrap = styled.div`
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
-	padding-top: ${({m}) => m.isHugeDesk || m.isDesk ? '192px' : 'clamp(96px, 26.67vw, 120px)'};
+	padding-top: ${ ({m}) => m.isHugeDesk || m.isDesk ? '192px'
+									: m.isMobile ? 'clamp(96px, 26.67vw, 120px)'
+									: '120px'};
 	transform-style: preserve-3d;
 `
 const Content = styled.div`
@@ -25,7 +27,11 @@ const Content = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
-	transform: ${({land, port}) => land ? 'translateZ(-1px) scale(1.077)' : port ? 'translateZ(-2px) scale(1.154)' : 'none'};
+	transform: ${ ({m, land, port}) => m.isMobile && land ? 'translateZ(2px) scale(0.846)'
+												: m.isMobile && port ? 'translateZ(1px) scale(0.923)'
+												: land ? 'translateZ(-1px) scale(1.077)'
+												: port ? 'translateZ(-2px) scale(1.154)'
+												: 'none'};
 	img {
 		opacity: ${({land, port}) => land || port ? 1 : 0};
 	}
@@ -56,8 +62,11 @@ const Multi = styled.h2`
 	color: ${ ({theme}) => theme.ac.dark };
 	font-family: 'AccentFontM';
 	font-weight: 500;
-	font-size: clamp(30px, 3.13vw, 48px);
+	font-size: ${ ({m}) => m.isTabletA || m.isTabletP ? 'clamp(24px, 3.065vw, 30px)'
+								: m.isMobile ? 'clamp(22px, 6.075vw, 29px)'
+								: 'clamp(40px, 2.815vw, 48px)'};
 	text-transform: uppercase;
+	transition: color ${commonTheme.durations.short}s;
 `
 const Text = styled.p`
 	position: relative;
@@ -88,7 +97,7 @@ const Portrait = styled.img`
 									: '2/6'};
 	align-self: center;
 	width: 100%;
-	padding-top: ${({m}) => m.isMobile ? 152 : 0}px;
+	padding-top: ${({m}) => m.isMobile ? 76 : 0}px;
 	z-index: 1;
 `
 const Info = () => {

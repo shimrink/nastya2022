@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 
@@ -7,7 +7,11 @@ const Main = styled.main`
 	flex-direction: column;
 	width: 100%;
 `
-const Services = () => {
+const Services = ({ setPageInitialized }) => {
+
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
 

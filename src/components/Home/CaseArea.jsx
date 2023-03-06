@@ -33,7 +33,7 @@ const Carousel = styled.div`
 	justify-content: center;
 	width: 100%;
 	aspect-ratio: ${({m}) => m.isMobile ? '0.754' : '16/9'};
-	transition: transform ${commonTheme.durations.long}s cubic-bezier(0.230, 1.000, 0.320, 1.000);
+	transition: transform ${commonTheme.durations.long}s ${commonTheme.easings.outPower4};
 	transform: translate(${ props => -props.currentIndex * 122 / props.scrollCount }%, ${ props => -props.currentIndex * 100 / props.scrollCount }%);
 `
 const CaseWrapper = styled.div`

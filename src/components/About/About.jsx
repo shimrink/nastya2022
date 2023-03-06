@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import SmoothScroll from '../common/SmoothScroll';
@@ -9,7 +9,7 @@ import Values from './Values';
 import Interests from './Interests';
 import Philosophy from './Philosophy';
 import Footer from '../Footer/Footer';
-import coverImg from '../../assets/images/aboutCover.png';
+import coverImg from '../../assets/images/aboutCover.webp';
 
 const Main = styled.main`
 	perspective: 13px;
@@ -69,7 +69,11 @@ const Contacts = styled.div`
 		margin-bottom: 0;
 	}
 `
-const About = ({ pageTransition }) => {
+const About = ({ setPageInitialized, pageTransition }) => {
+
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
 	const mainRef = useRef()
@@ -102,7 +106,7 @@ const About = ({ pageTransition }) => {
 			<Values pageTransition={pageTransition} />
 			<Interests mainRef={mainRef} />
 			<Philosophy />
-			<Footer about />
+			<Footer />
 		</SmoothScroll>
 	</Main>
 }

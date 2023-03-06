@@ -1,7 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import gsap from "gsap";
+import { MediaContext } from "../../AppWrap";
 import { commonTheme } from "../../styles/theme";
+import aboutCover from '../../assets/images/aboutCover.webp';
+import aboutIA from '../../assets/images/aboutInfoAlbum.webp';
+import aboutIP from '../../assets/images/aboutInfoPortrait.webp';
+import cats from '../../assets/images/Cats.webp';
+import colors from '../../assets/images/Colors.webp';
+import games from '../../assets/images/Games.webp';
+import neyro from '../../assets/images/Neyro.webp';
+import footerCover from '../../assets/images/footerCover.webp';
 
 const Main = styled.div`
 	position: fixed;
@@ -23,6 +32,7 @@ const Svg = styled.svg`
 `
 const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor }) => {
 
+	const media = useContext(MediaContext)
 	const [arrInitialized, setArrInitialized] = useState(false)
 	const mainRef = useRef()
 	const darkColRef = useRef()
@@ -40,13 +50,23 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor })
 	useEffect(() => {
 		document.querySelector('body').style.overflowY = 'hidden'
 
-		// Fill in the array with images URLs from Sanity
+		// Fill in the array with images URLs from Sanity + local
 		let imgArr = []
 		if (caseData && categoriesData) {
 			for (let i = 0; i < caseData.length; i++) {
-				imgArr.push(caseData[i].mainImage.asset.url)
+				if (media.isHugeDesk || media.isDesk) {
+					imgArr.push(caseData[i].mainImage.asset.url)
+				}
 				imgArr.push(caseData[i].mobileImage.asset.url)
 			}
+			imgArr.push(aboutCover)
+			imgArr.push(aboutIA)
+			imgArr.push(aboutIP)
+			imgArr.push(cats)
+			imgArr.push(colors)
+			imgArr.push(games)
+			imgArr.push(neyro)
+			imgArr.push(footerCover)
 			setArrInitialized(true)
 		}
 
@@ -70,8 +90,8 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor })
 				const tl = gsap.timeline()
 				tl.to(mainRef.current, {
 					opacity: 0,
-					duration: commonTheme.durations.middle,
-					ease: 'linear',
+					duration: commonTheme.durations.long,
+					ease: 'power3.inOut',
 					delay: 1.5,
 				})
 				tl.to(mainRef.current, {
@@ -96,7 +116,7 @@ const Preloader = ({ categoriesData, caseData, setAppInitialized, accentColor })
 				setAppInitialized(true)
 			}
 		}
-	}, [setAppInitialized, caseData, categoriesData, arrInitialized])
+	}, [media, setAppInitialized, caseData, categoriesData, arrInitialized])
 
 	return <Main ref={mainRef}>
 		<Svg viewBox="0 0 109 123" xmlns="http://www.w3.org/2000/svg">

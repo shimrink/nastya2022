@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import Plane from './Plane';
 
-const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering, hoverNum }) => {
+const Scene = ({ setPageInitialized, currentIndex, caseData, scrollCount, carouselSizes, hovering, hoverNum }) => {
 
 	const [prevIndex, setPrevIndex] = useState(0)
 
@@ -27,6 +27,7 @@ const Scene = ({ currentIndex, caseData, scrollCount, carouselSizes, hovering, h
 			if (p.isMainSlider) {
 				count++
 				return <Plane key={p.slug.current}
+									setPageInitialized={setPageInitialized}
 									post={p}
 									index={i}
 									count={count}

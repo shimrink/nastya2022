@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
@@ -40,20 +40,25 @@ const GridWrapper = styled.div`
 								: m.isTabletP ? '80px'
 								: 'clamp(68px, 19.655vw, 96px)'};
 `
-const Portfolio = ({ caseData, categoriesData, pageTransition }) => {
+const Portfolio = ({ setPageInitialized, caseData, categoriesData, pageTransition }) => {
+
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
+	const [scrollTopV, setScrollTopV] = useState(0)
 	const mainRef = useRef()
 
 	return <Main ref={mainRef}>
-		<SmoothScroll mainRef={mainRef}>
-			<TopBlock m={media} className='animItems _anim-show-opacity'>
-				<Title m={media}>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
+		<SmoothScroll mainRef={mainRef} setScrollTopV={setScrollTopV}>
+			<TopBlock m={media}>
+				<Title m={media} className='animItems _anim-show-opacity'>Проекты,&nbsp;созданные<br/>с&nbsp;вниманием и&nbsp;любовью</Title>
 				<Tabs caseData={caseData} categoriesData={categoriesData} />
 			</TopBlock>
 			{(media.isHugeDesk || media.isDesk)
 			?
-				<Rows mainRef={mainRef} caseData={caseData} pageTransition={pageTransition} />
+				<Rows scrollTopV={scrollTopV} mainRef={mainRef} caseData={caseData} pageTransition={pageTransition} />
 			:
 				<GridWrapper m={media}>
 					{caseData.map((c, i) => c.isPortfolio &&

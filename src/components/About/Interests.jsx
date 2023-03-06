@@ -10,7 +10,14 @@ import Interest from './Interest';
 const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-top: 435px;
+	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 'clamp(472px, 35.105vw, 640px)'
+								: m.isTabletA || m.isTabletP ? 'clamp(444px, 52.205vw, 466px)'
+								: 'clamp(208px, 57.64vw, 276px)'};
+	margin-bottom: ${({m}) => m.isHugeDesk ? '80px'
+									: m.isDesk ? '164px'
+									: m.isTabletA ? '88px'
+									: m.isTabletP ? '208px'
+									: 'clamp(4px, 10vw, 96px)'};
 `
 const Content = styled.div`
 	display: grid;
@@ -21,9 +28,9 @@ const Gifs = styled.div`
 	grid-column: ${({m}) => m.isHugeDesk ? '2/3' : '1/4'};
 	display: grid;
 	grid-template-columns: ${({m}) => m.isMobile || m.isTabletP ? '1fr 1fr' : 'repeat(12, 1fr)'};
-	grid-column-gap: ${ ({m}) => m.isMobile ? 0
-										: m.isTabletP ? 40
-										: 24}px;
+	grid-column-gap: ${ ({m}) => m.isMobile ? 'clamp(12px, 3.75vw, 20px)'
+										: m.isTabletP ? '40px'
+										: '24px'};
 	padding: ${({m}) => m.isHugeDesk ? '0'
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
@@ -44,7 +51,9 @@ const Container = styled.div`
 	grid-column: 1/4;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: ${({m}) => m.isMobile || m.isTabletP ? 40 : 24}px;
+	grid-column-gap: ${ ({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
+										: m.isTabletP ? '40px'
+										: '24px'};
 `
 const InnerContainer = styled.div`
 	grid-row: 1/2;
@@ -73,8 +82,9 @@ const Text = styled.div`
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: 24px;
 	padding: ${({m}) => m.isTabletP ? '0 0 0 20px'
-							: m.isMobile ? '48px 24px 0 24px'
+							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 0 0 24px'};
+	margin-top: ${({m}) => m.isMobile ? 48 : 0}px;
 	p {
 		grid-row: 1/2;
 		grid-column: ${({m}) => m.isHugeDesk ? '1/5'
@@ -112,7 +122,7 @@ const Interests = ({ mainRef }) => {
 	const wrapperRef = useRef()
 	const cirlceRef = useRef()
 
-	return <Wrap ref={wrapperRef}>
+	return <Wrap ref={wrapperRef} m={media}>
 		<SectionTitle interests>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
@@ -130,7 +140,7 @@ const Interests = ({ mainRef }) => {
 				</InnerContainer>
 			</Container>
 			{media.isMobile && <Text m={media}>
-				<p>Меня очень вдохновляют цвета и разнообразные их сочетания: палитры оттенков могут создавать яркие эмоции и окунать в атмосферу и воспоминания.<br/>В своих проектах я охотно использую самые разные цвета, а на моем сайте можно с ними даже поиграть!</p>
+				{state.gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
 			</Text>}
 		</Content>
 		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Тык</Circle>}

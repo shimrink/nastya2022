@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
@@ -76,48 +77,65 @@ const LineWrap = styled.div`
 	width: 100%;
 	padding: 0 40px;
 `
-const Row = ({ c, mainRef, casesRef, caseData, pageTransition }) => {
+gsap.registerPlugin(CustomEase);
+
+const Row = ({ c, scrollTopV, mainRef, casesRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
-	useEffect(() => {
-		const el = casesRef.current
-		const onMouseMove = e => {
-			let crd = casesRef.current.getBoundingClientRect()
-			if (crd.top <= e.clientY
-			&& e.clientY <= crd.bottom
-			&& crd.left <= e.clientX
-			&& e.clientX <= crd.right) {
-				for (let i = 0; i < caseData.length; i++) {
-					gsap.to(imgRef.current, {
-						left: e.clientX,
-						top: e.clientY + mainRef.current.scrollTop,
-						duration: commonTheme.durations.middle,
-						ease: 'power4.out',
-					})
-					gsap.to(imgRef.current, {
-						scale: 1,
-						duration: 0,
-						ease: 'linear',
-					})
-				}
-			} else {
-				for (let i = 0; i < caseData.length; i++) {
-					gsap.to(imgRef.current, {
-						scale: 0,
-						duration: 0,
-						ease: 'linear',
-					})
-				}
+	const moveImg = useCallback(e => {
+		let crd = casesRef.current.getBoundingClientRect()
+		if (crd.top <= e.clientY
+		&& e.clientY <= crd.bottom
+		&& crd.left <= e.clientX
+		&& e.clientX <= crd.right) {
+			for (let i = 0; i < caseData.length; i++) {
+				gsap.to(imgRef.current, {
+					left: e.clientX,
+					top: e.clientY + mainRef.current.scrollTop,
+					duration: commonTheme.durations.middle,
+					ease: 'power4.out',
+				})
+				gsap.to(imgRef.current, {
+					scale: 1,
+					duration: 0,
+					ease: 'linear',
+				})
+			}
+		} else {
+			for (let i = 0; i < caseData.length; i++) {
+				gsap.to(imgRef.current, {
+					scale: 0,
+					duration: 0,
+					ease: 'linear',
+				})
 			}
 		}
-
-		el.addEventListener('mousemove', onMouseMove)
-
-		return () => el.removeEventListener('mousemove', onMouseMove)
 	}, [mainRef, casesRef, caseData])
+
+	useEffect(() => {
+		const el = casesRef.current
+		el.addEventListener('mousemove', moveImg)
+
+		return () => el.removeEventListener('mousemove', moveImg)
+	}, [casesRef, moveImg])
+
+	useEffect(() => {
+		const el = mainRef.current
+		const moveImgH = e => {
+			let st = e.deltaY > 0 ? 100 : -100
+			gsap.to(imgRef.current, {
+				top: e.clientY + scrollTopV + st,
+				duration: commonTheme.durations.long,
+				ease: 'power4.out',
+			})
+		}
+		el.addEventListener('wheel', moveImgH)
+
+		return () => el.removeEventListener('wheel', moveImgH)
+	}, [mainRef, scrollTopV])
 
 	const showImg = e => {
 		gsap.to(imgRef.current, {

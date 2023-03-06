@@ -24,11 +24,13 @@ const moveXReverse = keyframes`
 const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-top: 576px;
-	padding-bottom: ${({m, row}) => m.isMobile ? 120
-											: m.isTabletP ? row * 196.5
-											: m.isTabletA ? row * 220.5
-											: row * 322.5}px;
+	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 'clamp(452px, 32.655vw, 576px)'
+								: m.isTabletA || m.isTabletP ? 'clamp(288px, 35.85vw, 342px)'
+								: 'clamp(188px, 51.11vw, 240px)'};
+	padding-bottom: ${({m}) => m.isMobile ? 123
+									: m.isTabletP ? 183
+									: m.isTabletA ? 207
+									: 300}px;
 `
 const MovingRow = styled.div`
 	position: absolute;
@@ -40,8 +42,6 @@ const MovingRow = styled.div`
 										: row * 115.5}px;
 	animation: ${({reverse}) => reverse ? moveXReverse : moveX} 22s linear infinite;
 `
-// justify-self: ${({reverse}) => reverse ? 'flex-end' : 'flex-start'};
-// animation: ${({reverse}) => reverse ? moveXReverse : moveX} 22s linear infinite;
 const String = styled.div`
 	padding-left: ${ ({m}) => m.isHugeDesk || m.isDesk ? 40
 									: m.isMobile ? 16

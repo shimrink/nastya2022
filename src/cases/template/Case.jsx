@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
@@ -108,20 +108,27 @@ const Button = styled.a`
 		margin: 0 12px 0 0;
 	}
 `
-const Case = ({ c, i, caseData, pageTransition }) => {
+const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
+
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
 	const mainRef = useRef()
 
-	// id соответствует порядковому номеру кейса
+	// slug должен совпадать с тем, что в Sanity
 	const casesArr = [
-		{ id: 1, url: AsyaDulova },
-		{ id: 2, url: UivProduction },
+		{ slug: 'asyadulova', url: AsyaDulova },
+		{ slug: 'uiv-production', url: UivProduction },
 	]
 
-	const CurrentCase = casesArr[i].url
-
-	if (casesArr[i].id - 1 !== i) console.error('id не совпадает с порядковым номером кейса.')
+	let CurrentCase
+	casesArr.forEach((a) => {
+		if (a.slug === c.slug.current) {
+			CurrentCase = a.url
+		}
+	})
 
 	return <Main ref={mainRef}>
 		<SmoothScroll mainRef={mainRef}>

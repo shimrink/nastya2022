@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Html, useTexture } from '@react-three/drei';
 import { extend, useFrame } from '@react-three/fiber';
@@ -56,7 +56,11 @@ const Title = styled.h2`
 `
 extend({CustomMaterial})
 
-const Plane = ({ post, index, count, caseData, carouselSizes, hovering, hoverNum }) => {
+const Plane = ({ setPageInitialized, post, index, count, caseData, carouselSizes, hovering, hoverNum }) => {
+
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
 	const covers = useTexture(caseData.map(c => c.mainImage.asset.url))

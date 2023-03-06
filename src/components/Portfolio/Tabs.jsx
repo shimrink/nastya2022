@@ -6,46 +6,48 @@ import { commonTheme } from '../../styles/theme';
 const Wrapper = styled.div`
 	display: ${({m}) => m.isMobile ? 'grid' : 'flex'};
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: ${({m}) => m.isMobile ? 24 : 0}px;
+	grid-gap: ${({m}) => m.isMobile ? 24 : 0}px;
 	justify-content: ${({m}) => m.isMobile || m.isTabletP ? 'space-between' : 'center'};
 	width: 100%;
 	padding: ${({m}) => m.isTabletP ? '0 40px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0'};
 	margin-bottom: 48px;
-	div {
-		display: grid;
-		width: ${({m}) => m.isMobile ? `100%` : 'auto'};
-		padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
-		margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
-		margin-bottom: ${({m}) => m.isMobile ? 24 : 0}px;
-		border: 1px solid ${ ({theme}) => theme.ac.light };
-		border-radius: 9em;
-		cursor: pointer;
-		transition: background-color ${commonTheme.durations.short}s,
-						color ${commonTheme.durations.short}s;
-		span {
-			grid-row: 1/2;
-			grid-column: 1/2;
-			font-family: 'AccentFontM', sans-serif;
-			font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-			text-align: center;
-			opacity: 1;
-		}
-		.tabTextActive {
-			font-family: 'AccentFontB', sans-serif;
-			opacity: 0;
-		}
+`
+const Tab = styled.div`
+	grid-row: ${({num}) => num === 0 || num === 1 ? `1/2`
+								: num === 2 || num === 4 ? '2/3'
+								: `3/4`};
+	grid-column: ${({num}) => num === 0 || num === 2 ? `1/2`
+									: num === 3 ? '1/3'
+									: `2/3`};
+	display: grid;
+	width: ${({m}) => m.isMobile ? `100%` : 'auto'};
+	padding: 16px ${({m}) => m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px'};
+	margin-right: ${({m}) => m.isMobile || m.isTabletP ? 0 : 24}px;
+	border: 1px solid ${ ({theme}) => theme.ac.light };
+	border-radius: 9em;
+	cursor: pointer;
+	transition: background-color ${commonTheme.durations.short}s;
+	span {
+		grid-row: 1/2;
+		grid-column: 1/2;
+		align-self: center;
+		font-family: 'AccentFontM', sans-serif;
+		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
+		text-align: center;
+		opacity: 1;
+		transition: color ${commonTheme.durations.short}s;
 	}
-	div:last-child {
-		grid-column: 1/3;
-		margin: 0;
+	.tabTextActive {
+		font-family: 'AccentFontB', sans-serif;
+		opacity: 0;
 	}
-	div:hover {
+	&:hover {
 		background-color: ${ ({theme}) => theme.ac.dark };
 		color: ${commonTheme.colors.white};
 	}
-	div.tabItemActive {
+	&.tabItemActive {
 		background-color: ${ ({theme}) => theme.ac.dark };
 		color: ${commonTheme.colors.white};
 		span {
@@ -78,9 +80,13 @@ const Tabs = ({ caseData, categoriesData }) => {
 
 		// Show all cases
 		for (let i = 0; i < rowArr.length; i++) {
-			rowArr[i].style.height = rowHeightArr.current[i] + 'px'
-			rowArr[i].children[1].style.opacity = 1
-			rowArr[i].children[1].style.transition = 'opacity 30ms'
+			if (media.isHugeDesk || media.isDesk) {
+				rowArr[i].style.height = rowHeightArr.current[i] + 'px'
+				rowArr[i].children[1].style.opacity = 1
+				rowArr[i].children[1].style.transition = 'opacity 30ms'
+			} else {
+				rowArr[i].style.display = 'flex'
+			}
 		}
 
 		// Hide unnecessary cases
@@ -92,28 +98,33 @@ const Tabs = ({ caseData, categoriesData }) => {
 
 					if (j === caseData[i].categories.length - 1
 					&& caseData[i].categories[j].title !== elem.children[0].innerText) {
-						rowArr[i].style.height = 0
-						rowArr[i].children[1].style.opacity = 0
-						rowArr[i].children[1].style.transition = 'opacity 600ms'
+						if (media.isHugeDesk || media.isDesk) {
+							rowArr[i].style.height = 0
+							rowArr[i].children[1].style.opacity = 0
+							rowArr[i].children[1].style.transition = 'opacity 600ms'
+						} else {
+							rowArr[i].style.display = 'none'
+						}
 					}
 				}
 			}
 		}
 	}
 
-	return <Wrapper m={media}>
-		<div num={0} className='tabItem0 tabItemActive' onClick={ e => tabSwitch('.tabItem0') }>
+	return <Wrapper m={media} className='animItems _anim-show-opacity'>
+		<Tab num={0} className='tabItem0 tabItemActive' m={media} onClick={ e => tabSwitch('.tabItem0') }>
 			<span>Все</span>
 			<span className='tabTextActive'>Все</span>
-		</div>
+		</Tab>
 		{categoriesData.map((c, i) => (
-			<div key={i}
+			<Tab key={i}
 			num={i + 1}
 			className={`tabItem${i + 1}`}
+			m={media}
 			onClick={ e => tabSwitch(`.tabItem${i + 1}`) }>
 				<span>{c.title}</span>
 				<span className='tabTextActive'>{c.title}</span>
-			</div>
+			</Tab>
 		))}
 	</Wrapper>
 }

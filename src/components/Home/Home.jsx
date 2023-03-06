@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
 import { commonTheme } from '../../styles/theme';
@@ -41,10 +41,9 @@ const ShowButton = styled.div`
 	transform: translate(-50%, -50%) scale(0);
 	z-index: 3;
 `
-const Home = ({ caseData, pageTransition }) => {
+const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-
 	const [scrollCount, setScrollCount] = useState(1)
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [carouselSizes, setCarouselSizes] = useState({width: 0, height: 0, indent: 0})
@@ -58,10 +57,6 @@ const Home = ({ caseData, pageTransition }) => {
 		if (c.isMainSlider) casesCount++
 	})
 
-	useEffect(() => {
-		setScrollCount(media.isHugeDesk || media.isDesk ? 5 : 1)
-	}, [media])
-
 	const next = useCallback(() => {
 		if (currentIndex < ((casesCount - 1) * scrollCount)) {
 			setCurrentIndex(prevState => prevState + 1)
@@ -73,18 +68,6 @@ const Home = ({ caseData, pageTransition }) => {
 			setCurrentIndex(prevState => prevState - 1)
 		}
 	}, [currentIndex])
-
-	useEffect(() => {
-		const el = mainRef.current
-		const onWheel = e => {
-			e.preventDefault()
-			e.deltaY > 0 ? next() : prev()
-		}
-
-		el.addEventListener('wheel', onWheel)
-
-		return () => el.removeEventListener('wheel', onWheel)
-	}, [next, prev])
 
 	const touchStartHandler = e => {
 		setTouchPosition({
@@ -104,32 +87,50 @@ const Home = ({ caseData, pageTransition }) => {
 			setTouchPosition(null)
 		}
 	}
-// Попробовать заменить gl={{toneMapping: THREE.NoToneMapping}} на flat
-	return <Main ref={mainRef}
-					m={media}
-					onTouchStart={touchStartHandler}
-					onTouchMove={touchMoveHandler}>
-		<Canvas linear flat className='canvas-main'>
-			<Scene currentIndex={currentIndex}
-					caseData={caseData}
-					scrollCount={scrollCount}
-					carouselSizes={carouselSizes}
-					hovering={hovering}
-					hoverNum={hoverNum} />
-		</Canvas>
-		{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
-		<CaseArea caseData={caseData}
-					currentIndex={currentIndex}
-					scrollCount={scrollCount}
-					showButtonRef={showButtonRef}
-					setCarouselSizes={setCarouselSizes}
-					setHovering={setHovering}
-					setHoverNum={setHoverNum}
-					pageTransition={pageTransition} />
-		<ScrollProgress casesCount={casesCount}
-							currentIndex={currentIndex}
-							scrollCount={scrollCount} />
-	</Main>
+
+	useEffect(() => {
+		const el = mainRef.current
+		const onWheel = e => {
+			e.preventDefault()
+			e.deltaY > 0 ? next() : prev()
+		}
+		el.addEventListener('wheel', onWheel)
+
+		return () => el.removeEventListener('wheel', onWheel)
+	}, [next, prev])
+
+	useEffect(() => {
+		setScrollCount(media.isHugeDesk || media.isDesk ? 5 : 1)
+	}, [media])
+
+	return <Suspense fallback={null}>
+		<Main ref={mainRef}
+						m={media}
+						onTouchStart={touchStartHandler}
+						onTouchMove={touchMoveHandler}>
+			<Canvas linear flat className='canvas-main'>
+				<Scene currentIndex={currentIndex}
+						setPageInitialized={setPageInitialized}
+						caseData={caseData}
+						scrollCount={scrollCount}
+						carouselSizes={carouselSizes}
+						hovering={hovering}
+						hoverNum={hoverNum} />
+			</Canvas>
+			{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
+			<CaseArea caseData={caseData}
+						currentIndex={currentIndex}
+						scrollCount={scrollCount}
+						showButtonRef={showButtonRef}
+						setCarouselSizes={setCarouselSizes}
+						setHovering={setHovering}
+						setHoverNum={setHoverNum}
+						pageTransition={pageTransition} />
+			<ScrollProgress casesCount={casesCount}
+								currentIndex={currentIndex}
+								scrollCount={scrollCount} />
+		</Main>
+	</Suspense>
 }
 
 export default Home;

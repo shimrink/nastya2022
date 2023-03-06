@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
 
@@ -8,8 +9,9 @@ const Wrapper = styled.div`
 	width: 100%;
 	transform-style: preserve-3d;
 `
-const SmoothScroll = ({ children, mainRef }) => {
+const SmoothScroll = ({ children, mainRef, setScrollTopV }) => {
 
+	const {pathname} = useLocation()
 	const scrollStep = 100
 	const [scrollTopValue, setScrollTopValue] = useState(0)
 	const wrapRef = useRef()
@@ -32,67 +34,95 @@ const SmoothScroll = ({ children, mainRef }) => {
 		}
 	}, [scrollTopValue])
 
-	const textAnimate = () => {
+	const offset = (el) => {
+		const rect = el.getBoundingClientRect()
+		const scrollLeft = window.scrollX || document.documentElement.scrollLeft
+		const scrollTop = window.scrollY || document.documentElement.scrollTop
+		return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+	}
+
+	const textAnimate = useCallback((val) => {
 		const animItems = document.querySelectorAll('.animItems')
 
 		if (animItems.length > 0) {
-			const offset = (el) => {
-				const rect = el.getBoundingClientRect()
-				const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
-				const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-				return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
-			}
-
 			for (let index = 0; index < animItems.length; index++) {
 				const animItem = animItems[index]
 				const animItemHeight = animItem.offsetHeight
 				const animItemOffset = offset(animItem).top
 				const animStart = 4 // the animation will work when (1/animStart) of the element height enters the viewport
 
-				let animItemPoint = window.innerHeight - animItemHeight / animStart
+				let animItemPoint = window.innerHeight - val - animItemHeight / animStart
 				if (animItemHeight > window.innerHeight) {
-					animItemPoint = window.innerHeight - window.innerHeight / animStart
+					animItemPoint = window.innerHeight - val - window.innerHeight / animStart
 				}
 
 				if ((window.scrollY > animItemOffset - animItemPoint) && window.scrollY < (animItemOffset + animItemHeight)) {
-					animItem.classList.add('_active')
+					animItem.style.transform = 'translate(0)'
+					animItem.style.opacity = '1'
 				} else {
 					if (animItem.classList.contains('reAnim')) {
-						animItem.classList.remove('_active')
+						animItem.style.opacity = '0'
 					}
 				}
 			}
 		}
-	}
-
-	useEffect(() => {
-		setTimeout(() => {
-			textAnimate()
-		}, 600)
 	}, [])
 
+	// preventDefault for keyboard arrows, space and middle mouse button
+	const mouseDownHandler = e => { e.preventDefault() }
+	const keyDownHandler = e => {
+		if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.code) > -1) {
+			e.preventDefault()
+		}
+	}
+
+	// Animate text on mobile devices
+	const touchMoveHandler = e => { textAnimate(200) }
+
+	// up() or down() on scroll
 	useEffect(() => {
 		const el = wrapRef.current
-		const onWheel = e => {
+		const wheelHandler = e => {
 			e.preventDefault()
 			e.deltaY > 0 ? down() : up()
 
-			textAnimate()
+			textAnimate(200)
 		}
-		el.addEventListener('wheel', onWheel)
+		el.addEventListener('wheel', wheelHandler)
 
-		return () => el.removeEventListener('wheel', onWheel)
-	}, [up, down])
+		return () => el.removeEventListener('wheel', wheelHandler)
+	}, [up, down, textAnimate])
 
+	// Smooth scroll when scrollTopValue changing
 	useEffect(() => {
+		if (setScrollTopV) setScrollTopV(scrollTopValue)
 		gsap.to(mainRef.current, {
 			scrollTop: scrollTopValue,
 			duration: 1,
 			ease: 'power4.out'
 		})
-	}, [scrollTopValue, mainRef])
+	}, [scrollTopValue, mainRef, setScrollTopV])
 
-	return <Wrapper ref={wrapRef}>
+	// Scroll top on new page
+	useEffect(() => {
+		gsap.to(mainRef.current, {
+			scrollTop: 0,
+			duration: 0,
+		})
+		setScrollTopValue(0)
+	}, [pathname, mainRef])
+
+	// auto animation on new page
+	useEffect(() => {
+		setTimeout(() => {
+			textAnimate(0)
+		}, 600)
+	}, [textAnimate])
+
+	return <Wrapper ref={wrapRef}
+						onMouseDown={mouseDownHandler}
+						onKeyDown={keyDownHandler}
+						onTouchMove={touchMoveHandler}>
 		{children}
 	</Wrapper>
 }

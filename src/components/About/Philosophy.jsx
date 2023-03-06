@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
+import { commonTheme } from '../../styles/theme';
 
 const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 549px 0 380px 0;
+	justify-content: center;
+	min-height: 100vh;
+	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 64 : 0}px;
 	text-align: center;
 `
 const Title = styled.span`
@@ -13,6 +16,7 @@ const Title = styled.span`
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	text-transform: uppercase;
 	margin-bottom: 24px;
+	transition: color ${commonTheme.durations.short}s;
 `
 const Slogan = styled.span`
 	font-family: 'AccentFontM', sans-serif;
@@ -20,16 +24,18 @@ const Slogan = styled.span`
 	color: ${ ({theme}) => theme.ac.dark };
 	text-transform: uppercase;
 	margin-bottom: 12px;
+	transition: color ${commonTheme.durations.short}s;
 `
 const Explanation = styled.span`
 	font-size: ${({m}) => m.isMobile ? 'clamp(16px, 3.75vw, 18px)' : '18px'};
 	color: ${ ({theme}) => theme.ac.dark };
+	transition: color ${commonTheme.durations.short}s;
 `
 const Philosophy = () => {
 
 	const media = useContext(MediaContext)
 
-	return <Wrap>
+	return <Wrap m={media}>
 		<Title m={media} className='animItems _anim-show-opacity'>Моя философия —</Title>
 		<Slogan m={media} className='animItems _anim-show-opacity'>Less is more</Slogan>
 		<Explanation m={media} className='animItems _anim-show-opacity'>(меньше значит больше)</Explanation>

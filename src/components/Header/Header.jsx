@@ -22,7 +22,7 @@ const Wrapper = styled.header`
 	touch-action: none;
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
-	z-index: 6;
+	z-index: 5;
 `
 const TogglersAndNav = styled.div`
 	grid-row: 1/2;
@@ -54,7 +54,7 @@ const Burger = styled.span`
 	font-size: 16px;
 	color: ${ ({theme, isMenuMobileOpen}) => isMenuMobileOpen ? commonTheme.colors.white : theme.mode.text };
 	cursor: pointer;
-	z-index: 8;
+	z-index: 7;
 	transition: color ${commonTheme.durations.short}s;
 `
 const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler }) => {
@@ -101,6 +101,10 @@ const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler 
 		})
 		setMenuMobileOpen(false)
 	}
+
+	useEffect(() => {
+		if (isMenuMobileOpen) setMenuMobileOpen(!media.isHugeDesk && !media.isDesk)
+	}, [media, isMenuMobileOpen])
 
 	return <Wrapper m={media} ref={headerRef}>
 		<Logo isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} pageTransition={pageTransition} />

@@ -151,6 +151,7 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 				}
 			}
 			el.addEventListener('mousemove', moveCirc)
+
 			return () => el.removeEventListener('mousemove', moveCirc)
 		}
 	}, [media, mainRef])

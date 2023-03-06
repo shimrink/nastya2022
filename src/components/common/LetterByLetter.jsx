@@ -12,8 +12,8 @@ const Wave = styled.div`
 									: props.titleSize && !props.bottom ? 'AccentFontT'
 									: props.regular || (props.titleSize && props.bottom) ? 'AccentFontR'
 									: 'AccentFontM'}, sans-serif;
-	color: ${ props => props.mobile || props.whiteCol ? commonTheme.colors.white
-							: !props.mobile && props.bottom ? props.theme.ac.dark
+	color: ${ props => props.navMobile || props.whiteCol ? commonTheme.colors.white
+							: !props.navMobile && props.bottom ? props.theme.ac.dark
 							: props.theme.mode.text};
 	transition: color ${commonTheme.durations.short}s;
 `
@@ -22,7 +22,7 @@ const Letter = styled.div`
 												: props.isMenuMobileOpen ? 0
 												: !props.showAnimFinish ? 100
 												: 0}%);
-	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.out} ${({delay}) => delay * 30}ms;
+	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3} ${({delay}) => delay * 30}ms;
 `
 const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	return child.split('').map((l, i) => {
@@ -41,13 +41,14 @@ const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	})
 }
 
-const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
+const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
 
 	const [waveAnim, setWaveAnim] = useState(false)
 	const [selfHovering, setSelfHovering] = useState(false)
 	const [upAnim, setUpAnim] = useState(false)
 	const [downAnim, setDownAnim] = useState(false)
 	const [endUpAnim, setEndUpAnim] = useState(false)
+	const [disableHover, setDisableHover] = useState(false)
 	const [mMOpen, setMMOpen] = useState(false)
 	const LBLRef = useRef()
 	const [showAnimFinish, setShowAnimFinish] = useState(!showAnim)
@@ -56,7 +57,7 @@ const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol,
 
 	useEffect(() => {
 		if (wavy) {
-			if (hovering || selfHovering) {
+			if ((hovering || selfHovering) && !disableHover) {
 				if (!upAnim && !downAnim) {
 					setUpAnim(true)
 
@@ -72,16 +73,18 @@ const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol,
 
 			} else {
 				if (endUpAnim) {
+					setDisableHover(true)
 					setEndUpAnim(false)
 					setDownAnim(true)
 
 					setTimeout(() => {
 						setDownAnim(false)
+						setDisableHover(false)
 					}, delay)
 				}
 			}
 		}
-	}, [wavy, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
+	}, [wavy, disableHover, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
 
 	useEffect(() => {
 		if (wavy) {
@@ -91,12 +94,12 @@ const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol,
 	}, [wavy, upAnim, downAnim])
 
 	useEffect(() => {
-		if (mobile) {
+		if (navMobile) {
 			setTimeout(() => {
 				setMMOpen(isMenuMobileOpen)
 			}, 450)
 		}
-	}, [mobile, isMenuMobileOpen])
+	}, [navMobile, isMenuMobileOpen])
 
 	const offset = (el) => {
 		const rect = el.getBoundingClientRect()
@@ -135,11 +138,11 @@ const LetterByLetter = ({ children, wavy, mobile, showAnim, titleSize, whiteCol,
 		}, 600)
 	}, [textAnimate])
 
-	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseEnter={e=>setSelfHovering(true)} onMouseLeave={e=>setSelfHovering(false)}>
-		<Wave mobile={mobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ e => setSelfHovering(true) } onMouseOut={ e => setSelfHovering(false) }>
+		<Wave navMobile={navMobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
 			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>
-		{wavy && <Wave bottom mobile={mobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+		{wavy && <Wave bottom navMobile={navMobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
 			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>}
 	</LinkWrap>

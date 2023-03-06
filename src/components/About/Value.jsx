@@ -9,7 +9,7 @@ const Row = styled.div`
 	grid-column-gap: ${ ({m}) => m.isTabletP ? '40px'
 										: m.isMobile ? '(24px, 7.5vw, 40px)'
 										: '24px'};
-	color: ${ ({theme}) => theme.mode.subText };
+	color: ${ ({theme, m}) => m.isHugeDesk || m.isDesk ? theme.mode.subText : theme.mode.text };
 	margin-bottom: ${({last, m}) => m.isHugeDesk || m.isDesk ? 96
 											: m.isTabletA ? 76
 											: last ? 0
@@ -46,20 +46,21 @@ const Value = ({ v }) => {
 	const rowRef = useRef()
 
 	useEffect(() => {
-		const onWheel = e => {
-			setTimeout(() => {
+		if (media.isHugeDesk || media.isDesk) {
+			const onWheel = e => {
 				let crd = rowRef.current.getBoundingClientRect()
-				if (crd.top <= (window.innerHeight * 0.55) && (window.innerHeight * 0.45) <= crd.bottom) {
+				let scrollValue = e.deltaY > 0 ? 100 : -100
+				if (crd.top - scrollValue <= (window.innerHeight * 0.55) && (window.innerHeight * 0.45) <= crd.bottom - scrollValue) {
 					rowRef.current.classList.add('active')
 				} else {
 					rowRef.current.classList.remove('active')
 				}
-			}, 200)
-		}
-		window.addEventListener('wheel', onWheel)
+			}
+			window.addEventListener('wheel', onWheel)
 
-		return () => window.removeEventListener('wheel', onWheel)
-	}, [])
+			return () => window.removeEventListener('wheel', onWheel)
+		}
+	}, [media])
 
 	return <Row ref={rowRef} m={media}>
 		<h2>{v.title}</h2>
