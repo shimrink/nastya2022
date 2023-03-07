@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { MediaContext } from '../../AppWrap';
@@ -57,22 +58,16 @@ const Burger = styled.span`
 	z-index: 7;
 	transition: color ${commonTheme.durations.short}s;
 `
-const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler }) => {
+const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentColor, themeToggler, accentColorToggler }) => {
 
 	const media = useContext(MediaContext)
+	const navigate = useNavigate()
+	const {pathname} = useLocation()
 	const [isMenuMobileOpen, setMenuMobileOpen] = useState(false)
+	const [navDisable, setNavDisable] = useState(false)
+	const [disableWave, setDisableWave] = useState(true)
 	const headerRef = useRef()
 	const menuMobileRef = useRef()
-
-	useEffect(() => {
-		const el = headerRef.current
-		const onWheel = e => {
-			e.preventDefault()
-		}
-		el.addEventListener('wheel', onWheel)
-
-		return () => el.removeEventListener('wheel', onWheel)
-	}, [])
 
 	const openMenu = () => {
 		gsap.to(menuMobileRef.current, {
@@ -86,9 +81,12 @@ const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler 
 			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(true)
+		setTimeout(() => {
+			setDisableWave(false)
+		}, 900)
 	}
 
-	const closeMenu = () => {
+	const closeMenu = useCallback(() => {
 		gsap.to(menuMobileRef.current, {
 			yPercent: 0,
 			duration: 0.7,
@@ -100,14 +98,40 @@ const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler 
 			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(false)
+		setTimeout(() => { setDisableWave(true) }, 700)
+	}, [])
+
+	const mobilePageTransition = path => {
+		if (pathname !== path && !navDisable) {
+			setPageInitialized(false)
+			setNavDisable(true)
+			navigate(path)
+		}
 	}
+
+	useEffect(() => {
+		if (!media.isHugeDesk && !media.isDesk && pageInitialized) {
+			setNavDisable(false)
+			setTimeout(() => { closeMenu() }, 200)
+		}
+	}, [pageInitialized, closeMenu, media])
 
 	useEffect(() => {
 		if (isMenuMobileOpen) setMenuMobileOpen(!media.isHugeDesk && !media.isDesk)
 	}, [media, isMenuMobileOpen])
 
+	useEffect(() => {
+		const el = headerRef.current
+		const onWheel = e => {
+			e.preventDefault()
+		}
+		el.addEventListener('wheel', onWheel)
+
+		return () => el.removeEventListener('wheel', onWheel)
+	}, [])
+
 	return <Wrapper m={media} ref={headerRef}>
-		<Logo isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} pageTransition={pageTransition} />
+		<Logo isMenuMobileOpen={isMenuMobileOpen} mobilePageTransition={mobilePageTransition} pageTransition={pageTransition} />
 		<TogglersAndNav m={media}>
 			<ThemeTogglerContainer onClick={media.isHugeDesk || media.isDesk ? ()=>{} : themeToggler} m={media}>
 				<ThemeToggler toggleTheme={themeToggler} />
@@ -122,7 +146,7 @@ const Header = ({ pageTransition, accentColor, themeToggler, accentColorToggler 
 				: <Burger onClick={openMenu} isMenuMobileOpen={isMenuMobileOpen}>Меню</Burger>
 			}
 		</TogglersAndNav>
-		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />}
+		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} disableWave={disableWave} isMenuMobileOpen={isMenuMobileOpen} mobilePageTransition={mobilePageTransition} />}
 	</Wrapper>
 }
 

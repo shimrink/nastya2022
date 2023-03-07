@@ -13,7 +13,7 @@ const Nav = styled.nav`
 	justify-self: ${({navMobile}) => navMobile ? 'center' : 'end'};
 	justify-content: center;
 `
-const Navigation = ({ navMobile, isMenuMobileOpen, closeMenu, pageTransition }) => {
+const Navigation = ({ navMobile, disableWave, isMenuMobileOpen, pageTransition, mobilePageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [active, setActive] = useState(true)
@@ -23,11 +23,12 @@ const Navigation = ({ navMobile, isMenuMobileOpen, closeMenu, pageTransition }) 
 			<NavItem key={i}
 						l={l}
 						navMobile={navMobile}
+						disableWave={disableWave}
 						isMenuMobileOpen={isMenuMobileOpen}
 						active={active}
 						setActive={setActive}
-						closeMenu={closeMenu}
-						pageTransition={pageTransition} />
+						pageTransition={pageTransition}
+						mobilePageTransition={mobilePageTransition} />
 		))}
 	</Nav>
 }

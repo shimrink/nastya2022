@@ -21,9 +21,9 @@ const Device = styled.div`
 	justify-items: center;
 	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	padding: ${({m}) => m.isHugeDesk ? '0'
-							: m.isDesk ? '80px'
-							: m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
-							: '40px'};
+							: m.isDesk ? '0 80px'
+							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
+							: '0 40px'};
 	margin: ${({m}) => m.isMobile ? '50px 0' : '150px 0'};
 	img {
 		position: relative;

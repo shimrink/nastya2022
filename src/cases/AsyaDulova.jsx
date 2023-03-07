@@ -21,9 +21,9 @@ const Device = styled.div`
 	justify-items: center;
 	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	padding: ${({m}) => m.isHugeDesk ? '0'
-							: m.isDesk ? '80px'
-							: m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
-							: '40px'};
+							: m.isDesk ? '0 80px'
+							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
+							: '0 40px'};
 	margin: ${({m}) => m.isMobile ? '50px 0' : '150px 0'};
 	img {
 		position: relative;
@@ -138,8 +138,12 @@ const AsyaDulova = ({ i, caseData }) => {
 			</div>
 		</Device>
 
-		{/* Заголовок с линией*/}
-		<SectionTitle cases>Текст</SectionTitle>
+		{/*
+			Заголовок с линией.
+			Отступы снизу по умолчанию:
+			mbHugeDesk='76px' mbDesk='76px' mbTabletA='76px' mbTabletP='76px' mbMobile='48px'
+		*/}
+		<SectionTitle mbHugeDesk='0px' mbDesk='0px' mbTabletA='0px' mbTabletP='0px' mbMobile='0px'>Текст</SectionTitle>
 
 		{/* Изображение 10 колонок */}
 		<Device m ={media}>

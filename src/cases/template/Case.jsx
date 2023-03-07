@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
@@ -110,12 +111,13 @@ const Button = styled.a`
 `
 const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 
+	const media = useContext(MediaContext)
+	const {pathname} = useLocation()
+	const mainRef = useRef()
+
 	useEffect(() => {
 		setPageInitialized(true)
-	}, [setPageInitialized])
-
-	const media = useContext(MediaContext)
-	const mainRef = useRef()
+	}, [pathname, setPageInitialized])
 
 	// slug должен совпадать с тем, что в Sanity
 	const casesArr = [

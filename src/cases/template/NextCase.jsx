@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import gsap from 'gsap';
 import { MediaContext } from '../../AppWrap';
@@ -60,18 +59,6 @@ const Info = styled.div`
 		cursor: pointer;
 		z-index: 2;
 	}
-	a {
-		grid-row: ${({m}) => m.isMobile ? '2/3' : '1/2'};
-		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-	}
-	.allWorks {
-		grid-column: ${({m}) => m.isMobile ? '1/7' : '1/4'};
-		justify-self: start;
-	}
-	.orderProject {
-		grid-column: ${({m}) => m.isMobile ? '7/13' : '10/13'};
-		justify-self: end;
-	}
 `
 const NameWrap = styled.div`
 	position: absolute;
@@ -91,6 +78,19 @@ const Name = styled.h2`
 	text-transform: uppercase;
 	white-space: nowrap;
 	margin-right: ${({m}) => m.isHugeDesk || m.isDesk ? 30 : 22}px;
+`
+const Links = styled.div`
+	grid-row: ${({m}) => m.isMobile ? '2/3' : '1/2'};
+	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
+	cursor: pointer;
+`
+const AllWorks = styled(Links)`
+	grid-column: ${({m}) => m.isMobile ? '1/7' : '1/4'};
+	justify-self: start;
+`
+const OrderProject = styled(Links)`
+	grid-column: ${({m}) => m.isMobile ? '7/13' : '10/13'};
+	justify-self: end;
 `
 const Circle = styled.div`
 	position: absolute;
@@ -122,6 +122,26 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 		else { setNextCaseI(0) }
 	}, [i, caseData])
 
+	const showAndHideCirc = e => {
+		let crd = imgRef.current.getBoundingClientRect()
+		if (crd.top <= e.clientY
+		&& e.clientY <= crd.bottom
+		&& crd.left <= e.clientX
+		&& e.clientX <= crd.right) {
+			gsap.to(cirlceRef.current, {
+				scale: 1,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		} else {
+			gsap.to(cirlceRef.current, {
+				scale: 0,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		}
+	}
+
 	useEffect(() => {
 		if (media.isHugeDesk || media.isDesk) {
 			const el = wrapperRef.current
@@ -132,29 +152,20 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 					duration: commonTheme.durations.middle,
 					ease: 'power4.out',
 				})
-				let crd = imgRef.current.getBoundingClientRect()
-				if (crd.top <= e.clientY
-				&& e.clientY <= crd.bottom
-				&& crd.left <= e.clientX
-				&& e.clientX <= crd.right) {
-					gsap.to(cirlceRef.current, {
-						scale: 1,
-						duration: commonTheme.durations.short,
-						ease: 'power4.out',
-					})
-				} else {
-					gsap.to(cirlceRef.current, {
-						scale: 0,
-						duration: commonTheme.durations.short,
-						ease: 'power4.out',
-					})
-				}
+				showAndHideCirc(e)
 			}
 			el.addEventListener('mousemove', moveCirc)
 
 			return () => el.removeEventListener('mousemove', moveCirc)
 		}
 	}, [media, mainRef])
+
+	useEffect(() => {
+		const el = wrapperRef.current
+		el.addEventListener('wheel', e => showAndHideCirc(e))
+
+		return () => el.removeEventListener('wheel', e => showAndHideCirc(e))
+	}, [mainRef])
 
 	return <Wrapper ref={wrapperRef}>
 		<Title m={media}>
@@ -169,16 +180,16 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 																		: caseData[nextCaseI].mainImage.asset.url}
 					alt={caseData[nextCaseI].slug.current}
 					ref={imgRef}
-					onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)} />
-			<NavLink to='/portfolio' onClick={e => pageTransition(e, '/portfolio')} className='allWorks linkUnderLine'>
+					onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
+			<AllWorks m={media} onClick={e => pageTransition('/portfolio')} className='linkUnderLine'>
 				<LetterByLetter wavy>Все работы</LetterByLetter>
-			</NavLink>
-			<NavLink to='/contacts' onClick={e => pageTransition(e, '/contacts')} className='orderProject linkUnderLine'>
+			</AllWorks>
+			<OrderProject m={media} onClick={e => pageTransition('/contacts')} className='linkUnderLine'>
 				<LetterByLetter wavy>Заказать проект</LetterByLetter>
-			</NavLink>
+			</OrderProject>
 		</Info>
 		<Contacts c={c} />
-		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(e, `/cases/${caseData[nextCaseI].slug.current}`)}>Смотреть</Circle>}
+		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)}>Смотреть</Circle>}
 	</Wrapper>
 }
 

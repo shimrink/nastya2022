@@ -48,7 +48,7 @@ const RoundedDiv = styled.div`
 	border-radius: 50% / 0 0 100% 100%;
 	margin-top: -4px;
 `
-const MenuMobile = forwardRef(({ isMenuMobileOpen, closeMenu }, ref) => {
+const MenuMobile = forwardRef(({ disableWave, isMenuMobileOpen, mobilePageTransition }, ref) => {
 
 	const media = useContext(MediaContext)
 
@@ -63,7 +63,7 @@ const MenuMobile = forwardRef(({ isMenuMobileOpen, closeMenu }, ref) => {
 
 	return <Wrapper ref={ref}>
 		<Content m={media}>
-			<Navigation navMobile isMenuMobileOpen={isMenuMobileOpen} closeMenu={closeMenu} />
+			<Navigation navMobile disableWave={disableWave} isMenuMobileOpen={isMenuMobileOpen} mobilePageTransition={mobilePageTransition} />
 			<Social m={media}>
 				<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
 					<LetterByLetter wavy whiteCol>Vk</LetterByLetter>

@@ -58,7 +58,7 @@ const Portfolio = ({ setPageInitialized, caseData, categoriesData, pageTransitio
 			</TopBlock>
 			{(media.isHugeDesk || media.isDesk)
 			?
-				<Rows scrollTopV={scrollTopV} mainRef={mainRef} caseData={caseData} pageTransition={pageTransition} />
+				<Rows scrollTopV={scrollTopV} caseData={caseData} pageTransition={pageTransition} />
 			:
 				<GridWrapper m={media}>
 					{caseData.map((c, i) => c.isPortfolio &&

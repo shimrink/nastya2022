@@ -123,7 +123,7 @@ const Interests = ({ mainRef }) => {
 	const cirlceRef = useRef()
 
 	return <Wrap ref={wrapperRef} m={media}>
-		<SectionTitle interests>Мои интересы</SectionTitle>
+		<SectionTitle mbTabletA='48px' mbTabletP='48px'>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
 				{state.gifs.map((g, i) => <img className={i === 0 ? 'gif active' : 'gif'} key={i} src={g.url} alt={g.alt} />)}

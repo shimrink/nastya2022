@@ -41,14 +41,13 @@ const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	})
 }
 
-const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
+const LetterByLetter = ({ children, wavy, disableWave, navMobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
 
 	const [waveAnim, setWaveAnim] = useState(false)
 	const [selfHovering, setSelfHovering] = useState(false)
 	const [upAnim, setUpAnim] = useState(false)
 	const [downAnim, setDownAnim] = useState(false)
 	const [endUpAnim, setEndUpAnim] = useState(false)
-	const [disableHover, setDisableHover] = useState(false)
 	const [mMOpen, setMMOpen] = useState(false)
 	const LBLRef = useRef()
 	const [showAnimFinish, setShowAnimFinish] = useState(!showAnim)
@@ -56,9 +55,9 @@ const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteC
 	let delay = commonTheme.durations.middle * 1000 + (children.split('').length - 2) * 30
 
 	useEffect(() => {
-		if (wavy) {
-			if ((hovering || selfHovering) && !disableHover) {
-				if (!upAnim && !downAnim) {
+		if (wavy && !disableWave) {
+			if ((hovering || selfHovering) && !downAnim) {
+				if (!upAnim) {
 					setUpAnim(true)
 
 					setTimeout(() => {
@@ -73,18 +72,16 @@ const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteC
 
 			} else {
 				if (endUpAnim) {
-					setDisableHover(true)
 					setEndUpAnim(false)
 					setDownAnim(true)
 
 					setTimeout(() => {
 						setDownAnim(false)
-						setDisableHover(false)
 					}, delay)
 				}
 			}
 		}
-	}, [wavy, disableHover, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
+	}, [wavy, disableWave, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
 
 	useEffect(() => {
 		if (wavy) {
@@ -122,6 +119,8 @@ const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteC
 
 			if ((window.scrollY > animItemOffset - animItemPoint) && window.scrollY < (animItemOffset + animItemHeight)) {
 				setShowAnimFinish(true)
+			} else {
+				setShowAnimFinish(false)
 			}
 		}
 	}, [showAnim])
@@ -135,7 +134,7 @@ const LetterByLetter = ({ children, wavy, navMobile, showAnim, titleSize, whiteC
 	useEffect(() => {
 		setTimeout(() => {
 			textAnimate()
-		}, 600)
+		}, 700)
 	}, [textAnimate])
 
 	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ e => setSelfHovering(true) } onMouseOut={ e => setSelfHovering(false) }>

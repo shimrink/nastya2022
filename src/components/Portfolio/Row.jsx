@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
@@ -79,51 +79,50 @@ const LineWrap = styled.div`
 `
 gsap.registerPlugin(CustomEase);
 
-const Row = ({ c, scrollTopV, mainRef, casesRef, caseData, pageTransition }) => {
+const Row = ({ c, scrollTopV, casesRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
-	const moveImg = useCallback(e => {
-		let crd = casesRef.current.getBoundingClientRect()
-		if (crd.top <= e.clientY
-		&& e.clientY <= crd.bottom
-		&& crd.left <= e.clientX
-		&& e.clientX <= crd.right) {
-			for (let i = 0; i < caseData.length; i++) {
-				gsap.to(imgRef.current, {
-					left: e.clientX,
-					top: e.clientY + mainRef.current.scrollTop,
-					duration: commonTheme.durations.middle,
-					ease: 'power4.out',
-				})
-				gsap.to(imgRef.current, {
-					scale: 1,
-					duration: 0,
-					ease: 'linear',
-				})
-			}
-		} else {
-			for (let i = 0; i < caseData.length; i++) {
-				gsap.to(imgRef.current, {
-					scale: 0,
-					duration: 0,
-					ease: 'linear',
-				})
-			}
-		}
-	}, [mainRef, casesRef, caseData])
-
 	useEffect(() => {
 		const el = casesRef.current
+		const moveImg = e => {
+			let crd = casesRef.current.getBoundingClientRect()
+			if (crd.top <= e.clientY
+			&& e.clientY <= crd.bottom
+			&& crd.left <= e.clientX
+			&& e.clientX <= crd.right) {
+				for (let i = 0; i < caseData.length; i++) {
+					gsap.to(imgRef.current, {
+						left: e.clientX,
+						top: e.clientY + scrollTopV,
+						duration: commonTheme.durations.middle,
+						ease: 'power4.out',
+					})
+					gsap.to(imgRef.current, {
+						scale: 1,
+						duration: 0,
+						ease: 'linear',
+					})
+				}
+			} else {
+				for (let i = 0; i < caseData.length; i++) {
+					gsap.to(imgRef.current, {
+						scale: 0,
+						duration: 0,
+						ease: 'linear',
+					})
+				}
+			}
+		}
 		el.addEventListener('mousemove', moveImg)
 
 		return () => el.removeEventListener('mousemove', moveImg)
-	}, [casesRef, moveImg])
+	}, [casesRef, scrollTopV, caseData])
 
 	useEffect(() => {
-		const el = mainRef.current
+		const el = casesRef.current
 		const moveImgH = e => {
 			let st = e.deltaY > 0 ? 100 : -100
 			gsap.to(imgRef.current, {
@@ -135,7 +134,7 @@ const Row = ({ c, scrollTopV, mainRef, casesRef, caseData, pageTransition }) => 
 		el.addEventListener('wheel', moveImgH)
 
 		return () => el.removeEventListener('wheel', moveImgH)
-	}, [mainRef, scrollTopV])
+	}, [casesRef, scrollTopV])
 
 	const showImg = e => {
 		gsap.to(imgRef.current, {
@@ -165,9 +164,9 @@ const Row = ({ c, scrollTopV, mainRef, casesRef, caseData, pageTransition }) => 
 			</Tags>
 			<Year className='animItems _anim-show-opacity'>{c.publishedAt.split('-')[0]}</Year>
 			<Img ref={imgRef} src={c.mobileImage.asset.url} alt={c.slug.current} />
-			<RowArea onMouseOver={showImg}
-						onMouseOut={hideImg}
-						onClick={e => pageTransition(e, `/cases/${c.slug.current}`)} />
+			<RowArea onClick={e => pageTransition(`/cases/${c.slug.current}`)}
+						onMouseOver={showImg}
+						onMouseOut={hideImg} />
 		</RowContent>
 		<LineWrap><Line /></LineWrap>
 	</RowWrap>

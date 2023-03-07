@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { commonTheme } from '../../styles/theme';
@@ -28,12 +28,14 @@ const TitleArea = styled.div`
 	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
 	grid-column: 1/2;
 	width: 100%;
-	cursor: ${({m}) => m.isHugeDesk || m.isDesk ? 'none' : 'pointer'};
+	cursor: ${({m, isScrolling}) => (m.isHugeDesk || m.isDesk) && !isScrolling ? 'none' : 'pointer'};
 	z-index: 3;
 `
 const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 
 	const media = useContext(MediaContext)
+	const [isScrolling, setIsScrolling] = useState(false)
+	const timeoutID = useRef()
 
 	const switchGif = e => {
 		const titleAreasArr = document.querySelectorAll('.interestArea')
@@ -54,7 +56,7 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 	}
 
 	const showCirc = () => {
-		if (media.isHugeDesk || media.isDesk) {
+		if ((media.isHugeDesk || media.isDesk) && !isScrolling) {
 			gsap.to(cirlceRef.current, {
 				scale: 1,
 				duration: commonTheme.durations.short,
@@ -78,8 +80,8 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 			const el = wrapperRef.current
 			const moveCirc = e => {
 				gsap.to(cirlceRef.current, {
-					top: e.clientY + mainRef.current.scrollTop,
 					left: e.clientX,
+					top: e.clientY + mainRef.current.scrollTop,
 					duration: commonTheme.durations.middle,
 					ease: 'power4.out',
 				})
@@ -90,14 +92,42 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 		}
 	}, [media, mainRef, wrapperRef, cirlceRef])
 
+	useEffect(() => {
+		if (media.isHugeDesk || media.isDesk) {
+			const el = wrapperRef.current
+			const moveCircH = e => {
+				const setTimeoutF = () => {
+					setIsScrolling(true)
+					timeoutID.current = setTimeout(() => { setIsScrolling(false) }, 600)
+				}
+				if (!isScrolling) {
+					setTimeoutF()
+				} else {
+					clearTimeout(timeoutID.current)
+					setTimeoutF()
+				}
+
+				gsap.to(cirlceRef.current, {
+					scale: 0,
+					duration: commonTheme.durations.short,
+					ease: 'power4.out',
+				})
+			}
+			el.addEventListener('wheel', moveCircH)
+
+			return () => el.removeEventListener('wheel', moveCircH)
+		}
+	}, [media, isScrolling, wrapperRef, cirlceRef])
+
 	return <Wrap>
 		<Title i={i} className={i === 0 ? 'interest active' : 'interest'} m={media}>{children}</Title>
-		<TitleArea i={i}
-					m={media}
-					className={i === 0 ? 'interestArea active' : 'interestArea'}
-					onClick={switchGif}
-					onMouseOver={showCirc}
-					onMouseOut={hideCirc} />
+		<TitleArea className={i === 0 ? 'interestArea active' : 'interestArea'}
+						i={i}
+						m={media}
+						isScrolling={isScrolling}
+						onClick={switchGif}
+						onMouseMove={showCirc}
+						onMouseOut={hideCirc} />
 	</Wrap>
 }
 

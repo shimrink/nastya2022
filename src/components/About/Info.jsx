@@ -106,7 +106,7 @@ const Info = () => {
 	const portraitRef = useRef()
 
 	return <Wrap m={media}>
-		<SectionTitle info>Здрасьте, я Настя</SectionTitle>
+		<SectionTitle mbMobile='clamp(48px, 14.58vw, 76px)'>Здрасьте, я Настя</SectionTitle>
 		<Content m={media}>
 			<Ranks m={media}>
 				<span className='animItems _anim-show-opacity'>Digital,</span>

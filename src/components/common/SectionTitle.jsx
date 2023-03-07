@@ -9,12 +9,12 @@ const Title = styled.div`
 	grid-column: 1/4;
 	width: 100%;
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
-	margin-bottom: ${({m, info, skills, valuesInWork, interests, cases}) =>
-						valuesInWork && !m.isTabletP && !m.isMobile ? '96px'
-						: skills || (valuesInWork && m.isMobile) || (interests && !m.isHugeDesk && !m.isDesk) ? '48px'
-						: info && m.isMobile ? 'clamp(48px, 14.58vw, 76px)'
-						: cases ? '0'
-						: '76px'};
+	margin-bottom: ${({m, mbHugeDesk, mbDesk, mbTabletA, mbTabletP, mbMobile}) =>
+							m.isHugeDesk ? mbHugeDesk
+							: m.isDesk ? mbDesk
+							: m.isTabletA ? mbTabletA
+							: m.isTabletP ? mbTabletP
+							: mbMobile};
 	h3 {
 		position: relative;
 		margin-bottom: 48px;
@@ -25,11 +25,11 @@ const Title = styled.div`
 		text-transform: uppercase;
 	}
 `
-const SectionTitle = ({ children, info, skills, valuesInWork, interests, cases }) => {
+const SectionTitle = ({ children, mbHugeDesk='76px', mbDesk='76px', mbTabletA='76px', mbTabletP='76px', mbMobile='48px' }) => {
 
 	const media = useContext(MediaContext)
 
-	return <Title m={media} info={info} skills={skills} valuesInWork={valuesInWork} interests={interests} cases={cases}>
+	return <Title m={media} mbHugeDesk={mbHugeDesk} mbDesk={mbDesk} mbTabletA={mbTabletA} mbTabletP={mbTabletP} mbMobile={mbMobile}>
 		<h3 className='animItems _anim-show-opacity'>{children}</h3>
 		<Line />
 	</Title>

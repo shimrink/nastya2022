@@ -61,12 +61,12 @@ const Values = ({ pageTransition }) => {
 	const media = useContext(MediaContext)
 
 	return <Wrap m={media}>
-		<SectionTitle valuesInWork>Ценности в работе</SectionTitle>
+		<SectionTitle mbHugeDesk='96px' mbDesk='96px' mbTabletA='96px'>Ценности в работе</SectionTitle>
 		<Content m={media}>
 			<Container m={media}>
 				{state.aboutValues.map((v, i) => <Value key={i} v={v} />)}
 			</Container>
-			<Button m={media} onClick={e=>pageTransition(e, '/services')}>Перейти к услугам</Button>
+			<Button m={media} onClick={e => pageTransition('/services')}>Перейти к услугам</Button>
 		</Content>
 	</Wrap>
 }

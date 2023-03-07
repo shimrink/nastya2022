@@ -70,7 +70,7 @@ const Skills = () => {
 	const media = useContext(MediaContext)
 
 	return <Wrap m={media}>
-		<SectionTitle skills>Навыки</SectionTitle>
+		<SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Навыки</SectionTitle>
 		<div>
 			<MovingRow row={0} m={media}>
 				{[...Array(4)].map((v, ind) => (

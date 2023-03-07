@@ -76,7 +76,6 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 					ease: 'power4.out',
 				})
 			}
-
 			el.addEventListener('mousemove', onMouseMove)
 
 			return () => el.removeEventListener('mousemove', onMouseMove)
@@ -120,7 +119,7 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 									i={count}
 									onMouseOver={e => mouseOverHandler(i)}
 									onMouseOut={mouseOutHandler}
-									onClick={e => pageTransition(e, `cases/${p.slug.current}`)} />
+									onClick={e => pageTransition(`cases/${p.slug.current}`)} />
 				}
 				return null
 			})}
