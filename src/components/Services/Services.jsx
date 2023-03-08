@@ -19,21 +19,24 @@ const Main = styled.main`
 `
 const Title = styled.h2`
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
-	margin-top: ${({m}) => m.isHugeDesk || m.isDesk ? 288 : 196}px;
-	margin-bottom: 176px;
+	margin: ${({m}) => m.isHugeDesk || m.isDesk ? '288px 0 176px 0' : '196px 0 120px 0'};
 	color: ${ ({theme}) => theme.mode.text };
-	font-size: ${({m}) => m.isMobile ? 30 : 48}px;
+	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : 30}px;
 	text-align: center;
 	text-transform: uppercase;
 	transition: color ${commonTheme.durations.short}s;
 `
 const Section = styled.div`
-	margin-bottom: 48px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	margin-bottom: ${({m}) => m.isMobile ? 96 : 48}px;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 `
 const ServiceStack = styled.div`
 	display: grid;
-	grid-template-columns: repeat(12, 1fr);
+	grid-template-columns: ${({m}) => m.isMobile ? '1fr' : 'repeat(12, 1fr)'};
 	grid-column-gap: ${ ({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
 										: m.isTabletP ? '40px'
 										: '24px'};
@@ -43,14 +46,16 @@ const ServiceStack = styled.div`
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
 	h3 {
-		grid-column: 1/7;
+		grid-column: ${({m}) => m.isTabletP ? '1/4' : '1/7'};
 		font-family: 'AccentFontR', sans-serif;
 		font-weight: normal;
 		text-transform: uppercase;
 	}
 `
 const Service = styled.div`
-	grid-column: 7/13;
+	grid-column: ${({m}) => m.isTabletP ? '4/13'
+								: m.isMobile ? '1/2'
+								: '7/13'};
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: ${ ({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
@@ -62,8 +67,8 @@ const Service = styled.div`
 	}
 `
 const Name = styled.h4`
-	grid-row: 1/2;
-	grid-column: 1/5;
+	grid-row: ${({m}) => m.isMobile ? '1/3' : '1/2'};
+	grid-column: ${({m}) => m.isMobile ? '1/4' : '1/5'};
 	margin-bottom: 4px;
 	font-family: 'BaseFont', sans-serif;
 	font-weight: normal;
@@ -76,15 +81,16 @@ const Description = styled.p`
 `
 const Time = styled.span`
 	grid-row: 1/2;
-	grid-column: 5/7;
+	grid-column: ${({m}) => m.isMobile ? '4/7' : '5/7'};
 	text-transform: uppercase;
 `
 const Price = styled.span`
 	grid-row: 2/3;
-	grid-column: 5/7;
+	grid-column: ${({m}) => m.isMobile ? '4/7' : '5/7'};
 	text-transform: uppercase;
 `
 const LineWrap = styled.div`
+	width: 100%;
 	padding: 0 40px;
 	margin-top: 48px;
 `
@@ -94,6 +100,7 @@ const ExactCost = styled.div`
 	grid-column-gap: ${ ({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
 										: m.isTabletP ? '40px'
 										: '24px'};
+	align-self: center;
 	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
 	padding: ${({m}) => m.isHugeDesk ? '0'
 							: m.isDesk ? '0 80px'
@@ -101,7 +108,9 @@ const ExactCost = styled.div`
 							: '0 40px'};
 	margin-top: 64px;
 	p {
-		grid-column: 7/13;
+		grid-column: ${({m}) => m.isMobile ? '1/13'
+									: m.isTabletP ? '4/13'
+									: '7/13'};
 	}
 `
 const Services = ({ setPageInitialized, servicesData }) => {
@@ -116,21 +125,22 @@ const Services = ({ setPageInitialized, servicesData }) => {
 	return <Main ref={mainRef}>
 		<SmoothScroll mainRef={mainRef}>
 			<Title m={media}>экспертиза, дизайн, разработка —<br/>весь комплекс услуг для упаковки бизнеса</Title>
-			<SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Услуги и компетенции</SectionTitle>
+			{!media.isMobile && <SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Услуги и компетенции</SectionTitle>}
 			{servicesData.map((servicesBlock, index) => (
 				<Section key={index} m={media}>
 					<ServiceStack m={media}>
-						<h3>{servicesBlock.title}</h3>
+						{!media.isMobile && <h3>{servicesBlock.title}</h3>}
+						{media.isMobile && <SectionTitle pZero>{servicesBlock.title}</SectionTitle>}
 						{servicesBlock.services.map((s, i) => (
 							<Service key={i} m={media}>
-								<Name>{s.title}</Name>
-								<Description>{s.description}</Description>
-								<Time>{s.time}</Time>
-								<Price>{s.price}</Price>
+								<Name m={media}>{s.title}</Name>
+								{!media.isMobile && <Description>{s.description}</Description>}
+								<Time m={media}>{s.time}</Time>
+								<Price m={media}>{s.price}</Price>
 							</Service>
 						))}
 					</ServiceStack>
-					<LineWrap><Line /></LineWrap>
+					{!media.isMobile && <LineWrap><Line /></LineWrap>}
 				</Section>
 			))}
 			<ExactCost m={media}>
