@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	width: 100%;
 	transform-style: preserve-3d;
 `
-const SmoothScroll = ({ children, mainRef, setScrollTopV }) => {
+const SmoothScroll = ({ children, mainRef, setScrollTopV, setSmoothScrollH }) => {
 
 	const {pathname} = useLocation()
 	const scrollStep = 100
@@ -77,7 +77,7 @@ const SmoothScroll = ({ children, mainRef, setScrollTopV }) => {
 	}
 
 	// Animate text on mobile devices
-	const touchMoveHandler = e => { textAnimate(200) }
+	const touchMoveHandler = e => { textAnimate(50) }
 
 	// up() or down() on scroll
 	useEffect(() => {
@@ -86,7 +86,7 @@ const SmoothScroll = ({ children, mainRef, setScrollTopV }) => {
 			e.preventDefault()
 			e.deltaY > 0 ? down() : up()
 
-			textAnimate(200)
+			textAnimate(150)
 		}
 		el.addEventListener('wheel', wheelHandler)
 
@@ -111,6 +111,10 @@ const SmoothScroll = ({ children, mainRef, setScrollTopV }) => {
 		})
 		setScrollTopValue(0)
 	}, [pathname, mainRef])
+
+	useEffect(() => {
+		if (setSmoothScrollH) setSmoothScrollH(wrapRef.current.offsetHeight)
+	}, [pathname, setSmoothScrollH])
 
 	// auto animation on new page
 	useEffect(() => {

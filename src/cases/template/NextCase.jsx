@@ -109,7 +109,7 @@ const Circle = styled.div`
 	z-index: 3;
 	transform: translate(-50%, -50%) scale(0);
 `
-const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
+const NextCase = ({ c, i, mainRef, smoothScrollH, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [nextCaseI, setNextCaseI] = useState(0)
@@ -167,6 +167,19 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 		return () => el.removeEventListener('wheel', e => showAndHideCirc(e))
 	}, [mainRef])
 
+	const nextCaseClick = e => {
+		pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)
+	}
+
+	useEffect(() => {
+		gsap.to(cirlceRef.current, {
+			top: smoothScrollH,
+			left: wrapperRef.current.offsetWidth / 2,
+			scale: 0,
+			duration: 0,
+		})
+	}, [smoothScrollH])
+
 	return <Wrapper ref={wrapperRef}>
 		<Title m={media}>
 			<h3>Следующий кейс</h3>
@@ -180,7 +193,7 @@ const NextCase = ({ c, i, mainRef, caseData, pageTransition }) => {
 																		: caseData[nextCaseI].mainImage.asset.url}
 					alt={caseData[nextCaseI].slug.current}
 					ref={imgRef}
-					onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
+					onClick={nextCaseClick} />
 			<AllWorks m={media} onClick={e => pageTransition('/portfolio')} className='linkUnderLine'>
 				<LetterByLetter wavy>Все работы</LetterByLetter>
 			</AllWorks>

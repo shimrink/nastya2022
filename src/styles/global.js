@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { commonTheme, lightTheme } from "./theme";
+import { commonTheme } from "./theme";
 
 export default createGlobalStyle`
 ::-webkit-scrollbar {
@@ -16,6 +16,7 @@ html {
 
 *, *:before, *:after {
 	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -36,14 +37,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'AccentFontT' , sans-serif;
 	font-weight: 100;
 	margin: 0;
+	line-height: 110%;
 }
 h2 {
 	color: ${commonTheme.colors.white};
-	line-height: 110%;
-}
-h3 {
-	font-family: ${({theme}) => theme.mode.text === lightTheme.text ? 'AccentFontT' : 'AccentFontR'}, sans-serif;
-	font-weight: ${({theme}) => theme.mode.text === lightTheme.text ? 100 : 400};
 }
 
 p {

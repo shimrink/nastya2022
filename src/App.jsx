@@ -1,18 +1,19 @@
-import React, { Suspense, useContext, useEffect, useRef, useState } from 'react'
+import React, { lazy, Suspense, useContext, useEffect, useRef, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import gsap from 'gsap';
 import { MediaContext } from './AppWrap';
 import { commonTheme } from "./styles/theme";
-// import { Gradient } from 'https://gist.githack.com/jordienr/64bcf75f8b08641f205bd6a1a0d4ce1d/raw/35a5c7c1ddc9f97ec84fe7e1ab388a3b726db85d/Gradient.js';
+import { Gradient } from './shaders/Gradient';
 import Preloader from './components/common/Preloader';
 import Case from './cases/template/Case';
 import Header from './components/Header/Header';
 import Home from "./components/Home/Home";
-import About from "./components/About/About";
-import Portfolio from "./components/Portfolio/Portfolio";
-import Services from "./components/Services/Services";
-import Contacts from './components/Contacts/Contacts';
+
+const About = lazy( () => import("./components/About/About") )
+const Portfolio = lazy( () => import("./components/Portfolio/Portfolio") )
+const Services = lazy( () => import("./components/Services/Services") )
+const Contacts = lazy( () => import("./components/Contacts/Contacts") )
 
 const Wrapper = styled.div`
 	display: flex;
@@ -66,13 +67,15 @@ const Shtora = styled.div`
 		background-color: ${ ({theme}) => theme.ac.dark };
 	}
 `
+const gradient = new Gradient()
+
 const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseData, categoriesData, servicesData }) => {
 
 	const media = useContext(MediaContext)
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
 	const [appInitialized, setAppInitialized] = useState(false)
-	const [pageInitialized, setPageInitialized] = useState(true)
+	const [pageInitialized, setPageInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
 	const [navDisable, setNavDisable] = useState(false)
 	const shtoraRef = useRef()
@@ -124,15 +127,14 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 		}
 	}, [pageInitialized])
 
-	// useEffect(() => {
-	// 	const gradient = new Gradient()
-	// 	gradient.initGradient('#gradient-canvas')
-	// }, [pathname, themeMode, accentColor, media])
+	useEffect(() => {
+		gradient.initGradient('#gradient-canvas')
+	}, [pathname, themeMode, accentColor, media])
 
 	return <Wrapper ref={wrapperRef} fullHeight={pathname === '/' || pathname === '/contacts'}>
-		{/* <canvas id='gradient-canvas' data-transition-in width={media.isHugeDesk || media.isDesk ? 1920 : 1280} height={media.isHugeDesk || media.isDesk ? 960 : 600} /> */}
+		<canvas id='gradient-canvas' data-transition-in width={media.isHugeDesk || media.isDesk ? 1920 : 1280} height={media.isHugeDesk || media.isDesk ? 960 : 600} />
 		<Header pageInitialized={pageInitialized} setPageInitialized={setPageInitialized} pageTransition={pageTransition} accentColor={accentColor} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
-		{showPreloader && <Preloader categoriesData={categoriesData} caseData={caseData} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
+		{showPreloader && <Preloader pageInitialized={pageInitialized} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
 		<Suspense fallback={null}>
 			<Routes>
 				{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case setPageInitialized={setPageInitialized} c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}

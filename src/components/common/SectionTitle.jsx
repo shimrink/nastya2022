@@ -6,7 +6,7 @@ import Line from '../../components/common/Line';
 const Title = styled.div`
 	position: relative;
 	grid-row: 1/2;
-	grid-column: 1/4;
+	grid-column: ${({gc}) => gc};
 	width: 100%;
 	padding: ${({m, pZero}) => pZero ? '0'
 										: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
@@ -27,11 +27,11 @@ const Title = styled.div`
 		text-transform: uppercase;
 	}
 `
-const SectionTitle = ({ children, pZero, mbHugeDesk='76px', mbDesk='76px', mbTabletA='76px', mbTabletP='76px', mbMobile='48px' }) => {
+const SectionTitle = ({ children, pZero, gc='1/4', mbHugeDesk='76px', mbDesk='76px', mbTabletA='76px', mbTabletP='76px', mbMobile='48px' }) => {
 
 	const media = useContext(MediaContext)
 
-	return <Title m={media} pZero={pZero} mbHugeDesk={mbHugeDesk} mbDesk={mbDesk} mbTabletA={mbTabletA} mbTabletP={mbTabletP} mbMobile={mbMobile}>
+	return <Title m={media} pZero={pZero} gc={gc} mbHugeDesk={mbHugeDesk} mbDesk={mbDesk} mbTabletA={mbTabletA} mbTabletP={mbTabletP} mbMobile={mbMobile}>
 		<h3 className='animItems _anim-show-opacity'>{children}</h3>
 		<Line />
 	</Title>

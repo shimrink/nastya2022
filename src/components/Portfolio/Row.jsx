@@ -33,7 +33,7 @@ const RowArea = styled.div`
 	cursor: pointer;
 	z-index: 4;
 `
-const Name = styled.h3`
+const Name = styled.div`
 	grid-row: 1/2;
 	grid-column: 1/10;
 	position: relative;

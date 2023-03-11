@@ -30,8 +30,8 @@ const Logo = ({ isMenuMobileOpen, mobilePageTransition, pageTransition }) => {
 	}
 
 	return <Wrapper m={media}>
-		<Svg m={media} onClick={clickHandler} viewBox="0 0 27 31" xmlns="http://www.w3.org/2000/svg">
-			<Path isMenuMobileOpen={isMenuMobileOpen} d="M4.96394 27.1602L13.4615 8.24349L16.8269 15.7435C16.8269 19.2157 15.7752 21.9796 13.6719 24.0352C11.5685 26.1185 8.76402 27.1602 5.25841 27.1602H4.96394ZM26.9231 30.2852L13.4615 0.285156L0 30.2852H5.25841C8.76402 30.2852 11.6106 29.0768 13.7981 26.6602C15.9575 24.2713 17.1494 21.0352 17.3738 16.9518L23.3474 30.2852H26.9231Z"/>
+		<Svg m={media} onClick={clickHandler} viewBox="0 0 85 93" xmlns="http://www.w3.org/2000/svg">
+			<Path isMenuMobileOpen={isMenuMobileOpen} fillRule="evenodd" clipRule="evenodd" d="M34.6248 0L0 93L17.421 93C29.035 93 40.4685 88.1118 46.5575 82.978C52.6466 77.8442 57.0408 71.7947 58.6286 61.5648L69.3798 93H85L50.1148 0H34.6248ZM54.5212 49.1877L42.4349 13.2671H42.1746L19.2787 81.0546C29.1788 80.6904 39.1964 77.5974 44.5671 71.2977C49.9379 64.998 53.3588 57.5819 54.5212 49.1877Z" />
 		</Svg>
 	</Wrapper>
 }

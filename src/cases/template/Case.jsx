@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
@@ -113,6 +113,7 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const {pathname} = useLocation()
+	const [smoothScrollH, setSmoothScrollH] = useState(0)
 	const mainRef = useRef()
 
 	useEffect(() => {
@@ -133,7 +134,7 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 	})
 
 	return <Main ref={mainRef}>
-		<SmoothScroll mainRef={mainRef}>
+		<SmoothScroll mainRef={mainRef} setSmoothScrollH={setSmoothScrollH}>
 			<MainCover src={c.mainImage.asset.url} alt={c.slug.current} />
 			<Title m={media}>
 				<h2>{c.title}</h2>
@@ -160,7 +161,7 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 				</Button>
 			</Info>
 			<CurrentCase i={i} caseData={caseData} />
-			<NextCase c={c} i={i} mainRef={mainRef} caseData={caseData} pageTransition={pageTransition} />
+			<NextCase c={c} i={i} mainRef={mainRef} smoothScrollH={smoothScrollH} caseData={caseData} pageTransition={pageTransition} />
 		</SmoothScroll>
 	</Main>
 }

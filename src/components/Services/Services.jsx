@@ -17,7 +17,7 @@ const Main = styled.main`
 	overflow-y: auto;
 	z-index: 3;
 `
-const Title = styled.h2`
+const Title = styled.h1`
 	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 	margin: ${({m}) => m.isHugeDesk || m.isDesk ? '288px 0 176px 0' : '196px 0 120px 0'};
 	color: ${ ({theme}) => theme.mode.text };
@@ -130,7 +130,7 @@ const Services = ({ setPageInitialized, servicesData }) => {
 				<Section key={index} m={media}>
 					<ServiceStack m={media}>
 						{!media.isMobile && <h3>{servicesBlock.title}</h3>}
-						{media.isMobile && <SectionTitle pZero>{servicesBlock.title}</SectionTitle>}
+						{media.isMobile && <SectionTitle pZero gc='1/2'>{servicesBlock.title}</SectionTitle>}
 						{servicesBlock.services.map((s, i) => (
 							<Service key={i} m={media}>
 								<Name m={media}>{s.title}</Name>
