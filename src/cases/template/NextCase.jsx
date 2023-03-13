@@ -109,18 +109,12 @@ const Circle = styled.div`
 	z-index: 3;
 	transform: translate(-50%, -50%) scale(0);
 `
-const NextCase = ({ c, i, mainRef, smoothScrollH, caseData, pageTransition }) => {
+const NextCase = ({ c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [nextCaseI, setNextCaseI] = useState(0)
-	const wrapperRef = useRef()
 	const cirlceRef = useRef()
 	const imgRef = useRef()
-
-	useEffect(() => {
-		if (i < caseData.length - 1) { setNextCaseI(i + 1) }
-		else { setNextCaseI(0) }
-	}, [i, caseData])
 
 	const showAndHideCirc = e => {
 		let crd = imgRef.current.getBoundingClientRect()
@@ -142,45 +136,25 @@ const NextCase = ({ c, i, mainRef, smoothScrollH, caseData, pageTransition }) =>
 		}
 	}
 
-	useEffect(() => {
+	const circAnim = e => {
 		if (media.isHugeDesk || media.isDesk) {
-			const el = wrapperRef.current
-			const moveCirc = e => {
-				gsap.to(cirlceRef.current, {
-					top: e.clientY + mainRef.current.scrollTop,
-					left: e.clientX,
-					duration: commonTheme.durations.middle,
-					ease: 'power4.out',
-				})
-				showAndHideCirc(e)
-			}
-			el.addEventListener('mousemove', moveCirc)
-
-			return () => el.removeEventListener('mousemove', moveCirc)
+			gsap.to(cirlceRef.current, {
+				top: e.pageY,
+				left: e.pageX,
+				duration: commonTheme.durations.middle,
+				ease: 'power4.out',
+			})
+			showAndHideCirc(e)
 		}
-	}, [media, mainRef])
-
-	useEffect(() => {
-		const el = wrapperRef.current
-		el.addEventListener('wheel', e => showAndHideCirc(e))
-
-		return () => el.removeEventListener('wheel', e => showAndHideCirc(e))
-	}, [mainRef])
-
-	const nextCaseClick = e => {
-		pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)
 	}
 
 	useEffect(() => {
-		gsap.to(cirlceRef.current, {
-			top: smoothScrollH,
-			left: wrapperRef.current.offsetWidth / 2,
-			scale: 0,
-			duration: 0,
-		})
-	}, [smoothScrollH])
+		i < caseData.length - 1
+		? setNextCaseI(i + 1)
+		: setNextCaseI(0)
+	}, [i, caseData])
 
-	return <Wrapper ref={wrapperRef}>
+	return <Wrapper onWheel={e => showAndHideCirc(e)} onMouseMove={circAnim}>
 		<Title m={media}>
 			<h3>Следующий кейс</h3>
 			<Line />
@@ -193,7 +167,7 @@ const NextCase = ({ c, i, mainRef, smoothScrollH, caseData, pageTransition }) =>
 																		: caseData[nextCaseI].mainImage.asset.url}
 					alt={caseData[nextCaseI].slug.current}
 					ref={imgRef}
-					onClick={nextCaseClick} />
+					onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
 			<AllWorks m={media} onClick={e => pageTransition('/portfolio')} className='linkUnderLine'>
 				<LetterByLetter wavy>Все работы</LetterByLetter>
 			</AllWorks>

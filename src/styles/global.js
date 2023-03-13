@@ -79,10 +79,14 @@ a {
 	transform: translateX(-100%) scaleX(100%);
 	opacity: 0;
 	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
-					opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3};
+					opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
+					background-color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3},
+					color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
 }
 ._anim-show-opacity {
 	opacity: 0;
-	transition: opacity ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
+	transition: opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
+					background-color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3},
+					color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
 }
 `

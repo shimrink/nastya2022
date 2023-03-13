@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 
 const ThemeCircle = styled.div`
-	width: 22px;
-	height: 22px;
+	width: 20px;
+	height: 20px;
 	background-color: ${ ({theme}) => theme.mode.text };
 	border: none;
 	border-radius: 50%;

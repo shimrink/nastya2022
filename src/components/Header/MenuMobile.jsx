@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
@@ -16,8 +16,14 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 110%;
 	touch-action: none;
-	transform: translateY(-100%);
 	z-index: 6;
+`
+const RoundedDiv = styled.div`
+	width: 120vw;
+	height: 10%;
+	background-color: ${ ({theme}) => theme.ac.dark };
+	border-radius: 50% / 0 0 100% 100%;
+	margin-top: -4px;
 `
 const Content = styled.div`
 	display: grid;
@@ -41,25 +47,9 @@ const Social = styled.div`
 		margin: ${({m}) => m.isMobile ? '0' : '0 12px'};
 	}
 `
-const RoundedDiv = styled.div`
-	width: 120vw;
-	height: 10%;
-	background-color: ${ ({theme}) => theme.ac.dark };
-	border-radius: 50% / 0 0 100% 100%;
-	margin-top: -4px;
-`
 const MenuMobile = forwardRef(({ disableWave, isMenuMobileOpen, mobilePageTransition }, ref) => {
 
 	const media = useContext(MediaContext)
-
-	useEffect(() => {
-		const el = ref.current
-		const onWheel = e => {
-			e.preventDefault()
-		}
-		el.addEventListener('wheel', onWheel)
-		return () => el.removeEventListener('wheel', onWheel)
-	})
 
 	return <Wrapper ref={ref}>
 		<Content m={media}>

@@ -1,16 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import SmoothScroll from '../common/SmoothScroll';
 import Footer from '../Footer/Footer';
 
 const Main = styled.main`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	height: 100vh;
-	overflow-x: hidden;
-	overflow-y: auto;
 	z-index: 3;
 `
 const Contacts = ({ setPageInitialized }) => {
@@ -19,12 +14,8 @@ const Contacts = ({ setPageInitialized }) => {
 		setPageInitialized(true)
 	}, [setPageInitialized])
 
-	const mainRef = useRef()
-
-	return <Main ref={mainRef}>
-		<SmoothScroll mainRef={mainRef}>
-			<Footer setPageInitialized={setPageInitialized} />
-		</SmoothScroll>
+	return <Main>
+		<Footer setPageInitialized={setPageInitialized} />
 	</Main>
 }
 

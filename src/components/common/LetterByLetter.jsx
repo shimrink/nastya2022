@@ -119,16 +119,14 @@ const LetterByLetter = ({ children, wavy, disableWave, navMobile, showAnim, titl
 
 			if ((window.scrollY > animItemOffset - animItemPoint) && window.scrollY < (animItemOffset + animItemHeight)) {
 				setShowAnimFinish(true)
-			} else {
-				setShowAnimFinish(false)
 			}
 		}
 	}, [showAnim])
 
 	useEffect(() => {
-		window.addEventListener('wheel', textAnimate)
+		window.addEventListener('scroll', textAnimate)
 
-		return () => window.removeEventListener('wheel', textAnimate)
+		return () => window.removeEventListener('scroll', textAnimate)
 	}, [textAnimate])
 
 	useEffect(() => {

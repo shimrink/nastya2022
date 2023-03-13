@@ -28,15 +28,14 @@ const Tab = styled.div`
 	border: 1px solid ${ ({theme}) => theme.ac.light };
 	border-radius: 9em;
 	cursor: pointer;
+	font-family: 'AccentFontM', sans-serif;
 	transition: background-color ${commonTheme.durations.short}s;
 	span {
 		grid-row: 1/2;
 		grid-column: 1/2;
 		align-self: center;
-		font-family: 'AccentFontM', sans-serif;
 		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 		text-align: center;
-		opacity: 1;
 		transition: color ${commonTheme.durations.short}s;
 	}
 	.tabTextActive {
@@ -47,36 +46,43 @@ const Tab = styled.div`
 		background-color: ${ ({theme}) => theme.ac.dark };
 		color: ${commonTheme.colors.white};
 	}
-	&.tabItemActive {
-		background-color: ${ ({theme}) => theme.ac.dark };
-		color: ${commonTheme.colors.white};
-		span {
-			opacity: 0;
-		}
-		.tabTextActive {
-			opacity: 1;
-		}
-	}
 `
-const Tabs = ({ caseData, categoriesData }) => {
+const Tabs = ({ accentColor, caseData, categoriesData }) => {
 
 	const media = useContext(MediaContext)
 	const rowHeightArr = useRef([])
+	const activeTab = useRef()
 
 	useEffect(() => {
+		activeTab.current = document.querySelector('.tabItem0')
+		activeTab.current.style.color = commonTheme.colors.white
+		activeTab.current.style.fontFamily = "'AccentFontB', sans-serif"
 		const rowArr = document.querySelectorAll('.rowItem')
 		for (let i = 0; i < rowArr.length; i++) {
 			rowHeightArr.current.push(rowArr[i].offsetHeight)
 		}
 	}, [media])
 
+	useEffect(() => {
+		activeTab.current.style.backgroundColor = accentColor.dark
+	}, [accentColor])
+
 	const tabSwitch = el => {
 		const elem = document.querySelector(el)
+		const tabArr = document.querySelectorAll('.tabItem')
 		const rowArr = document.querySelectorAll('.rowItem')
 
 		// Switch active class
-		document.querySelector('.tabItemActive').classList.remove('tabItemActive')
-		elem.classList.add('tabItemActive')
+		tabArr.forEach((t, i) => {
+			t.style.backgroundColor = 'transparent'
+			t.style.color = 'inherit'
+			t.style.fontFamily = "'AccentFontM', sans-serif"
+		})
+
+		activeTab.current = elem
+		elem.style.backgroundColor = accentColor.dark
+		elem.style.color = commonTheme.colors.white
+		elem.style.fontFamily = "'AccentFontB', sans-serif"
 
 		// Show all cases
 		for (let i = 0; i < rowArr.length; i++) {
@@ -111,17 +117,38 @@ const Tabs = ({ caseData, categoriesData }) => {
 		}
 	}
 
+	const mouseEnterHandler = e => {
+		if (e.target !== activeTab.current) {
+			e.target.style.backgroundColor = accentColor.dark
+			e.target.style.color = commonTheme.colors.white
+		}
+	}
+
+	const mouseLeaveHandler = e => {
+		if (e.target !== activeTab.current) {
+			e.target.style.backgroundColor = 'transparent'
+			e.target.style.color = 'inherit'
+		}
+	}
+
 	return <Wrapper m={media} className='animItems _anim-show-opacity'>
-		<Tab num={0} className='tabItem0 tabItemActive' m={media} onClick={ e => tabSwitch('.tabItem0') }>
+		<Tab num={0}
+				className='tabItem tabItem0'
+				m={media}
+				onClick={ () => tabSwitch('.tabItem0') }
+				onMouseEnter={mouseEnterHandler}
+				onMouseLeave={mouseLeaveHandler}>
 			<span>Все</span>
 			<span className='tabTextActive'>Все</span>
 		</Tab>
 		{categoriesData.map((c, i) => (
 			<Tab key={i}
-			num={i + 1}
-			className={`tabItem${i + 1}`}
-			m={media}
-			onClick={ e => tabSwitch(`.tabItem${i + 1}`) }>
+					num={i + 1}
+					className={`tabItem tabItem${i + 1}`}
+					m={media}
+					onClick={ () => tabSwitch(`.tabItem${i + 1}`) }
+					onMouseEnter={mouseEnterHandler}
+					onMouseLeave={mouseLeaveHandler}>
 				<span>{c.title}</span>
 				<span className='tabTextActive'>{c.title}</span>
 			</Tab>

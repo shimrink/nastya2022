@@ -31,7 +31,7 @@ const TitleArea = styled.div`
 	cursor: ${({m, isScrolling}) => (m.isHugeDesk || m.isDesk) && !isScrolling ? 'none' : 'pointer'};
 	z-index: 3;
 `
-const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
+const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 
 	const media = useContext(MediaContext)
 	const [isScrolling, setIsScrolling] = useState(false)
@@ -80,8 +80,8 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 			const el = wrapperRef.current
 			const moveCirc = e => {
 				gsap.to(cirlceRef.current, {
-					left: e.clientX,
-					top: e.clientY + mainRef.current.scrollTop,
+					left: e.pageX,
+					top: e.pageY,
 					duration: commonTheme.durations.middle,
 					ease: 'power4.out',
 				})
@@ -90,7 +90,7 @@ const Interest = ({ children, i, mainRef, wrapperRef, cirlceRef }) => {
 
 			return () => el.removeEventListener('mousemove', moveCirc)
 		}
-	}, [media, mainRef, wrapperRef, cirlceRef])
+	}, [media, wrapperRef, cirlceRef])
 
 	useEffect(() => {
 		if (media.isHugeDesk || media.isDesk) {

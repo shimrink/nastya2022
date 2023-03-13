@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
-import { commonTheme } from '../../styles/theme';
 
 const Wrap = styled.div`
 	display: flex;
@@ -16,7 +15,6 @@ const Title = styled.span`
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	text-transform: uppercase;
 	margin-bottom: 24px;
-	transition: color ${commonTheme.durations.short}s;
 `
 const Slogan = styled.span`
 	font-family: 'AccentFontM', sans-serif;
@@ -24,12 +22,10 @@ const Slogan = styled.span`
 	color: ${ ({theme}) => theme.ac.dark };
 	text-transform: uppercase;
 	margin-bottom: 12px;
-	transition: color ${commonTheme.durations.short}s;
 `
 const Explanation = styled.span`
 	font-size: ${({m}) => m.isMobile ? 'clamp(16px, 3.75vw, 18px)' : '18px'};
 	color: ${ ({theme}) => theme.ac.dark };
-	transition: color ${commonTheme.durations.short}s;
 `
 const Philosophy = () => {
 

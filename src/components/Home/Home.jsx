@@ -105,9 +105,9 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 
 	return <Suspense fallback={null}>
 		<Main ref={mainRef}
-						m={media}
-						onTouchStart={touchStartHandler}
-						onTouchMove={touchMoveHandler}>
+				m={media}
+				onTouchStart={touchStartHandler}
+				onTouchMove={touchMoveHandler}>
 			<Canvas linear flat className='canvas-main'>
 				<Scene currentIndex={currentIndex}
 						setPageInitialized={setPageInitialized}

@@ -66,12 +66,13 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 	const [isMenuMobileOpen, setMenuMobileOpen] = useState(false)
 	const [navDisable, setNavDisable] = useState(false)
 	const [disableWave, setDisableWave] = useState(true)
-	const headerRef = useRef()
 	const menuMobileRef = useRef()
 
 	const openMenu = () => {
+		document.querySelector('body').style.overflowY = 'hidden'
+		menuMobileRef.current.style.display = 'flex'
 		gsap.to(menuMobileRef.current, {
-			yPercent: 100,
+			yPercent: 0,
 			duration: 0.7,
 			ease: 'power4.inOut'
 		})
@@ -81,14 +82,14 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(true)
-		setTimeout(() => {
-			setDisableWave(false)
-		}, 900)
+
+		setTimeout(() => { setDisableWave(false) }, 900)
 	}
 
 	const closeMenu = useCallback(() => {
+		document.querySelector('body').style.overflowY = 'visible'
 		gsap.to(menuMobileRef.current, {
-			yPercent: 0,
+			yPercent: -100,
 			duration: 0.7,
 			ease: 'power4.inOut'
 		})
@@ -98,7 +99,11 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 			ease: 'power4.inOut'
 		})
 		setMenuMobileOpen(false)
-		setTimeout(() => { setDisableWave(true) }, 700)
+
+		setTimeout(() => {
+			setDisableWave(true)
+			menuMobileRef.current.style.display = 'none'
+		}, 700)
 	}, [])
 
 	const mobilePageTransition = path => {
@@ -120,17 +125,7 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 		if (isMenuMobileOpen) setMenuMobileOpen(!media.isHugeDesk && !media.isDesk)
 	}, [media, isMenuMobileOpen])
 
-	useEffect(() => {
-		const el = headerRef.current
-		const onWheel = e => {
-			e.preventDefault()
-		}
-		el.addEventListener('wheel', onWheel)
-
-		return () => el.removeEventListener('wheel', onWheel)
-	}, [])
-
-	return <Wrapper m={media} ref={headerRef}>
+	return <Wrapper m={media}>
 		<Logo isMenuMobileOpen={isMenuMobileOpen} mobilePageTransition={mobilePageTransition} pageTransition={pageTransition} />
 		<TogglersAndNav m={media}>
 			<ThemeTogglerContainer onClick={media.isHugeDesk || media.isDesk ? ()=>{} : themeToggler} m={media}>

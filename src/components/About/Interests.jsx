@@ -116,7 +116,7 @@ const Circle = styled.div`
 	z-index: 2;
 	transform: translate(-50%, -50%) scale(0);
 `
-const Interests = ({ mainRef }) => {
+const Interests = () => {
 
 	const media = useContext(MediaContext)
 	const wrapperRef = useRef()
@@ -131,7 +131,7 @@ const Interests = ({ mainRef }) => {
 			<Container m={media}>
 				<InnerContainer m={media}>
 					<Toggles m={media}>
-						{state.gifs.map((g, i) => <Interest key={i} i={i} mainRef={mainRef} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
+						{state.gifs.map((g, i) => <Interest key={i} i={i} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
 					</Toggles>
 					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>

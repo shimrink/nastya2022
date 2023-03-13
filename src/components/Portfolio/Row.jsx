@@ -79,24 +79,24 @@ const LineWrap = styled.div`
 `
 gsap.registerPlugin(CustomEase);
 
-const Row = ({ c, scrollTopV, casesRef, caseData, pageTransition }) => {
+const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
 	useEffect(() => {
-		const el = casesRef.current
+		const el = rowsRef.current
 		const moveImg = e => {
-			let crd = casesRef.current.getBoundingClientRect()
+			let crd = rowsRef.current.getBoundingClientRect()
 			if (crd.top <= e.clientY
 			&& e.clientY <= crd.bottom
 			&& crd.left <= e.clientX
 			&& e.clientX <= crd.right) {
 				for (let i = 0; i < caseData.length; i++) {
 					gsap.to(imgRef.current, {
-						left: e.clientX,
-						top: e.clientY + scrollTopV,
+						left: e.pageX,
+						top: e.pageY,
 						duration: commonTheme.durations.middle,
 						ease: 'power4.out',
 					})
@@ -119,24 +119,9 @@ const Row = ({ c, scrollTopV, casesRef, caseData, pageTransition }) => {
 		el.addEventListener('mousemove', moveImg)
 
 		return () => el.removeEventListener('mousemove', moveImg)
-	}, [casesRef, scrollTopV, caseData])
+	}, [rowsRef, caseData])
 
-	useEffect(() => {
-		const el = casesRef.current
-		const moveImgH = e => {
-			let st = e.deltaY > 0 ? 100 : -100
-			gsap.to(imgRef.current, {
-				top: e.clientY + scrollTopV + st,
-				duration: commonTheme.durations.long,
-				ease: 'power4.out',
-			})
-		}
-		el.addEventListener('wheel', moveImgH)
-
-		return () => el.removeEventListener('wheel', moveImgH)
-	}, [casesRef, scrollTopV])
-
-	const showImg = e => {
+	const showImg = () => {
 		gsap.to(imgRef.current, {
 			opacity: 1,
 			duration: commonTheme.durations.short,
@@ -145,7 +130,7 @@ const Row = ({ c, scrollTopV, casesRef, caseData, pageTransition }) => {
 		setHovering(true)
 	}
 
-	const hideImg = e => {
+	const hideImg = () => {
 		gsap.to(imgRef.current, {
 			opacity: 0,
 			duration: commonTheme.durations.short,

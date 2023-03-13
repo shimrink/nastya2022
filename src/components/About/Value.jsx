@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
@@ -9,15 +9,11 @@ const Row = styled.div`
 	grid-column-gap: ${ ({m}) => m.isTabletP ? '40px'
 										: m.isMobile ? '(24px, 7.5vw, 40px)'
 										: '24px'};
-	color: ${ ({theme, m}) => m.isHugeDesk || m.isDesk ? theme.mode.subText : theme.mode.text };
 	margin-bottom: ${({last, m}) => m.isHugeDesk || m.isDesk ? 96
 											: m.isTabletA ? 76
 											: last ? 0
 											: 48}px;
 	transition: color ${commonTheme.durations.short}s;
-	&.active {
-		color: ${ ({theme}) => theme.mode.text };
-	}
 	h2 {
 		grid-row: 1/2;
 		grid-column: ${ ({m}) => m.isMobile ? '1/13'
@@ -43,26 +39,8 @@ const Row = styled.div`
 const Value = ({ v }) => {
 
 	const media = useContext(MediaContext)
-	const rowRef = useRef()
 
-	useEffect(() => {
-		if (media.isHugeDesk || media.isDesk) {
-			const onWheel = e => {
-				let crd = rowRef.current.getBoundingClientRect()
-				let scrollValue = e.deltaY > 0 ? 100 : -100
-				if (crd.top - scrollValue <= (window.innerHeight * 0.55) && (window.innerHeight * 0.45) <= crd.bottom - scrollValue) {
-					rowRef.current.classList.add('active')
-				} else {
-					rowRef.current.classList.remove('active')
-				}
-			}
-			window.addEventListener('wheel', onWheel)
-
-			return () => window.removeEventListener('wheel', onWheel)
-		}
-	}, [media])
-
-	return <Row ref={rowRef} m={media}>
+	return <Row m={media}>
 		<h2>{v.title}</h2>
 		<span>{v.text}</span>
 	</Row>

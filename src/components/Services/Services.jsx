@@ -1,20 +1,15 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
-import SmoothScroll from '../common/SmoothScroll';
 import SectionTitle from '../common/SectionTitle';
 import Footer from '../Footer/Footer';
 import Line from '../common/Line';
 
 const Main = styled.main`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	height: 100vh;
-	overflow-x: hidden;
-	overflow-y: auto;
 	z-index: 3;
 `
 const Title = styled.h1`
@@ -120,34 +115,31 @@ const Services = ({ setPageInitialized, servicesData }) => {
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
-	const mainRef = useRef()
 
-	return <Main ref={mainRef}>
-		<SmoothScroll mainRef={mainRef}>
-			<Title m={media}>экспертиза, дизайн, разработка —<br/>весь комплекс услуг для упаковки бизнеса</Title>
-			{!media.isMobile && <SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Услуги и компетенции</SectionTitle>}
-			{servicesData.map((servicesBlock, index) => (
-				<Section key={index} m={media}>
-					<ServiceStack m={media}>
-						{!media.isMobile && <h3>{servicesBlock.title}</h3>}
-						{media.isMobile && <SectionTitle pZero gc='1/2'>{servicesBlock.title}</SectionTitle>}
-						{servicesBlock.services.map((s, i) => (
-							<Service key={i} m={media}>
-								<Name m={media}>{s.title}</Name>
-								{!media.isMobile && <Description>{s.description}</Description>}
-								<Time m={media}>{s.time}</Time>
-								<Price m={media}>{s.price}</Price>
-							</Service>
-						))}
-					</ServiceStack>
-					{!media.isMobile && <LineWrap><Line /></LineWrap>}
-				</Section>
-			))}
-			<ExactCost m={media}>
-				<p>Точную стоимость определим после обсуждения всех нюансов и необходимого объема работ.</p>
-			</ExactCost>
-			<Footer />
-		</SmoothScroll>
+	return <Main>
+		<Title m={media}>экспертиза, дизайн, разработка —<br/>весь комплекс услуг для упаковки бизнеса</Title>
+		{!media.isMobile && <SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Услуги и компетенции</SectionTitle>}
+		{servicesData.map((servicesBlock, index) => (
+			<Section key={index} m={media}>
+				<ServiceStack m={media}>
+					{!media.isMobile && <h3>{servicesBlock.title}</h3>}
+					{media.isMobile && <SectionTitle pZero gc='1/2'>{servicesBlock.title}</SectionTitle>}
+					{servicesBlock.services.map((s, i) => (
+						<Service key={i} m={media}>
+							<Name m={media}>{s.title}</Name>
+							{!media.isMobile && <Description>{s.description}</Description>}
+							<Time m={media}>{s.time}</Time>
+							<Price m={media}>{s.price}</Price>
+						</Service>
+					))}
+				</ServiceStack>
+				{!media.isMobile && <LineWrap><Line /></LineWrap>}
+			</Section>
+		))}
+		<ExactCost m={media}>
+			<p>Точную стоимость определим после обсуждения всех нюансов и необходимого объема работ.</p>
+		</ExactCost>
+		<Footer />
 	</Main>
 }
 

@@ -50,6 +50,23 @@ const AppWrap = () => {
 		setMedia({ isHugeDesk, isDesk, isTabletA, isTabletP, isMobile })
 	}, [isHugeDesk, isDesk, isTabletA, isTabletP, isMobile])
 
+	useEffect(() => {
+		window.SmoothScroll({
+			animationTime: 800,
+			stepSize: 70,
+			accelerationDelta: 20,
+			accelerationMax: 2,
+			keyboardSupport: true,
+			arrowScroll: 50,
+			// Pulse (less tweakable)
+			// ratio of "tail" to "acceleration"
+			pulseAlgorithm: true,
+			pulseScale: 4,
+			pulseNormalize: 1,
+			touchpadSupport: true
+		});
+	}, [])
+
 	// Get data from Sanity
 	useEffect(() => {
 		sanityClient.fetch(
