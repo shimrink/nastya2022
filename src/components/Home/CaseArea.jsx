@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 
 const CarouselContainer = styled.div`
+	position: absolute;
 	grid-row: 1/2;
 	grid-column: ${({m}) => m.isHugeDesk ? '2/3' : '1/4'};
-	position: absolute;
 	top: 0;
 	left: 0;
 	display: grid;
@@ -22,9 +22,9 @@ const CarouselContainer = styled.div`
 	z-index: 4;
 `
 const Carousel = styled.div`
+	position: absolute;
 	grid-row: 1/2;
 	grid-column: ${({m}) => m.isMobile || m.isTabletP ? '1/13' : '2/12'};
-	position: absolute;
 	display: grid;
 	grid-template-rows: 1fr;
 	grid-template-columns: 1fr;
@@ -44,43 +44,20 @@ const CaseWrapper = styled.div`
 	transform: translate(${ ({i}) => i * 122 }%, ${ ({i}) => i * 100 }%);
 	cursor: ${({m}) => m.isHugeDesk || m.isDesk ? 'none' : 'pointer'};
 `
-const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarouselSizes, setHovering, setHoverNum, pageTransition }) => {
+const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setHovering, setHoverNum, pageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const containerRef = useRef()
-	const carouselRef = useRef()
 
-	useEffect(() => {
-		const calcPlaneSizes = () => {
-			setCarouselSizes({
-				w: carouselRef.current.getBoundingClientRect().width,
-				h: carouselRef.current.getBoundingClientRect().height,
-				i: carouselRef.current.getBoundingClientRect().width * 1.22
+	const moveCirc = e => {
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(showButtonRef.current, {
+				left: e.pageX,
+				top: e.pageY,
+				duration: commonTheme.durations.middle,
+				ease: 'power4.out',
 			})
 		}
-		calcPlaneSizes()
-		window.addEventListener('resize', calcPlaneSizes)
-
-		return () => window.removeEventListener('resize', calcPlaneSizes)
-	}, [media, setCarouselSizes])
-
-	// Hovering animation
-	useEffect(() => {
-		if (media.isHugeDesk || media.isDesk) {
-			const el = containerRef.current
-			const onMouseMove = e => {
-				gsap.to(showButtonRef.current, {
-					left: e.pageX,
-					top: e.pageY,
-					duration: commonTheme.durations.middle,
-					ease: 'power4.out',
-				})
-			}
-			el.addEventListener('mousemove', onMouseMove)
-
-			return () => el.removeEventListener('mousemove', onMouseMove)
-		}
-	}, [showButtonRef, media])
+	}
 
 	const mouseOverHandler = (i) => {
 		if (media.isHugeDesk || media.isDesk) {
@@ -106,20 +83,17 @@ const CaseArea = ({ caseData, currentIndex, scrollCount, showButtonRef, setCarou
 	}
 
 	let count = -1
-	return <CarouselContainer ref={containerRef} m={media}>
-		<Carousel ref={carouselRef}
-					m={media}
-					currentIndex={currentIndex}
-					scrollCount={scrollCount}>
+	return <CarouselContainer m={media} onMouseMove={moveCirc}>
+		<Carousel m={media} currentIndex={currentIndex} scrollCount={scrollCount}>
 			{caseData.map((p, i) => {
 				if (p.isMainSlider) {
 					count++
 					return <CaseWrapper key={p.slug.current}
-									m={media}
-									i={count}
-									onMouseOver={e => mouseOverHandler(i)}
-									onMouseOut={mouseOutHandler}
-									onClick={e => pageTransition(`cases/${p.slug.current}`)} />
+												m={media}
+												i={count}
+												onMouseOver={() => mouseOverHandler(i)}
+												onMouseOut={mouseOutHandler}
+												onClick={() => pageTransition(`cases/${p.slug.current}`)} />
 				}
 				return null
 			})}

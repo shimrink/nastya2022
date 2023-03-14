@@ -22,7 +22,7 @@ const TopBlock = styled.div`
 	width: 100%;
 	height: 100vh;
 	background-image: url(${coverImg});
-	background-position-x: ${ ({m}) => m.isTabletP ? '20%' : '10%'};
+	background-position-x: ${({m}) => m.isTabletP ? '20%' : '10%'};
 	background-size: cover;
 	background-attachment: fixed;
 `

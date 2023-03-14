@@ -1,11 +1,10 @@
 import React, { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Canvas } from '@react-three/fiber';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 import ScrollProgress from './ScrollProgress';
-import Scene from './Scene';
 import CaseArea from './CaseArea';
+import CaseImg from './CaseImg';
 
 const Main = styled.main`
 	position: absolute;
@@ -15,19 +14,11 @@ const Main = styled.main`
 	height: 100%;
 	overflow: hidden;
 	touch-action: none;
-	.canvas-main {
-		position: relative;
-		grid-row: 1/2;
-		grid-column: 1/4;
-		width: 100%;
-		height: 100%;
-		z-index: 2;
-	}
 `
 const ShowButton = styled.div`
+	position: absolute;
 	grid-row: 1/2;
 	grid-column: 1/4;
-	position: absolute;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -43,15 +34,17 @@ const ShowButton = styled.div`
 `
 const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 
+	useEffect(() => {
+		setPageInitialized(true)
+	}, [setPageInitialized])
+
 	const media = useContext(MediaContext)
 	const [scrollCount, setScrollCount] = useState(1)
 	const [currentIndex, setCurrentIndex] = useState(0)
-	const [carouselSizes, setCarouselSizes] = useState({width: 0, height: 0, indent: 0})
 	const [hovering, setHovering] = useState(false)
 	const [hoverNum, setHoverNum] = useState()
 	const [touchPosition, setTouchPosition] = useState(null)
 	const showButtonRef = useRef()
-	const mainRef = useRef()
 	let casesCount = 0
 	caseData.forEach(c => {
 		if (c.isMainSlider) casesCount++
@@ -89,14 +82,12 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 	}
 
 	useEffect(() => {
-		const el = mainRef.current
 		const onWheel = e => {
-			e.preventDefault()
 			e.deltaY > 0 ? next() : prev()
 		}
-		el.addEventListener('wheel', onWheel)
+		window.addEventListener('wheel', onWheel)
 
-		return () => el.removeEventListener('wheel', onWheel)
+		return () => window.removeEventListener('wheel', onWheel)
 	}, [next, prev])
 
 	useEffect(() => {
@@ -104,31 +95,17 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 	}, [media])
 
 	return <Suspense fallback={null}>
-		<Main ref={mainRef}
-				m={media}
-				onTouchStart={touchStartHandler}
-				onTouchMove={touchMoveHandler}>
-			<Canvas linear flat className='canvas-main'>
-				<Scene currentIndex={currentIndex}
-						setPageInitialized={setPageInitialized}
-						caseData={caseData}
-						scrollCount={scrollCount}
-						carouselSizes={carouselSizes}
-						hovering={hovering}
-						hoverNum={hoverNum} />
-			</Canvas>
+		<Main m={media} onTouchStart={touchStartHandler} onTouchMove={touchMoveHandler}>
+			<CaseImg caseData={caseData} currentIndex={currentIndex} scrollCount={scrollCount} hovering={hovering} hoverNum={hoverNum} />
 			{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
 			<CaseArea caseData={caseData}
 						currentIndex={currentIndex}
 						scrollCount={scrollCount}
 						showButtonRef={showButtonRef}
-						setCarouselSizes={setCarouselSizes}
 						setHovering={setHovering}
 						setHoverNum={setHoverNum}
 						pageTransition={pageTransition} />
-			<ScrollProgress casesCount={casesCount}
-								currentIndex={currentIndex}
-								scrollCount={scrollCount} />
+			<ScrollProgress casesCount={casesCount} currentIndex={currentIndex} scrollCount={scrollCount} />
 		</Main>
 	</Suspense>
 }

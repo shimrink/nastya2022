@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { accentTheme, commonTheme } from '../../styles/theme';
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	justify-items: ${({m}) => m.isHugeDesk || m.isDesk ? 'start' : 'end'};
 	padding: ${({m}) => m.isHugeDesk || m.isDesk ? 0 : 6}px;
 `
-const Button = styled.div`
+const ColorDiv = styled.div`
 	position: relative;
 	grid-row: 1/2;
 	grid-column: 1/2;
@@ -36,19 +36,23 @@ const Button = styled.div`
 const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
 
 	const media = useContext(MediaContext)
+	const [accentThemeLocal, setAccentThemeLocal] = useState([...accentTheme])
 
-	const accentThemeLocal = [...accentTheme]
-	accentTheme.forEach((ac, index) => {
-		if (ac.color.dark === accentColor.dark) {
-			for (let i = 0; i < index; i++) {
-				accentThemeLocal.push(accentThemeLocal.shift())
+	useEffect(() => {
+		let localArr = [...accentTheme]
+		accentTheme.forEach((ac, index) => {
+			if (ac.color === accentColor) {
+				for (let i = 0; i < index; i++) {
+					localArr.push(localArr.shift())
+				}
+				setAccentThemeLocal(localArr)
 			}
-		}
-	})
+		})
+	}, [accentColor])
 
 	return <Wrapper m={media}>
 		{accentThemeLocal.map((ac, i) => (
-			<Button onClick={ () => toggleAccentColor(ac.name) }
+			<ColorDiv onClick={ () => toggleAccentColor(ac.name) }
 						col={ac.color.dark}
 						sn={i}
 						m={media}
