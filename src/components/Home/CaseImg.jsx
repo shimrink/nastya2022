@@ -53,6 +53,7 @@ const Content = styled.div`
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-gap: 24px;
+	align-content: end;
 	align-items: end;
 	width: 100%;
 	aspect-ratio: ${({m}) => m.isMobile ? '0.754' : '16/9'};
@@ -110,7 +111,7 @@ const CaseImg = ({ caseData, currentIndex, scrollCount, hovering, hoverNum }) =>
 									i={count}
 									hovering={hovering}
 									hoverNum={hoverNum}
-									imgUrl={!media.isTabletP && !media.isMobile ? p.mainImage.asset.url : p.mobileImage.asset.url}>
+									imgUrl={!media.isMobile ? p.mainImage.asset.url : p.mobileImage.asset.url}>
 							<Tags m={media}>
 								{p.tags.map((t, i) => <span key={i}>{t}</span>)}
 							</Tags>

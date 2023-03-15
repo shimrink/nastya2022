@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import gsap from 'gsap';
 import { MediaContext } from '../../AppWrap';
@@ -112,29 +113,10 @@ const Circle = styled.div`
 const NextCase = ({ c, i, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
+	const {pathname} = useLocation()
 	const [nextCaseI, setNextCaseI] = useState(0)
 	const cirlceRef = useRef()
 	const imgRef = useRef()
-
-	const showAndHideCirc = e => {
-		let crd = imgRef.current.getBoundingClientRect()
-		if (crd.top <= e.clientY
-		&& e.clientY <= crd.bottom
-		&& crd.left <= e.clientX
-		&& e.clientX <= crd.right) {
-			gsap.to(cirlceRef.current, {
-				scale: 1,
-				duration: commonTheme.durations.short,
-				ease: 'power4.out',
-			})
-		} else {
-			gsap.to(cirlceRef.current, {
-				scale: 0,
-				duration: commonTheme.durations.short,
-				ease: 'power4.out',
-			})
-		}
-	}
 
 	const circAnim = e => {
 		if (media.isHugeDesk || media.isDesk) {
@@ -144,7 +126,23 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 				duration: commonTheme.durations.middle,
 				ease: 'power4.out',
 			})
-			showAndHideCirc(e)
+			let crd = imgRef.current.getBoundingClientRect()
+			if (crd.top <= e.clientY
+			&& e.clientY <= crd.bottom
+			&& crd.left <= e.clientX
+			&& e.clientX <= crd.right) {
+				gsap.to(cirlceRef.current, {
+					scale: 1,
+					duration: commonTheme.durations.short,
+					ease: 'power4.out',
+				})
+			} else {
+				gsap.to(cirlceRef.current, {
+					scale: 0,
+					duration: commonTheme.durations.short,
+					ease: 'power4.out',
+				})
+			}
 		}
 	}
 
@@ -154,7 +152,16 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 		: setNextCaseI(0)
 	}, [i, caseData])
 
-	return <Wrapper onWheel={e => showAndHideCirc(e)} onMouseMove={circAnim}>
+	useEffect(() => {
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(cirlceRef.current, {
+				scale: 0,
+				duration: 0,
+			})
+		}
+	}, [pathname, media])
+
+	return <Wrapper onMouseMove={circAnim}>
 		<Title m={media}>
 			<h3>Следующий кейс</h3>
 			<Line />

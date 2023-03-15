@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	color: ${commonTheme.colors.white};

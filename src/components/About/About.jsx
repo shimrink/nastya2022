@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
@@ -24,7 +24,7 @@ const TopBlock = styled.div`
 	background-image: url(${coverImg});
 	background-position-x: ${({m}) => m.isTabletP ? '20%' : '10%'};
 	background-size: cover;
-	background-attachment: fixed;
+	background-attachment: ${({iosDevice}) => iosDevice ? 'scroll' : 'fixed'};
 `
 const TopBlockContent = styled.div`
 	display: grid;
@@ -71,9 +71,14 @@ const About = ({ setPageInitialized, pageTransition }) => {
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
+	const iosDevice = useRef(false)
+
+	useEffect(() => {
+		if (navigator.userAgent.toLowerCase().match(/(ipad|iphone)/)) iosDevice.current = true
+	}, [iosDevice])
 
 	return <Main>
-		<TopBlock m={media}>
+		<TopBlock m={media} iosDevice={iosDevice.current}>
 			<TopBlockContent m={media}>
 				<Contacts m={media} className='animItems _anim-show-opacity'>
 					<a className='linkUnderLine' href="https://dribbble.com/asyadulova" target="_blank" rel="noreferrer">
