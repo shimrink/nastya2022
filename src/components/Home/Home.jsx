@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
@@ -44,6 +44,8 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 	const [hovering, setHovering] = useState(false)
 	const [hoverNum, setHoverNum] = useState()
 	const [touchPosition, setTouchPosition] = useState(null)
+	const [distX, setDistX] = useState(0)
+	const [distY, setDistY] = useState(0)
 	const showButtonRef = useRef()
 	let casesCount = 0
 	caseData.forEach(c => {
@@ -70,15 +72,19 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 	}
 
 	const touchMoveHandler = e => {
-		if (touchPosition !== null) {
-			if (touchPosition.x - e.touches[0].clientX > 5
-			|| touchPosition.y - e.touches[0].clientY > 5) next()
+		setDistX(touchPosition.x - e.touches[0].clientX)
+		setDistY(touchPosition.y - e.touches[0].clientY)
+	}
 
-			if (touchPosition.x - e.touches[0].clientX < -5
-			|| touchPosition.y - e.touches[0].clientY < 5) prev()
+	const touchEndHandler = () => {
+		let mDistX = distX < 0 ? -1 * distX : distX
+		let mDistY = distY < 0 ? -1 * distY : distY
+		let dir = mDistX - mDistY >= 0 ? 'horizontal' : 'vertical'
+		if ((dir === 'horizontal' && distX > 7)
+		 || (dir === 'vertical' && distY > 7)) next()
 
-			setTouchPosition(null)
-		}
+		if ((dir === 'horizontal' && distX < -7)
+		 || (dir === 'vertical' && distY < -7)) prev()
 	}
 
 	useEffect(() => {
@@ -94,20 +100,18 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 		setScrollCount(media.isHugeDesk || media.isDesk ? 5 : 1)
 	}, [media])
 
-	return <Suspense fallback={null}>
-		<Main m={media} onTouchStart={touchStartHandler} onTouchMove={touchMoveHandler}>
-			<CaseImg caseData={caseData} currentIndex={currentIndex} scrollCount={scrollCount} hovering={hovering} hoverNum={hoverNum} />
-			{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
-			<CaseArea caseData={caseData}
-						currentIndex={currentIndex}
-						scrollCount={scrollCount}
-						showButtonRef={showButtonRef}
-						setHovering={setHovering}
-						setHoverNum={setHoverNum}
-						pageTransition={pageTransition} />
-			<ScrollProgress casesCount={casesCount} currentIndex={currentIndex} scrollCount={scrollCount} />
-		</Main>
-	</Suspense>
+	return <Main m={media} onTouchStart={touchStartHandler} onTouchMove={touchMoveHandler} onTouchEnd={touchEndHandler}>
+		<CaseImg caseData={caseData} currentIndex={currentIndex} scrollCount={scrollCount} hovering={hovering} hoverNum={hoverNum} />
+		{(media.isHugeDesk || media.isDesk) && <ShowButton ref={showButtonRef}>Смотреть</ShowButton>}
+		<CaseArea caseData={caseData}
+					currentIndex={currentIndex}
+					scrollCount={scrollCount}
+					showButtonRef={showButtonRef}
+					setHovering={setHovering}
+					setHoverNum={setHoverNum}
+					pageTransition={pageTransition} />
+		<ScrollProgress casesCount={casesCount} currentIndex={currentIndex} scrollCount={scrollCount} />
+	</Main>
 }
 
 export default Home;

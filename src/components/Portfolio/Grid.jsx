@@ -11,7 +11,7 @@ const Case = styled.div`
 `
 const Img = styled.img`
 	width: 100%;
-	aspect-ratio: 224/277;
+	aspect-ratio: ${({m}) => m.isMobile ? '2/3' : '224/277'};
 	object-fit: cover;
 	user-select: none;
 	-webkit-user-drag: none;
@@ -44,7 +44,7 @@ const Grid = ({ c, pageTransition }) => {
 	const media = useContext(MediaContext)
 
 	return <Case className='rowItem' m={media} onClick={e => pageTransition(`cases/${c.slug.current}`)}>
-		<Img src={c.mobileImage.asset.url} alt={c.slug.current} />
+		<Img m={media} src={c.mobileImage.asset.url} alt={c.slug.current} />
 		<Name className='animItems _anim-show-opacity'>{c.title}</Name>
 		<Line />
 		<CaseInfo>

@@ -106,6 +106,7 @@ const ExactCost = styled.div`
 		grid-column: ${({m}) => m.isMobile ? '1/13'
 									: m.isTabletP ? '4/13'
 									: '7/13'};
+		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	}
 `
 const Services = ({ setPageInitialized, servicesData }) => {

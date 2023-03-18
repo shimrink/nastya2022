@@ -74,7 +74,7 @@ const About = ({ setPageInitialized, pageTransition }) => {
 	const iosDevice = useRef(false)
 
 	useEffect(() => {
-		if (navigator.userAgent.toLowerCase().match(/(ipad|iphone)/)) iosDevice.current = true
+		if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|ipod)/)) iosDevice.current = true
 	}, [iosDevice])
 
 	return <Main>

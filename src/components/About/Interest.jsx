@@ -16,7 +16,6 @@ const Title = styled.h3`
 	text-transform: uppercase;
 	cursor: pointer;
 	z-index: 1;
-	transition: color ${commonTheme.durations.short}s;
 	&.active {
 		font-family: 'AccentFontM';
 		font-weight: 500;
@@ -35,9 +34,12 @@ const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 
 	const media = useContext(MediaContext)
 	const [isScrolling, setIsScrolling] = useState(false)
+	const [disableClick, setDisableClick] = useState(false)
 	const timeoutID = useRef()
 
 	const switchGif = e => {
+		setDisableClick(true)
+		setTimeout(() => { setDisableClick(false) }, 300)
 		const titleAreasArr = document.querySelectorAll('.interestArea')
 		const titlesArr = document.querySelectorAll('.interest')
 		const gifsArr = document.querySelectorAll('.gif')
@@ -45,11 +47,15 @@ const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 		for (let i = 0; i < titleAreasArr.length; i++) {
 			titlesArr[i].classList.remove('active')
 			gifsArr[i].classList.remove('active')
-			textsArr[i].classList.remove('active')
+			textsArr[i].classList.remove('activeOpacity')
+			if (e.target !== titleAreasArr[i]) {
+				setTimeout(() => { textsArr[i].classList.add('deactiveHeight') }, 300)
+			}
 			if (e.target === titleAreasArr[i]) {
 				titlesArr[i].classList.add('active')
 				gifsArr[i].classList.add('active')
-				textsArr[i].classList.add('active')
+				textsArr[i].classList.remove('deactiveHeight')
+				textsArr[i].classList.add('activeOpacity')
 			}
 		}
 		e.target.classList.add('active')
@@ -125,7 +131,7 @@ const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 						i={i}
 						m={media}
 						isScrolling={isScrolling}
-						onClick={switchGif}
+						onClick={!disableClick && switchGif}
 						onMouseMove={showCirc}
 						onMouseOut={hideCirc} />
 	</Wrap>

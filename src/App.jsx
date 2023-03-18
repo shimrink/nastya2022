@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 100%;
+	width: 100vw;
 	height: ${ ({fullHeight}) => fullHeight ? '100%' : 'auto' };
 	overflow-x: hidden;
 	color: ${ ({theme}) => theme.mode.text };
@@ -79,7 +79,33 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 	const [pageInitialized, setPageInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
 	const [navDisable, setNavDisable] = useState(false)
+	const [prevURL, setPrevURL] = useState(pathname)
 	const curtainRef = useRef()
+
+	const pageTransition = useCallback(path => {
+		if (pathname !== path && !navDisable) {
+			setPrevURL(window.location.pathname)
+			setPageInitialized(false)
+			setNavDisable(true)
+			curtainRef.current.style.display = 'flex'
+
+			const tl = gsap.timeline()
+			tl.to(curtainRef.current, {
+				yPercent: 100,
+				duration: 0,
+			})
+			tl.to(curtainRef.current, {
+				yPercent: -10,
+				duration: commonTheme.durations.middle,
+				ease: 'power3.in',
+			})
+
+			setTimeout(() => {
+				navigate(path)
+				window.scrollTo(0, 0)
+			}, 600)
+		}
+	}, [pathname, navDisable, navigate])
 
 	const offset = (el) => {
 		const rect = el.getBoundingClientRect()
@@ -115,52 +141,20 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 		}
 	}, [])
 
+	// Animation on scroll
 	useEffect(() => {
-		const scrollHandler = e => { textAnimate(50) }
+		const scrollHandler = () => { textAnimate(50) }
 		window.addEventListener('scroll', scrollHandler)
 
 		return () => window.removeEventListener('scroll', scrollHandler)
 	}, [textAnimate])
 
-	// auto animation on new page
+	// Auto animation on new page
 	useEffect(() => {
 		setTimeout(() => { textAnimate(0) }, 600)
 	}, [textAnimate, pageInitialized])
 
-	// Delete Preloader
-	useEffect(() => {
-		if (appInitialized) {
-			setTimeout(() => {
-				setShowPreloader(false)
-			}, 6000)
-		}
-	}, [appInitialized])
-
-	useEffect(() => {
-		window.scrollTo(0, 0)
-	}, [pathname])
-
-	const pageTransition = path => {
-		if (pathname !== path && !navDisable) {
-			setPageInitialized(false)
-			setNavDisable(true)
-			curtainRef.current.style.display = 'flex'
-
-			const tl = gsap.timeline()
-			tl.to(curtainRef.current, {
-				yPercent: 100,
-				duration: 0,
-			})
-			tl.to(curtainRef.current, {
-				yPercent: -10,
-				duration: commonTheme.durations.middle,
-				ease: 'power3.in',
-			})
-
-			setTimeout(() => { navigate(path) }, 600)
-		}
-	}
-
+	// Curtain out anim on new page
 	useEffect(() => {
 		if (pageInitialized) {
 			gsap.to(curtainRef.current, {
@@ -177,6 +171,30 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 		}
 	}, [pageInitialized])
 
+	// Browser history transition
+	useEffect(() => {
+		window.history.pushState(null, "", window.location.href)
+		const onPop = () => {
+			window.history.pushState(null, "", window.location.href)
+			pageTransition(prevURL)
+		}
+		window.addEventListener('popstate', onPop)
+
+		return () => {
+			window.removeEventListener('popstate', onPop)
+		}
+	}, [prevURL, pageTransition])
+
+	// Delete Preloader
+	useEffect(() => {
+		if (appInitialized) {
+			setTimeout(() => {
+				setShowPreloader(false)
+			}, 6000)
+		}
+	}, [appInitialized])
+
+	// Gradient initialization
 	useEffect(() => {
 		gradient.initGradient('#gradient-canvas')
 	}, [pathname, themeMode, accentColor, media])

@@ -78,7 +78,7 @@ const Text = styled.div`
 	grid-row: 2/3;
 	grid-column: 1/4;
 	display: grid;
-	align-items: end;
+	align-items: ${({m}) => m.isMobile ? 'start' : 'end'};
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: 24px;
 	padding: ${({m}) => m.isTabletP ? '0 0 0 20px'
@@ -95,7 +95,10 @@ const Text = styled.div`
 		opacity: 0;
 		transition: opacity ${commonTheme.durations.short}s;
 	}
-	p.active {
+	p.deactiveHeight {
+		height: 0;
+	}
+	p.activeOpacity {
 		opacity: 1;
 	}
 `
@@ -135,12 +138,12 @@ const Interests = () => {
 					</Toggles>
 					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>
-						{state.gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
+						{state.gifs.map((g, i) => <p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>{g.text}</p>)}
 					</Text>}
 				</InnerContainer>
 			</Container>
 			{media.isMobile && <Text m={media}>
-				{state.gifs.map((g, i) => <p className={i === 0 ? 'text active' : 'text'} key={i}>{g.text}</p>)}
+				{state.gifs.map((g, i) => <p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>{g.text}</p>)}
 			</Text>}
 		</Content>
 		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Тык</Circle>}
