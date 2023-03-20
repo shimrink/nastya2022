@@ -49,17 +49,26 @@ const Info = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isHugeDesk ? '0'
 							: '0 40px'};
-	img {
-		position: relative;
-		grid-row: 1/2;
-		grid-column: ${({m}) => m.isMobile ? '1/13' : '4/10'};
-		width: 100%;
-		aspect-ratio: ${({m}) => m.isTabletP || m.isMobile ? '2/3' : '16/9'};
-		object-fit: cover;
-		margin-bottom: ${({m}) => m.isMobile ? 'clamp(48px, 12.08vw, 52px)' : '0'};
-		cursor: pointer;
-		z-index: 2;
-	}
+`
+const NextCover = styled.img`
+	position: relative;
+	grid-row: 1/2;
+	grid-column: ${({m}) => m.isMobile ? '1/13' : '4/10'};
+	width: 100%;
+	aspect-ratio: ${({m}) => m.isTabletP || m.isMobile ? '2/3' : '16/9'};
+	object-fit: cover;
+	margin-bottom: ${({m}) => m.isMobile ? 'clamp(48px, 12.08vw, 52px)' : '0'};
+	cursor: pointer;
+	z-index: 2;
+`
+const CoverArea = styled.div`
+	position: relative;
+	grid-row: 1/2;
+	grid-column: ${({m}) => m.isMobile ? '1/13' : '4/10'};
+	width: 100%;
+	height: 100%;
+	cursor: ${({m}) => m.isHugeDesk || m.isDesk ? 'none' : 'pointer'};
+	z-index: 4;
 `
 const NameWrap = styled.div`
 	position: absolute;
@@ -94,7 +103,7 @@ const OrderProject = styled(Links)`
 	justify-self: end;
 `
 const Circle = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
@@ -121,29 +130,28 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 	const circAnim = e => {
 		if (media.isHugeDesk || media.isDesk) {
 			gsap.to(cirlceRef.current, {
-				top: e.pageY,
-				left: e.pageX,
+				top: e.clientY,
+				left: e.clientX,
 				duration: commonTheme.durations.middle,
 				ease: 'power4.out',
 			})
-			let crd = imgRef.current.getBoundingClientRect()
-			if (crd.top <= e.clientY
-			&& e.clientY <= crd.bottom
-			&& crd.left <= e.clientX
-			&& e.clientX <= crd.right) {
-				gsap.to(cirlceRef.current, {
-					scale: 1,
-					duration: commonTheme.durations.short,
-					ease: 'power4.out',
-				})
-			} else {
-				gsap.to(cirlceRef.current, {
-					scale: 0,
-					duration: commonTheme.durations.short,
-					ease: 'power4.out',
-				})
-			}
 		}
+	}
+
+	const showCirc = () => {
+		gsap.to(cirlceRef.current, {
+			scale: 1,
+			duration: commonTheme.durations.short,
+			ease: 'power4.out',
+		})
+	}
+
+	const hideCirc = () => {
+		gsap.to(cirlceRef.current, {
+			scale: 0,
+			duration: commonTheme.durations.short,
+			ease: 'power4.out',
+		})
 	}
 
 	useEffect(() => {
@@ -170,20 +178,22 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 			<NameWrap m={media}>
 				{[...Array(4)].map((v, ind) => <Name key={ind} m={media}>{caseData[nextCaseI].title} /</Name>)}
 			</NameWrap>
-			<img src={ media.isTabletP || media.isMobile ? caseData[nextCaseI].mobileImage.asset.url
+			<NextCover m={media}
+					src={media.isTabletP || media.isMobile ? caseData[nextCaseI].mobileImage.asset.url
 																		: caseData[nextCaseI].mainImage.asset.url}
 					alt={caseData[nextCaseI].slug.current}
 					ref={imgRef}
-					onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
-			<AllWorks m={media} onClick={e => pageTransition('/portfolio')} className='linkUnderLine'>
+					onClick={() => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
+			<CoverArea m={media} onMouseOver={showCirc} onMouseOut={hideCirc} />
+			<AllWorks m={media} onClick={() => pageTransition('/portfolio')}>
 				<LetterByLetter wavy>Все работы</LetterByLetter>
 			</AllWorks>
-			<OrderProject m={media} onClick={e => pageTransition('/contacts')} className='linkUnderLine'>
+			<OrderProject m={media} onClick={() => pageTransition('/contacts')}>
 				<LetterByLetter wavy>Заказать проект</LetterByLetter>
 			</OrderProject>
 		</Info>
 		<Contacts c={c} />
-		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={e => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)}>Смотреть</Circle>}
+		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef} onClick={() => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)}>Смотреть</Circle>}
 	</Wrapper>
 }
 

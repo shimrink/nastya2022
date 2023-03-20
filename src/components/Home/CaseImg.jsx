@@ -58,11 +58,11 @@ const Content = styled.div`
 	background-image: url(${({imgUrl}) => imgUrl});
 	background-position-x: ${props => props.hovering && props.i === props.hoverNum
 												? 50
-												: -10 * (props.i * props.scrollCount - props.currentIndex) + 50}%;
+												: -10 * props.mob * (props.i * props.scrollCount - props.currentIndex) + 50}%;
 	background-position-y: ${props => props.hovering && props.i === props.hoverNum
 												? 50
-												: -10 * (props.i * props.scrollCount - props.currentIndex) + 50}%;
-	background-size: ${({i, hovering, hoverNum}) => hovering && i === hoverNum ? 110 : 120}% auto;
+												: -10 * props.mob * (props.i * props.scrollCount - props.currentIndex) + 50}%;
+	background-size: ${({i, hovering, hoverNum}) => hovering && i === hoverNum ? 100 : 120}% auto;
 	transition: background-position ${commonTheme.durations.long}s ${commonTheme.easings.outPower4},
 					background-size ${commonTheme.durations.long}s ${commonTheme.easings.outPower4};
 `
@@ -101,12 +101,12 @@ const CaseImg = ({ caseData, currentIndex, scrollCount, hovering, hoverNum }) =>
 				if (p.isMainSlider) {
 					count++
 					return <Case key={p.slug.current} i={count}>
-						<Content m={media}
-									currentIndex={currentIndex}
+						<Content currentIndex={currentIndex}
 									scrollCount={scrollCount}
 									i={count}
 									hovering={hovering}
 									hoverNum={hoverNum}
+									mob={media.isHugeDesk || media.isDesk ? 1 : 5}
 									imgUrl={!media.isMobile ? p.mainImage.asset.url : p.mobileImage.asset.url}>
 							<Tags m={media}>
 								{p.tags.map((t, i) => <span key={i}>{t}</span>)}

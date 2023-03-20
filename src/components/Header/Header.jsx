@@ -66,9 +66,11 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 	const [isMenuMobileOpen, setMenuMobileOpen] = useState(false)
 	const [navDisable, setNavDisable] = useState(false)
 	const [disableWave, setDisableWave] = useState(true)
+	const [disableBurger, setDisableBurger] = useState(false)
 	const menuMobileRef = useRef()
 
 	const openMenu = () => {
+		setDisableBurger(true)
 		document.querySelector('body').style.overflowY = 'hidden'
 		menuMobileRef.current.style.display = 'flex'
 		gsap.to(menuMobileRef.current, {
@@ -84,9 +86,11 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 		setMenuMobileOpen(true)
 
 		setTimeout(() => { setDisableWave(false) }, 900)
+		setTimeout(() => { setDisableBurger(false) }, 700)
 	}
 
 	const closeMenu = useCallback(() => {
+		setDisableBurger(true)
 		document.querySelector('body').style.overflowY = 'visible'
 		gsap.to(menuMobileRef.current, {
 			yPercent: -100,
@@ -102,6 +106,7 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 
 		setTimeout(() => {
 			setDisableWave(true)
+			setDisableBurger(false)
 			menuMobileRef.current.style.display = 'none'
 		}, 700)
 	}, [])
@@ -137,8 +142,8 @@ const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentCol
 			{media.isHugeDesk || media.isDesk
 				? <Navigation pageTransition={pageTransition} />
 				: isMenuMobileOpen
-				? <Burger onClick={closeMenu} isMenuMobileOpen={isMenuMobileOpen}>Закрыть</Burger>
-				: <Burger onClick={openMenu} isMenuMobileOpen={isMenuMobileOpen}>Меню</Burger>
+				? <Burger onClick={() => { !disableBurger && closeMenu() }} isMenuMobileOpen={isMenuMobileOpen}>Закрыть</Burger>
+				: <Burger onClick={() => { !disableBurger && openMenu() }} isMenuMobileOpen={isMenuMobileOpen}>Меню</Burger>
 			}
 		</TogglersAndNav>
 		{(!media.isHugeDesk && !media.isDesk) && <MenuMobile ref={menuMobileRef} disableWave={disableWave} isMenuMobileOpen={isMenuMobileOpen} mobilePageTransition={mobilePageTransition} />}

@@ -66,7 +66,7 @@ const Values = ({ pageTransition }) => {
 			<Container m={media}>
 				{state.aboutValues.map((v, i) => <Value key={i} v={v} />)}
 			</Container>
-			<Button m={media} onClick={e => pageTransition('/services')}>Перейти к услугам</Button>
+			<Button m={media} onClick={() => pageTransition('/services')}>Перейти к услугам</Button>
 		</Content>
 	</Wrap>
 }

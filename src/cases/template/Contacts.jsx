@@ -54,19 +54,19 @@ const Contacts = ({ c }) => {
 			<span>ASYADULOVA</span>
 		</Copywriting>
 		<Links m={media}>
-			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Vk</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Telegramm</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Ig</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Behance</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Tilda experts</LetterByLetter>
 			</a>
 		</Links>

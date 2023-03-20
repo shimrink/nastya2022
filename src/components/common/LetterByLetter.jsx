@@ -135,7 +135,7 @@ const LetterByLetter = ({ children, wavy, disableWave, navMobile, showAnim, titl
 		}, 700)
 	}, [textAnimate])
 
-	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ e => setSelfHovering(true) } onMouseOut={ e => setSelfHovering(false) }>
+	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ () => setSelfHovering(true) } onMouseOut={ () => setSelfHovering(false) }>
 		<Wave navMobile={navMobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
 			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>

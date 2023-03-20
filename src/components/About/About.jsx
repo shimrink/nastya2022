@@ -81,16 +81,16 @@ const About = ({ setPageInitialized, pageTransition }) => {
 		<TopBlock m={media} iosDevice={iosDevice.current}>
 			<TopBlockContent m={media}>
 				<Contacts m={media} className='animItems _anim-show-opacity'>
-					<a className='linkUnderLine' href="https://dribbble.com/asyadulova" target="_blank" rel="noreferrer">
+					<a href="https://dribbble.com/asyadulova" target="_blank" rel="noreferrer">
 						<LetterByLetter wavy>Dribble</LetterByLetter>
 					</a>
-					<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+					<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
 						<LetterByLetter wavy>Behance</LetterByLetter>
 					</a>
-					<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+					<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
 						<LetterByLetter wavy>Instagram*</LetterByLetter>
 					</a>
-					<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+					<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
 						<LetterByLetter wavy>Tilda experts</LetterByLetter>
 					</a>
 				</Contacts>

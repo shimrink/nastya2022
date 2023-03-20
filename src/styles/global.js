@@ -55,25 +55,6 @@ a {
 	color: ${ ({theme}) => theme.mode.text };
 	text-decoration: none;
 }
-.linkUnderLine {
-	position: relative;
-}
-.linkUnderLine:after {
-	display: block;
-	position: absolute;
-	left: auto;
-	right: 0;
-	width: 0;
-	height: 1px;
-	background-color: ${ ({theme}) => theme.ac.dark };
-	content: "";
-	transition: width 0.2s cubic-bezier(0, 0, .40, 1);
-}
-.linkUnderLine:hover:after {
-	width: 100%;
-	left: 0;
-	right: auto;
-}
 
 ._anim-show-left {
 	transform: translateX(-100%) scaleX(100%);

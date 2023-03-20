@@ -108,24 +108,24 @@ const UpperFooter = () => {
 		</TitleWrap>
 		<Text m={media}>Я&nbsp;на&nbsp;связи в&nbsp;рабочее время: отвечу на&nbsp;возникшие вопросы, сориентирую в&nbsp;области онлайн-упаковки бизнеса и пойму, что вам необходимо!</Text>
 		<Messengers m={media}>
-			<a className='linkUnderLine' href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://vk.com/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Vk</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://t.me/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Telegramm</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="mailto:me@asyadulova.ru?subject=Запись на консультацию">
+			<a href="mailto:me@asyadulova.ru?subject=Запись на консультацию">
 				<LetterByLetter wavy>Email</LetterByLetter>
 			</a>
 		</Messengers>
 		<Social m={media}>
-			<a className='linkUnderLine' href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://www.instagram.com/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Ig*</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://www.behance.net/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Behance</LetterByLetter>
 			</a>
-			<a className='linkUnderLine' href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
+			<a href="https://experts.tilda.cc/asyadulova" target="_blank" rel="noreferrer">
 				<LetterByLetter wavy>Tilda experts</LetterByLetter>
 			</a>
 		</Social>

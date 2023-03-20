@@ -43,7 +43,7 @@ const Grid = ({ c, pageTransition }) => {
 
 	const media = useContext(MediaContext)
 
-	return <Case className='rowItem' m={media} onClick={e => pageTransition(`cases/${c.slug.current}`)}>
+	return <Case className='rowItem' m={media} onClick={() => pageTransition(`cases/${c.slug.current}`)}>
 		<Img m={media} src={c.mobileImage.asset.url} alt={c.slug.current} />
 		<Name className='animItems _anim-show-opacity'>{c.title}</Name>
 		<Line />

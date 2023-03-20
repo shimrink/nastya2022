@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
-import { CustomEase } from 'gsap/CustomEase';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
 import LetterByLetter from '../common/LetterByLetter';
@@ -59,7 +58,7 @@ const Year = styled.span`
 	z-index: 1;
 `
 const Img = styled.img`
-	position: absolute;
+	position: fixed;
 	opacity: 0;
 	width: 312px;
 	height: 386px;
@@ -77,7 +76,6 @@ const LineWrap = styled.div`
 	width: 100%;
 	padding: 0 40px;
 `
-gsap.registerPlugin(CustomEase);
 
 const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 
@@ -95,15 +93,14 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 			&& e.clientX <= crd.right) {
 				for (let i = 0; i < caseData.length; i++) {
 					gsap.to(imgRef.current, {
-						left: e.pageX,
-						top: e.pageY,
+						left: e.clientX,
+						top: e.clientY,
 						duration: commonTheme.durations.middle,
 						ease: 'power4.out',
 					})
 					gsap.to(imgRef.current, {
 						scale: 1,
 						duration: 0,
-						ease: 'linear',
 					})
 				}
 			} else {
@@ -111,7 +108,6 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 					gsap.to(imgRef.current, {
 						scale: 0,
 						duration: 0,
-						ease: 'linear',
 					})
 				}
 			}
@@ -149,7 +145,7 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 			</Tags>
 			<Year className='animItems _anim-show-opacity'>{c.publishedAt.split('-')[0]}</Year>
 			<Img ref={imgRef} src={c.mobileImage.asset.url} alt={c.slug.current} />
-			<RowArea onClick={e => pageTransition(`/cases/${c.slug.current}`)}
+			<RowArea onClick={() => pageTransition(`/cases/${c.slug.current}`)}
 						onMouseOver={showImg}
 						onMouseOut={hideImg} />
 		</RowContent>
