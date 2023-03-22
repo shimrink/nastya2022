@@ -70,7 +70,14 @@ const Curtain = styled.div`
 `
 const gradient = new Gradient()
 
-const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseData, categoriesData, servicesData }) => {
+const App = ({
+	themeMode,
+	accentColor,
+	themeToggler,
+	accentColorToggler,
+	caseData,
+	categoriesData,
+	servicesData }) => {
 
 	const media = useContext(MediaContext)
 	const navigate = useNavigate()
@@ -102,7 +109,6 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 
 			setTimeout(() => {
 				navigate(path)
-				window.scrollTo(0, 0)
 			}, 600)
 		}
 	}, [pathname, navDisable, navigate])
@@ -193,6 +199,11 @@ const App = ({ themeMode, accentColor, themeToggler, accentColorToggler, caseDat
 			}, 6000)
 		}
 	}, [appInitialized])
+
+	// Scroll top on new page
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [pathname])
 
 	// Gradient initialization
 	useEffect(() => {

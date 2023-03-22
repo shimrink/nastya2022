@@ -20,32 +20,37 @@ const LinkWrap = styled.div`
 		margin: 0;
 	}
 `
-const NavItem = ({ l, navMobile, disableWave, isMenuMobileOpen, active, setActive, pageTransition, mobilePageTransition }) => {
+const NavItem = ({
+	l,
+	navMobile,
+	disableWave,
+	isMenuMobileOpen,
+	pageTransition,
+	mobilePageTransition }) => {
 
 	const media = useContext(MediaContext)
 	const {pathname} = useLocation()
 	const [curActive, setCurActive] = useState(pathname === l.path)
 
-	const clickHandler = e => {
+	const clickHandler = () => {
 		media.isHugeDesk || media.isDesk || !isMenuMobileOpen
 		? pageTransition(l.path)
 		: mobilePageTransition(l.path)
 	}
 
 	useEffect(() => {
-		setActive(true)
 		setCurActive(pathname === l.path)
-	}, [pathname, l, setActive])
+	}, [pathname, l])
 
 	return <LinkWrap m={media} onClick={clickHandler}>
 		<LetterByLetter navMobile={navMobile}
 							wavy
 							disableWave={disableWave}
-							regular={!navMobile}
 							isMenuMobileOpen={isMenuMobileOpen}
 							showAnim={navMobile}
-							titleSize={navMobile}
-							active={active && curActive}>
+							active={curActive}
+							topFont={navMobile ? 'AccentFontT' : 'AccentFontR'}
+							bottomFont={navMobile ? 'AccentFontR' : 'AccentFontB'}>
 			{l.name}
 		</LetterByLetter>
 	</LinkWrap>

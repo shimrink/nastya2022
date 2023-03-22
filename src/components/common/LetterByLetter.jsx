@@ -8,10 +8,8 @@ const LinkWrap = styled.div`
 `
 const Wave = styled.div`
 	display: flex;
-	font-family: ${ props => !props.titleSize && props.bottom ? 'AccentFontB'
-									: props.titleSize && !props.bottom ? 'AccentFontT'
-									: props.regular || (props.titleSize && props.bottom) ? 'AccentFontR'
-									: 'AccentFontM'}, sans-serif;
+	font-family: ${ props => props.bottom ? props.bottomFont
+									: props.topFont}, sans-serif;
 	color: ${ props => props.navMobile || props.whiteCol ? commonTheme.colors.white
 							: !props.navMobile && props.bottom ? props.theme.ac.dark
 							: props.theme.mode.text};
@@ -22,7 +20,10 @@ const Letter = styled.div`
 												: props.isMenuMobileOpen ? 0
 												: !props.showAnimFinish ? 100
 												: 0}%);
-	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3} ${({delay}) => delay * 30}ms;
+	transition-property: transform;
+	transition-duration: ${commonTheme.durations.middle}s;
+	transition-timing-function: ${commonTheme.easings.outPower3};
+	transition-delay: ${({delay}) => delay * 30}ms;
 `
 const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	return child.split('').map((l, i) => {
@@ -41,7 +42,18 @@ const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	})
 }
 
-const LetterByLetter = ({ children, wavy, disableWave, navMobile, showAnim, titleSize, whiteCol, regular, isMenuMobileOpen, active, hovering }) => {
+const LetterByLetter = ({
+	children,
+	wavy,
+	disableWave,
+	navMobile,
+	showAnim,
+	whiteCol,
+	isMenuMobileOpen,
+	active,
+	hovering,
+	topFont='AccentFontM',
+	bottomFont='AccentFontB' }) => {
 
 	const [waveAnim, setWaveAnim] = useState(false)
 	const [selfHovering, setSelfHovering] = useState(false)
@@ -136,10 +148,10 @@ const LetterByLetter = ({ children, wavy, disableWave, navMobile, showAnim, titl
 	}, [textAnimate])
 
 	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ () => setSelfHovering(true) } onMouseOut={ () => setSelfHovering(false) }>
-		<Wave navMobile={navMobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+		<Wave navMobile={navMobile} whiteCol={whiteCol} topFont={topFont} bottomFont={bottomFont}>
 			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>
-		{wavy && <Wave bottom navMobile={navMobile} titleSize={titleSize} whiteCol={whiteCol} regular={regular}>
+		{wavy && <Wave bottom navMobile={navMobile} whiteCol={whiteCol} topFont={topFont} bottomFont={bottomFont}>
 			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
 		</Wave>}
 	</LinkWrap>

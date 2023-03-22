@@ -95,7 +95,7 @@ const About = ({ setPageInitialized, pageTransition }) => {
 					</a>
 				</Contacts>
 				<Title m={media}>
-					<LetterByLetter showAnim regular whiteCol>AsyaDulova</LetterByLetter>
+					<LetterByLetter showAnim whiteCol topFont='AccentFontR'>AsyaDulova</LetterByLetter>
 				</Title>
 			</TopBlockContent>
 		</TopBlock>

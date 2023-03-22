@@ -58,7 +58,13 @@ const Burger = styled.span`
 	z-index: 7;
 	transition: color ${commonTheme.durations.short}s;
 `
-const Header = ({ pageInitialized, setPageInitialized, pageTransition, accentColor, themeToggler, accentColorToggler }) => {
+const Header = ({
+	pageInitialized,
+	setPageInitialized,
+	pageTransition,
+	accentColor,
+	themeToggler,
+	accentColorToggler }) => {
 
 	const media = useContext(MediaContext)
 	const navigate = useNavigate()

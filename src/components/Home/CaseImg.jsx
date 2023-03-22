@@ -84,9 +84,7 @@ const Title = styled.h2`
 	grid-column: ${({m}) => m.isMobile ? '1/7' : '3/7'};
 	font-family: 'AccentFontR', sans-serif;
 	font-weight: normal;
-	font-size: ${ ({m}) => m.isMobile ? 40
-								: m.isTabletP ? 48
-								: 76}px;
+	font-size: ${ ({m}) => m.isMobile ? 40 : m.isTabletP ? 48 : 76}px;
 	text-align: ${({m}) => m.isMobile ? 'start' : 'end'};
 	text-transform: uppercase;
 `

@@ -74,15 +74,16 @@ const Description = styled.p`
 	grid-column: 1/5;
 	color: ${ ({theme}) => theme.mode.subText };
 `
-const Time = styled.span`
+const Price = styled.span`
 	grid-row: 1/2;
 	grid-column: ${({m}) => m.isMobile ? '4/7' : '5/7'};
 	text-transform: uppercase;
 `
-const Price = styled.span`
+const Time = styled.span`
 	grid-row: 2/3;
 	grid-column: ${({m}) => m.isMobile ? '4/7' : '5/7'};
-	text-transform: uppercase;
+	color: ${({theme}) => theme.mode.subText};
+	text-transform: lowercase;
 `
 const LineWrap = styled.div`
 	width: 100%;
@@ -129,8 +130,8 @@ const Services = ({ setPageInitialized, servicesData }) => {
 						<Service key={i} m={media}>
 							<Name m={media}>{s.title}</Name>
 							{!media.isMobile && <Description>{s.description}</Description>}
-							<Time m={media}>{s.time}</Time>
 							<Price m={media}>{s.price}</Price>
+							<Time m={media}>{s.time}</Time>
 						</Service>
 					))}
 				</ServiceStack>

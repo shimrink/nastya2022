@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
@@ -35,16 +35,13 @@ const Gifs = styled.div`
 							: m.isDesk ? '0 80px'
 							: m.isMobile ? '0 clamp(24px, 7.5vw, 40px)'
 							: '0 40px'};
-	img {
-		grid-row: 1/2;
-		grid-column: ${({m}) => m.isMobile || m.isTabletP ? '1/2' : '2/6'};
-		width: 100%;
-		opacity: 0;
-		transition: opacity ${commonTheme.durations.short}s;
-	}
-	img.active {
-		opacity: 1;
-	}
+`
+const Gif = styled.img`
+	grid-row: 1/2;
+	grid-column: ${({m}) => m.isMobile || m.isTabletP ? '1/2' : '2/6'};
+	width: 100%;
+	opacity: ${({active}) => active ? 1 : 0};
+	transition: opacity ${commonTheme.durations.short}s;
 `
 const Container = styled.div`
 	grid-row: 1/2;
@@ -122,6 +119,13 @@ const Circle = styled.div`
 const Interests = () => {
 
 	const media = useContext(MediaContext)
+	const [disableClick, setDisableClick] = useState(false)
+	const [interestActive, setInterestActive] = useState([
+		{name: 'pets', active: true},
+		{name: 'colors', active: false},
+		{name: 'games', active: false},
+		{name: 'handiwork', active: false},
+	])
 	const wrapperRef = useRef()
 	const cirlceRef = useRef()
 
@@ -129,12 +133,16 @@ const Interests = () => {
 		<SectionTitle mbTabletA='48px' mbTabletP='48px'>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
-				{state.gifs.map((g, i) => <img className={i === 0 ? 'gif active' : 'gif'} key={i} src={g.url} alt={g.alt} />)}
+				{state.gifs.map((g, i) => <Gif key={i} m={media} active={interestActive[i].active} src={g.url} alt={g.alt} />)}
 			</Gifs>
 			<Container m={media}>
 				<InnerContainer m={media}>
 					<Toggles m={media}>
-						{state.gifs.map((g, i) => <Interest key={i} i={i} wrapperRef={wrapperRef} cirlceRef={cirlceRef}>{g.title}</Interest>)}
+						{state.gifs.map((g, i) => (
+							<Interest key={i} i={i} wrapperRef={wrapperRef} cirlceRef={cirlceRef} interestActive={interestActive} setInterestActive={setInterestActive} disableClick={disableClick} setDisableClick={setDisableClick}>
+								{g.title}
+							</Interest>
+						))}
 					</Toggles>
 					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>

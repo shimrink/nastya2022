@@ -138,7 +138,13 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 	return <RowWrap className='rowItem'>
 		<RowContent m={media}>
 			<Name>
-				<LetterByLetter wavy showAnim titleSize hovering={hovering}>{c.title}</LetterByLetter>
+				<LetterByLetter wavy
+									showAnim
+									hovering={hovering}
+									topFont='AccentFontT'
+									bottomFont='AccentFontR'>
+					{c.title}
+				</LetterByLetter>
 			</Name>
 			<Tags className='animItems _anim-show-opacity'>
 				{c.tags.map((t, ind) => <span key={ind}>{t}</span>)}

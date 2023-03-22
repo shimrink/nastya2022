@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { state } from '../../store';
@@ -13,10 +13,14 @@ const Nav = styled.nav`
 	justify-self: ${({navMobile}) => navMobile ? 'center' : 'end'};
 	justify-content: center;
 `
-const Navigation = ({ navMobile, disableWave, isMenuMobileOpen, pageTransition, mobilePageTransition }) => {
+const Navigation = ({
+	navMobile,
+	disableWave,
+	isMenuMobileOpen,
+	pageTransition,
+	mobilePageTransition }) => {
 
 	const media = useContext(MediaContext)
-	const [active, setActive] = useState(true)
 
 	return <Nav navMobile={navMobile} m={media}>
 		{state.navLinksData.map((l, i) => (
@@ -25,8 +29,6 @@ const Navigation = ({ navMobile, disableWave, isMenuMobileOpen, pageTransition, 
 						navMobile={navMobile}
 						disableWave={disableWave}
 						isMenuMobileOpen={isMenuMobileOpen}
-						active={active}
-						setActive={setActive}
 						pageTransition={pageTransition}
 						mobilePageTransition={mobilePageTransition} />
 		))}

@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import gsap from 'gsap';
 import { commonTheme } from '../../styles/theme';
 import { MediaContext } from '../../AppWrap';
+import LetterByLetter from '../common/LetterByLetter';
 
 const Wrap = styled.div`
 	display: grid;
 	width: 100%;
 `
-const Title = styled.h3`
+const Title = styled.div`
 	position: relative;
 	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
 	grid-column: 1/2;
@@ -30,35 +31,34 @@ const TitleArea = styled.div`
 	cursor: ${({m, isScrolling}) => (m.isHugeDesk || m.isDesk) && !isScrolling ? 'none' : 'pointer'};
 	z-index: 3;
 `
-const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
+const Interest = ({ children, i, wrapperRef, cirlceRef, interestActive, setInterestActive, disableClick, setDisableClick }) => {
 
 	const media = useContext(MediaContext)
 	const [isScrolling, setIsScrolling] = useState(false)
-	const [disableClick, setDisableClick] = useState(false)
 	const timeoutID = useRef()
 
-	const switchGif = e => {
+	const switchGif = (e, i) => {
 		setDisableClick(true)
 		setTimeout(() => { setDisableClick(false) }, 300)
 		const titleAreasArr = document.querySelectorAll('.interestArea')
-		const titlesArr = document.querySelectorAll('.interest')
-		const gifsArr = document.querySelectorAll('.gif')
 		const textsArr = document.querySelectorAll('.text')
-		for (let i = 0; i < titleAreasArr.length; i++) {
-			titlesArr[i].classList.remove('active')
-			gifsArr[i].classList.remove('active')
-			textsArr[i].classList.remove('activeOpacity')
-			if (e.target !== titleAreasArr[i]) {
-				setTimeout(() => { textsArr[i].classList.add('deactiveHeight') }, 300)
-			}
-			if (e.target === titleAreasArr[i]) {
-				titlesArr[i].classList.add('active')
-				gifsArr[i].classList.add('active')
-				textsArr[i].classList.remove('deactiveHeight')
-				textsArr[i].classList.add('activeOpacity')
+
+		setInterestActive([
+			{name: 'pets', active: i === 0},
+			{name: 'colors', active: i === 1},
+			{name: 'games', active: i === 2},
+			{name: 'handiwork', active: i === 3},
+		])
+
+		for (let index = 0; index < titleAreasArr.length; index++) {
+			textsArr[index].classList.remove('activeOpacity')
+			if (e.target !== titleAreasArr[index]) {
+				setTimeout(() => { textsArr[index].classList.add('deactiveHeight') }, 300)
+			} else {
+				textsArr[index].classList.remove('deactiveHeight')
+				textsArr[index].classList.add('activeOpacity')
 			}
 		}
-		e.target.classList.add('active')
 	}
 
 	const showCirc = () => {
@@ -101,7 +101,7 @@ const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 	useEffect(() => {
 		if (media.isHugeDesk || media.isDesk) {
 			const el = wrapperRef.current
-			const moveCircH = e => {
+			const moveCircH = () => {
 				const setTimeoutF = () => {
 					setIsScrolling(true)
 					timeoutID.current = setTimeout(() => { setIsScrolling(false) }, 600)
@@ -126,12 +126,19 @@ const Interest = ({ children, i, wrapperRef, cirlceRef }) => {
 	}, [media, isScrolling, wrapperRef, cirlceRef])
 
 	return <Wrap>
-		<Title i={i} className={i === 0 ? 'interest active' : 'interest'} m={media}>{children}</Title>
-		<TitleArea className={i === 0 ? 'interestArea active' : 'interestArea'}
+		<Title i={i} m={media}>
+			<LetterByLetter wavy
+								active={interestActive[i].active}
+								topFont='AccentFontT'
+								bottomFont='AccentFontR'>
+				{children}
+			</LetterByLetter>
+		</Title>
+		<TitleArea className='interestArea'
 						i={i}
 						m={media}
 						isScrolling={isScrolling}
-						onClick={!disableClick && switchGif}
+						onClick={e => { if (!disableClick) switchGif(e, i) }}
 						onMouseMove={showCirc}
 						onMouseOut={hideCirc} />
 	</Wrap>
