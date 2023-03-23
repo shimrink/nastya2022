@@ -23,10 +23,5 @@ export default {
 			title: 'Стоимость',
 			type: 'string',
 		},
-		{
-			name: 'order',
-			title: 'Порядковый номер',
-			type: 'number',
-		},
 	],
 }

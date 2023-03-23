@@ -22,10 +22,9 @@ const Svg = styled.svg`
 	height: auto;
 	fill: none;
 `
-const Preloader = ({ pageInitialized, setAppInitialized, accentColor }) => {
+const Preloader = ({ pageInitialized, setShowPreloader, accentColor }) => {
 
 	const media = useContext(MediaContext)
-	// const [arrInitialized, setArrInitialized] = useState(false)
 	const mainRef = useRef()
 	const darkColRef = useRef()
 
@@ -51,7 +50,7 @@ const Preloader = ({ pageInitialized, setAppInitialized, accentColor }) => {
 			})
 			tl.to(mainRef.current, {
 				opacity: 0,
-				duration: 1.5,
+				duration: commonTheme.durations.long,
 				ease: 'power3.inOut',
 				delay: commonTheme.durations.short,
 			})
@@ -59,10 +58,12 @@ const Preloader = ({ pageInitialized, setAppInitialized, accentColor }) => {
 				yPercent: -100,
 				duration: 0,
 			})
-			document.querySelector('body').style.overflowY = 'visible'
-			setAppInitialized(true)
+			setTimeout(() => {
+				document.querySelector('body').style.overflowY = 'visible'
+				setShowPreloader(false)
+			}, 2500)
 		}
-	}, [pageInitialized, setAppInitialized])
+	}, [pageInitialized, setShowPreloader])
 
 	return <Main ref={mainRef}>
 		<Svg m={media} viewBox="0 0 85 93" xmlns="http://www.w3.org/2000/svg">

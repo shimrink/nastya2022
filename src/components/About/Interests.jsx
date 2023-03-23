@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import { state } from '../../store';
-import Line from '../common/Line';
 import SectionTitle from '../common/SectionTitle';
 import Interest from './Interest';
 
@@ -64,11 +63,10 @@ const InnerContainer = styled.div`
 	margin-left: ${({m}) => m.isTabletP ? -20 : m.isMobile ? 0 : -24}px;
 `
 const Toggles = styled.div`
-	display: ${({m}) => m.isMobile ? 'flex' : 'grid'};
-	grid-row-gap: ${({m}) => m.isHugeDesk || m.isDesk ? 48 : 20}px;
-	flex-direction: column;
-	justify-content: ${({m}) => m.isMobile ? 'space-between' : 'normal'};
-	height: ${({m}) => m.isMobile ? '100%' : 'auto'};
+	display: grid;
+	grid-row-gap: ${({m}) => m.isHugeDesk || m.isDesk ? 48
+									: m.isMobile ? 24
+									: 20}px;
 	padding-left: ${({m}) => m.isTabletP ? 20 : m.isMobile ? 0 : 24}px;
 `
 const Text = styled.div`
@@ -99,23 +97,6 @@ const Text = styled.div`
 		opacity: 1;
 	}
 `
-const Circle = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 146px;
-	height: 146px;
-	font-family: 'AccentFontB',sans-serif;
-	color: ${commonTheme.colors.white};
-	background-color: ${ ({theme}) => theme.ac.dark };
-	border-radius: 50%;
-	cursor: none;
-	z-index: 2;
-	transform: translate(-50%, -50%) scale(0);
-`
 const Interests = () => {
 
 	const media = useContext(MediaContext)
@@ -126,35 +107,41 @@ const Interests = () => {
 		{name: 'games', active: false},
 		{name: 'handiwork', active: false},
 	])
-	const wrapperRef = useRef()
-	const cirlceRef = useRef()
 
-	return <Wrap ref={wrapperRef} m={media}>
+	return <Wrap m={media}>
 		<SectionTitle mbTabletA='48px' mbTabletP='48px'>Мои интересы</SectionTitle>
 		<Content m={media}>
 			<Gifs m={media}>
-				{state.gifs.map((g, i) => <Gif key={i} m={media} active={interestActive[i].active} src={g.url} alt={g.alt} />)}
+				{state.gifs.map((g, i) => (
+					<Gif key={i} m={media} active={interestActive[i].active} src={g.url} alt={g.alt} />
+				))}
 			</Gifs>
 			<Container m={media}>
 				<InnerContainer m={media}>
 					<Toggles m={media}>
 						{state.gifs.map((g, i) => (
-							<Interest key={i} i={i} wrapperRef={wrapperRef} cirlceRef={cirlceRef} interestActive={interestActive} setInterestActive={setInterestActive} disableClick={disableClick} setDisableClick={setDisableClick}>
+							<Interest key={i} i={i} interestActive={interestActive} setInterestActive={setInterestActive} disableClick={disableClick} setDisableClick={setDisableClick}>
 								{g.title}
 							</Interest>
 						))}
 					</Toggles>
-					{!media.isMobile && <Line />}
 					{!media.isMobile && <Text m={media}>
-						{state.gifs.map((g, i) => <p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>{g.text}</p>)}
+						{state.gifs.map((g, i) => (
+							<p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>
+								{g.text}
+							</p>
+						))}
 					</Text>}
 				</InnerContainer>
 			</Container>
 			{media.isMobile && <Text m={media}>
-				{state.gifs.map((g, i) => <p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>{g.text}</p>)}
+				{state.gifs.map((g, i) => (
+					<p className={i === 0 ? 'text activeOpacity' : 'text deactiveHeight'} key={i}>
+						{g.text}
+					</p>
+				))}
 			</Text>}
 		</Content>
-		{(media.isHugeDesk || media.isDesk) && <Circle ref={cirlceRef}>Тык</Circle>}
 	</Wrap>
 }
 

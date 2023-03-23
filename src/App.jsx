@@ -77,12 +77,12 @@ const App = ({
 	accentColorToggler,
 	caseData,
 	categoriesData,
-	servicesData }) => {
+	servicesData,
+	FAQData }) => {
 
 	const media = useContext(MediaContext)
 	const navigate = useNavigate()
 	const {pathname} = useLocation()
-	const [appInitialized, setAppInitialized] = useState(false)
 	const [pageInitialized, setPageInitialized] = useState(false)
 	const [showPreloader, setShowPreloader] = useState(true)
 	const [navDisable, setNavDisable] = useState(false)
@@ -191,15 +191,6 @@ const App = ({
 		}
 	}, [prevURL, pageTransition])
 
-	// Delete Preloader
-	useEffect(() => {
-		if (appInitialized) {
-			setTimeout(() => {
-				setShowPreloader(false)
-			}, 6000)
-		}
-	}, [appInitialized])
-
 	// Scroll top on new page
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -213,13 +204,13 @@ const App = ({
 	return <Wrapper fullHeight={pathname === '/' || pathname === '/contacts'}>
 		<canvas id='gradient-canvas' data-transition-in width={media.isHugeDesk || media.isDesk ? 1920 : 1280} height={media.isHugeDesk || media.isDesk ? 960 : 600} />
 		<Header pageInitialized={pageInitialized} setPageInitialized={setPageInitialized} pageTransition={pageTransition} accentColor={accentColor} themeToggler={themeToggler} accentColorToggler={accentColorToggler} />
-		{showPreloader && <Preloader pageInitialized={pageInitialized} setAppInitialized={setAppInitialized} accentColor={accentColor} />}
+		{showPreloader && <Preloader pageInitialized={pageInitialized} setShowPreloader={setShowPreloader} accentColor={accentColor} />}
 		<Suspense fallback={null}>
 			<Routes>
 				{caseData.map((c, i) => <Route key={i} path={`/cases/${c.slug.current}`} element={<Case setPageInitialized={setPageInitialized} c={c} i={i} caseData={caseData} pageTransition={pageTransition} />} />)}
 				<Route path="/portfolio" element={<Portfolio setPageInitialized={setPageInitialized} accentColor={accentColor} caseData={caseData} categoriesData={categoriesData} pageTransition={pageTransition} />} />
 				<Route path="/about" element={<About setPageInitialized={setPageInitialized} pageTransition={pageTransition} />} />
-				<Route path="/services" element={<Services setPageInitialized={setPageInitialized} servicesData={servicesData} />} />
+				<Route path="/services" element={<Services setPageInitialized={setPageInitialized} servicesData={servicesData} FAQData={FAQData} />} />
 				<Route path="/contacts" element={<Contacts setPageInitialized={setPageInitialized} />} />
 				<Route path="/" element={<Home setPageInitialized={setPageInitialized} caseData={caseData} pageTransition={pageTransition} />} />
 			</Routes>

@@ -139,19 +139,23 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 	}
 
 	const showCirc = () => {
-		gsap.to(cirlceRef.current, {
-			scale: 1,
-			duration: commonTheme.durations.short,
-			ease: 'power4.out',
-		})
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(cirlceRef.current, {
+				scale: 1,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		}
 	}
 
 	const hideCirc = () => {
-		gsap.to(cirlceRef.current, {
-			scale: 0,
-			duration: commonTheme.durations.short,
-			ease: 'power4.out',
-		})
+		if (media.isHugeDesk || media.isDesk) {
+			gsap.to(cirlceRef.current, {
+				scale: 0,
+				duration: commonTheme.durations.short,
+				ease: 'power4.out',
+			})
+		}
 	}
 
 	useEffect(() => {
@@ -179,12 +183,11 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 				{[...Array(4)].map((v, ind) => <Name key={ind} m={media}>{caseData[nextCaseI].title} /</Name>)}
 			</NameWrap>
 			<NextCover m={media}
-					src={media.isTabletP || media.isMobile ? caseData[nextCaseI].mobileImage.asset.url
-																		: caseData[nextCaseI].mainImage.asset.url}
-					alt={caseData[nextCaseI].slug.current}
-					ref={imgRef}
-					onClick={() => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
-			<CoverArea m={media} onMouseOver={showCirc} onMouseOut={hideCirc} />
+						src={media.isTabletP || media.isMobile ? caseData[nextCaseI].mobileImage.asset.url
+																			: caseData[nextCaseI].mainImage.asset.url}
+						alt={caseData[nextCaseI].slug.current}
+						ref={imgRef} />
+			<CoverArea m={media} onMouseOver={showCirc} onMouseOut={hideCirc} onClick={() => pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)} />
 			<AllWorks m={media} onClick={() => pageTransition('/portfolio')}>
 				<LetterByLetter wavy>Все работы</LetterByLetter>
 			</AllWorks>

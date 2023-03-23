@@ -22,6 +22,7 @@ const AppWrap = () => {
 	const [caseData, setCaseData] = useState(null)
 	const [categoriesData, setCategoriesData] = useState(null)
 	const [servicesData, setServicesData] = useState(null)
+	const [FAQData, setFAQData] = useState(null)
 
 	useEffect(() => {
 		switch (accentColor) {
@@ -123,8 +124,19 @@ const AppWrap = () => {
 		.catch(console.error)
 	}, [])
 
+	useEffect(() => {
+		sanityClient.fetch(
+			groq`*[_type == "faq"] | order(order) {
+				question,
+				answer
+			}`
+		)
+		.then((data) => setFAQData(data))
+		.catch(console.error)
+	}, [])
+
 	if (!mountedComponent) return null
-	return caseData && categoriesData && servicesData && <BrowserRouter>
+	return caseData && categoriesData && servicesData && FAQData && <BrowserRouter>
 		<ThemeProvider theme={{mode: themeMode, ac: endCol}}>
 			<MediaContext.Provider value={media}>
 				<GlobalStyles />
@@ -134,7 +146,8 @@ const AppWrap = () => {
 					accentColorToggler={accentColorToggler}
 					caseData={caseData}
 					categoriesData={categoriesData}
-					servicesData={servicesData} />
+					servicesData={servicesData}
+					FAQData={FAQData} />
 			</MediaContext.Provider>
 		</ThemeProvider>
 	</BrowserRouter>
