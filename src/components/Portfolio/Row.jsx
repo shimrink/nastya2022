@@ -68,15 +68,6 @@ const Img = styled.img`
 	-webkit-user-drag: none;
 	z-index: 2;
 `
-const LineWrap = styled.div`
-	position: absolute;
-	grid-row: 1/2;
-	grid-column: 1/2;
-	align-self: end;
-	width: 100%;
-	padding: 0 40px;
-`
-
 const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 
 	const media = useContext(MediaContext)
@@ -155,7 +146,7 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 						onMouseOver={showImg}
 						onMouseOut={hideImg} />
 		</RowContent>
-		<LineWrap><Line /></LineWrap>
+		<Line asEnd />
 	</RowWrap>
 }
 

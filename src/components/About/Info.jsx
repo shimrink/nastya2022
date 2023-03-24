@@ -41,6 +41,7 @@ const Rank = styled.span`
 	font-family: 'AccentFontR', sans-serif;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	text-transform: uppercase;
+	line-height: 110%;
 	margin-bottom: 4px;
 	&:last-child {
 		margin-bottom: 0;

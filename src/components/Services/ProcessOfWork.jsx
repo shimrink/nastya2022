@@ -24,17 +24,19 @@ const Gif = styled.img`
 const Toggles = styled.div`
 	grid-row: 1/2;
 	grid-column: ${({m}) => m.isMobile ? '1/13' : '7/13'};
-	display: grid;
-	grid-row-gap: 24px;
+	display: flex;
+	flex-direction: column;
 `
 const Process = styled.h3`
-	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
-	grid-column: 1/2;
+	padding: 12px 0;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	font-family: 'AccentFontR';
 	text-transform: uppercase;
 	color: ${ ({theme, m, active}) => active || m.isMobile ? theme.mode.text : theme.mode.subText };
 	transition: color ${commonTheme.durations.short}s;
+	&:first-child {
+		padding-top: 0;
+	}
 `
 const Text = styled.p`
 	grid-row: 2/3;
@@ -44,6 +46,7 @@ const Text = styled.p`
 	align-self: end;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	white-space: pre-line;
+	line-height: 110%;
 	opacity: ${({active}) => active ? 1 : 0};
 	transition: opacity ${commonTheme.durations.short}s;
 `
@@ -78,8 +81,8 @@ const ProcessOfWork = () => {
 		))}
 		<Toggles m={media}>
 			{state.processOfWork.map((g, i) => (
-				<Process key={i} i={i} m={media} active={processActive[i].active} onMouseOver={() => switchGif(i)}>
-					{`${i + 1}. ${g.title}`}
+				<Process key={i} m={media} active={processActive[i].active} onMouseOver={() => switchGif(i)}>
+					{g.title}
 				</Process>
 			))}
 		</Toggles>

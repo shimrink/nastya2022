@@ -47,15 +47,23 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 	const media = useContext(MediaContext)
 
 	return <Main>
-		<Title m={media}>экспертиза, дизайн, разработка —<br/>весь комплекс услуг для упаковки бизнеса</Title>
-		{!media.isMobile && <SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>Услуги и компетенции</SectionTitle>}
-		{servicesData.map((servicesBlock, index) => <Sections key={index} servicesBlock={servicesBlock} />)}
+		<Title m={media}>
+			Экспертиза, дизайн, разработка —<br/>весь комплекс услуг для упаковки бизнеса
+		</Title>
+		{!media.isMobile && <SectionTitle mbHugeDesk='48px' mbDesk='48px' mbTabletA='48px' mbTabletP='48px'>
+			Услуги и компетенции
+		</SectionTitle>}
+		{servicesData.map((servicesBlock, index) => (
+			<Sections key={index} servicesBlock={servicesBlock} />
+		))}
 		<ProcessOfWorkContainer m={media}>
 			<SectionTitle>Процесс работы</SectionTitle>
 			<ProcessOfWork />
 		</ProcessOfWorkContainer>
 		<FAQ m={media}>
-			<SectionTitle mbHugeDesk='0' mbDesk='0' mbTabletA='0' mbTabletP='0' mbMobile='0'>ЧАВО</SectionTitle>
+			<SectionTitle mbHugeDesk='0' mbDesk='0' mbTabletA='0' mbTabletP='0' mbMobile='0'>
+				ЧАВО
+			</SectionTitle>
 			{FAQData.map((f, i) => <FAQRows key={i} f={f} />)}
 		</FAQ>
 		<Footer />

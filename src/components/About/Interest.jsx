@@ -5,69 +5,54 @@ import LetterByLetter from '../common/LetterByLetter';
 
 const Wrap = styled.div`
 	display: grid;
-	width: 100%;
+	font-size: ${({m}) => m.isMobile ? 'clamp(26px, 7.08vw, 48px)' : 'clamp(48px, 3.85vw, 76px)'};
+	text-transform: uppercase;
 `
 const Title = styled.div`
 	position: relative;
-	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
+	grid-row: ${({i}) => `${i}/${i + 1}`};
 	grid-column: 1/2;
-	font-size: ${({m}) => m.isMobile ? 'clamp(26px, 7.08vw, 48px)' : 'clamp(48px, 3.85vw, 76px)'};
-	text-transform: uppercase;
+	padding: ${({m}) => m.isMobile ? '12px 0' : m.isHugeDesk || m.isDesk ? '24px 0' : '10px 0'};
 	z-index: 1;
-	&.active {
-		font-family: 'AccentFontM';
-		font-weight: 500;
-		color: ${ ({theme}) => theme.ac.dark };
+	&:first-child {
+		padding-top: 0;
 	}
 `
 const TitleArea = styled.div`
 	position: relative;
-	grid-row: ${({i}) => `${i + 1}/${i + 2}`};
+	grid-row: ${({i}) => `${i}/${i + 1}`};
 	grid-column: 1/2;
-	width: 100%;
+	padding: ${({m}) => m.isMobile ? '12px 0' : m.isHugeDesk || m.isDesk ? '24px 0' : '10px 0'};
 	z-index: 2;
+	&:first-child {
+		padding-top: 0;
+	}
 `
-const Interest = ({ children, i, interestActive, setInterestActive, disableClick, setDisableClick }) => {
+const Interest = ({ g, i, interestActive, setInterestActive, disableActive, setDisableActive }) => {
 
 	const media = useContext(MediaContext)
 
-	const switchGif = (e, i) => {
-		setDisableClick(true)
-		setTimeout(() => { setDisableClick(false) }, 300)
-		const titleAreasArr = document.querySelectorAll('.interestArea')
-		const textsArr = document.querySelectorAll('.text')
-
+	const switchGif = (i) => {
+		setDisableActive(true)
 		setInterestActive([
 			{name: 'pets', active: i === 0},
 			{name: 'colors', active: i === 1},
 			{name: 'games', active: i === 2},
 			{name: 'handiwork', active: i === 3},
 		])
-
-		for (let index = 0; index < titleAreasArr.length; index++) {
-			textsArr[index].classList.remove('activeOpacity')
-			if (e.target !== titleAreasArr[index]) {
-				setTimeout(() => { textsArr[index].classList.add('deactiveHeight') }, 300)
-			} else {
-				textsArr[index].classList.remove('deactiveHeight')
-				textsArr[index].classList.add('activeOpacity')
-			}
-		}
+		setTimeout(() => { setDisableActive(false) }, 300)
 	}
 
-	return <Wrap>
-		<Title i={i} m={media}>
+	return <Wrap m={media}>
+		<Title i={i + 1} m={media}>
 			<LetterByLetter wavy
 								active={interestActive[i].active}
 								topFont='AccentFontT'
 								bottomFont='AccentFontM'>
-				{children}
+				{g.title}
 			</LetterByLetter>
 		</Title>
-		<TitleArea className='interestArea'
-						i={i}
-						m={media}
-						onMouseOver={e => { if (!disableClick) switchGif(e, i) }} />
+		<TitleArea i={i + 1} m={media} onMouseOver={() => { if (!disableActive) switchGif(i) }} />
 	</Wrap>
 }
 

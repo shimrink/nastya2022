@@ -5,8 +5,8 @@ import gsap from 'gsap';
 import { MediaContext } from '../../AppWrap';
 import { commonTheme } from '../../styles/theme';
 import LetterByLetter from "../../components/common/LetterByLetter";
-import Line from '../../components/common/Line';
 import Contacts from './Contacts';
+import SectionTitle from '../../components/common/SectionTitle';
 
 const moveX = keyframes`
 	from {
@@ -21,24 +21,10 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-`
-const Title = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	padding: ${({m}) => m.isMobile ? 'clamp(24px, 7.5vw, 40px)' : '0 40px'};
-	margin: ${ ({m}) => m.isHugeDesk ? '164px 0'
-							: m.isDesk ? '132px 0 120px 0'
-							: m.isMobile ? 'clamp(176px, 49.445vw, 240px) 0 clamp(108px, 30.415vw, 148px) 0'
-							: '140px 0 96px 0'};
-	h3 {
-		margin-bottom: 48px;
-		font-family: 'AccentFontR', sans-serif;
-		font-weight: normal;
-		font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
-		text-transform: uppercase;
-	}
+	margin-top: ${({m}) => m.isHugeDesk ? '164px'
+								: m.isDesk ? '132px'
+								: m.isMobile ? 'clamp(176px, 49.445vw, 240px)'
+								: '140px'};
 `
 const Info = styled.div`
 	display: grid;
@@ -173,11 +159,10 @@ const NextCase = ({ c, i, caseData, pageTransition }) => {
 		}
 	}, [pathname, media])
 
-	return <Wrapper onMouseMove={circAnim}>
-		<Title m={media}>
-			<h3>Следующий кейс</h3>
-			<Line />
-		</Title>
+	return <Wrapper m={media} onMouseMove={circAnim}>
+		<SectionTitle mbHugeDesk='164px' mbDesk='120px' mbTabletA='96px' mbTabletP='96px' mbMobile='clamp(108px, 30.415vw, 148px)'>
+			Следующий кейс
+		</SectionTitle>
 		<Info m={media}>
 			<NameWrap m={media}>
 				{[...Array(4)].map((v, ind) => <Name key={ind} m={media}>{caseData[nextCaseI].title} /</Name>)}

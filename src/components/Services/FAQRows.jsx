@@ -8,15 +8,17 @@ const Wrap = styled.div`
 	display: grid;
 	grid-template-columns: 1fr ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
 	grid-column-gap: ${ ({m}) => m.isTabletP ? 40 : 24}px;
+	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 `
 const Row = styled.div`
 	grid-column: ${({m}) => m.isHugeDesk ? '2/3' : '1/4'};
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-row-gap: 24px;
-	padding: ${({m}) => m.isHugeDesk ? '24px 0 0 0'
-							: m.isDesk ? '24px 80px 0 80px'
-							: '24px 40px 0 40px'};
+	grid-column-gap: ${ ({m}) => m.isTabletP ? '40px'
+										: m.isMobile ? 'clamp(24px, 7.5vw, 40px)'
+										: '24px'};
+	padding: ${({m}) => m.isDesk ? '24px 40px 0 40px' : '24px 0 0 0'};
 	cursor: pointer;
 	overflow: hidden;
 `
@@ -26,6 +28,8 @@ const Question = styled.p`
 	align-self: center;
 	font-family: 'AccentFontR', sans-serif;
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
+	text-transform: uppercase;
+	line-height: 110%;
 `
 const Svg = styled.svg`
 	grid-row: 1/2;
@@ -47,12 +51,8 @@ const Answer = styled.p`
 	grid-column: ${({m}) => m.isMobile ? '1/13' : '7/13'};
 	font-size: ${({m}) => m.isHugeDesk || m.isDesk ? 18 : 16}px;
 	height: ${({active, h}) => active ? h + 24 : 0}px;
+	line-height: 110%;
 	transition: height ${commonTheme.durations.short}s;
-`
-const LineWrap = styled.div`
-	grid-row: 3/4;
-	grid-column: 1/4;
-	padding: ${({m}) => m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px'};
 `
 const FAQRows = ({ f }) => {
 
@@ -87,7 +87,7 @@ const FAQRows = ({ f }) => {
 			</Svg>
 			<Answer ref={answerRef} m={media} active={active} h={answerH}>{f.answer}</Answer>
 		</Row>
-		<LineWrap m={media}><Line /></LineWrap>
+		<Line defaultP gr='3/4' gc='1/4' />
 	</Wrap>
 }
 
