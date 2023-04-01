@@ -127,6 +127,7 @@ const Device = styled.div`
 		grid-column-gap: ${({ m }) =>
 			m.isHugeDesk || m.isDesk ? 80 : m.isMobile ? 20 : 40}px;
 		justify-items: center;
+		width: 100%;
 		img {
 			grid-column: auto;
 		}

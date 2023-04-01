@@ -47,7 +47,7 @@ const Preloader = ({ pageInitialized, setShowPreloader, accentColor }) => {
 				duration: 0,
 			})
 			setTimeout(() => {
-				document.querySelector('body').style.overflowY = 'visible'
+				document.querySelector('body').style.overflowY = 'scroll'
 				setShowPreloader(false)
 			}, 2500)
 		} else {

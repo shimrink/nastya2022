@@ -33,6 +33,7 @@ const Carousel = styled.div`
 	justify-content: center;
 	width: 100%;
 	aspect-ratio: ${({ m }) => (m.isMobile ? '2/3' : '16/9')};
+	will-change: transform;
 	transform: translate(
 		${(props) => (-props.currentIndex * 122) / props.scrollCount + '%'},
 		${(props) => (-props.currentIndex * 100) / props.scrollCount + '%'}
@@ -54,19 +55,6 @@ const Case = styled.div`
 		${({ i }) => i * 100 + '%'}
 	);
 `
-const Content = styled.div`
-	grid-row: 1/2;
-	grid-column: 1/2;
-	display: grid;
-	grid-template-columns: repeat(6, 1fr);
-	grid-gap: 24px;
-	align-content: end;
-	align-items: end;
-	width: 100%;
-	height: 100%;
-	padding: 24px;
-	color: ${commonTheme.colors.white};
-`
 const Cover = styled.img`
 	position: relative;
 	grid-row: 1/2;
@@ -75,6 +63,7 @@ const Cover = styled.img`
 	aspect-ratio: ${({ m }) => (m.isMobile ? '2/3' : '16/9')};
 	object-fit: cover;
 	z-index: 1;
+	will-change: transform;
 	transform: translateX(
 			${(props) =>
 				props.hovering && props.i === props.hoverNum
@@ -98,34 +87,42 @@ const Cover = styled.img`
 	transition: transform ${commonTheme.durations.long}s
 		${commonTheme.easings.outPower4};
 `
-const FilterDiv = styled.div`
+const Content = styled.div`
 	position: relative;
 	grid-row: 1/2;
 	grid-column: 1/2;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-gap: 24px;
+	align-content: end;
+	align-items: end;
 	width: 100%;
-	height: 30%;
-	background: linear-gradient(rgba(0, 0, 0, 0), ${commonTheme.colors.balck});
+	height: 100%;
+	padding: 24px;
+	color: ${commonTheme.colors.white};
+	background-image: linear-gradient(
+		rgba(0, 0, 0, 0),
+		${commonTheme.colors.balck}
+	);
+	background-position: bottom;
+	background-repeat: no-repeat;
+	background-size: 100% 30%;
 	z-index: 2;
 `
 const Tags = styled.div`
-	position: relative;
 	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/3')};
 	grid-column: ${({ m }) => (m.isMobile ? '1/4' : '1/2')};
 	display: flex;
 	flex-direction: column;
 	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
-	z-index: 3;
 `
 const Year = styled.span`
-	position: relative;
 	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/3')};
 	grid-column: ${({ m }) => (m.isMobile ? '4/7' : '2/3')};
 	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
 	text-align: ${({ m }) => (m.isMobile ? 'end' : 'start')};
-	z-index: 3;
 `
 const Title = styled.h2`
-	position: relative;
 	grid-row: ${({ m }) => (m.isMobile ? '1/2' : '1/3')};
 	grid-column: ${({ m }) => (m.isMobile ? '1/7' : '3/7')};
 	font-family: 'AccentFontR', sans-serif;
@@ -138,7 +135,6 @@ const Title = styled.h2`
 			: 'clamp(24px, 3.065vw, 30px)'};
 	text-align: ${({ m }) => (m.isMobile ? 'start' : 'end')};
 	text-transform: uppercase;
-	z-index: 3;
 `
 const CaseImg = ({
 	caseData,
@@ -174,7 +170,6 @@ const CaseImg = ({
 									}
 									alt='case cover'
 								/>
-								<FilterDiv />
 								<Content>
 									<Tags m={media}>
 										{p.tags.map((t, i) => (
