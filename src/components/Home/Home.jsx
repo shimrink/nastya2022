@@ -89,14 +89,17 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 		if (
 			(dir === 'horizontal' && distX > 7) ||
 			(dir === 'vertical' && distY > 7)
-		)
+		) {
 			next()
-
+		}
 		if (
 			(dir === 'horizontal' && distX < -7) ||
 			(dir === 'vertical' && distY < -7)
-		)
+		) {
 			prev()
+		}
+		setDistX(0)
+		setDistY(0)
 	}
 
 	useEffect(() => {

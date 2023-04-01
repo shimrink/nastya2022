@@ -23,6 +23,7 @@ const Notification = styled.div`
 const Text = styled.p`
 	margin: ${({ m }) => (m.isMobile ? '0 0 24px 0' : '0 24px 0 0')};
 	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+	color: ${({ theme }) => theme.mode.text};
 	transition: color ${commonTheme.durations.short}s;
 `
 const Ok = styled.button`
@@ -48,13 +49,13 @@ const notificationText =
 
 const Cookie = () => {
 	const media = useContext(MediaContext)
-	const [cookies, setCookies] = useCookies([])
+	const [cookies, setCookies] = useCookies(['agreement'])
 	const [counterHidden, setCounterHidden] = useState(false)
 
 	const initCounter = useCallback(() => {
 		setCounterHidden(true)
 
-		setCookies('agreement', '1')
+		setCookies('agreement', '1', { path: '/', maxAge: 15768000 })
 	}, [setCookies])
 
 	useEffect(() => {

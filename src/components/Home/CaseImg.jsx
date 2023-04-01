@@ -98,6 +98,15 @@ const Cover = styled.img`
 	transition: transform ${commonTheme.durations.long}s
 		${commonTheme.easings.outPower4};
 `
+const FilterDiv = styled.div`
+	position: relative;
+	grid-row: 1/2;
+	grid-column: 1/2;
+	width: 100%;
+	height: 30%;
+	background: linear-gradient(rgba(0, 0, 0, 0), ${commonTheme.colors.balck});
+	z-index: 2;
+`
 const Tags = styled.div`
 	position: relative;
 	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/3')};
@@ -105,7 +114,7 @@ const Tags = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
-	z-index: 2;
+	z-index: 3;
 `
 const Year = styled.span`
 	position: relative;
@@ -113,7 +122,7 @@ const Year = styled.span`
 	grid-column: ${({ m }) => (m.isMobile ? '4/7' : '2/3')};
 	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
 	text-align: ${({ m }) => (m.isMobile ? 'end' : 'start')};
-	z-index: 2;
+	z-index: 3;
 `
 const Title = styled.h2`
 	position: relative;
@@ -121,10 +130,15 @@ const Title = styled.h2`
 	grid-column: ${({ m }) => (m.isMobile ? '1/7' : '3/7')};
 	font-family: 'AccentFontR', sans-serif;
 	font-weight: normal;
-	font-size: ${({ m }) => (m.isMobile ? 40 : m.isTabletP ? 48 : 76)}px;
+	font-size: ${({ m }) =>
+		m.isHugeDesk || m.isDesk
+			? 'clamp(40px, 2.815vw, 48px)'
+			: m.isMobile
+			? 'clamp(22px, 6.18vw, 30px)'
+			: 'clamp(24px, 3.065vw, 30px)'};
 	text-align: ${({ m }) => (m.isMobile ? 'start' : 'end')};
 	text-transform: uppercase;
-	z-index: 2;
+	z-index: 3;
 `
 const CaseImg = ({
 	caseData,
@@ -160,6 +174,7 @@ const CaseImg = ({
 									}
 									alt='case cover'
 								/>
+								<FilterDiv />
 								<Content>
 									<Tags m={media}>
 										{p.tags.map((t, i) => (

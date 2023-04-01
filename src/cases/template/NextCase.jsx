@@ -157,7 +157,22 @@ const NextCase = ({ i, caseData, pageTransition }) => {
 	}
 
 	useEffect(() => {
-		i < caseData.length - 1 ? setNextCaseI(i + 1) : setNextCaseI(0)
+		let count = 0
+		for (let index = i + 1; index < caseData.length; index++) {
+			if (caseData[index].isPortfolio) {
+				count++
+				setNextCaseI(index)
+				break
+			}
+		}
+		if (count === 0) {
+			for (let index = 0; index < caseData.length; index++) {
+				if (caseData[index].isPortfolio) {
+					setNextCaseI(index)
+					break
+				}
+			}
+		}
 	}, [i, caseData])
 
 	useEffect(() => {
