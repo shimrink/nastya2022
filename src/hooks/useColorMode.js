@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export const useColorMode = () => {
-
 	const [theme, setTheme] = useState('light')
 	const [accentColor, setAccentColor] = useState('purple')
 	const [mountedComponent, setMountedComponent] = useState(false)
 
-	const setMode = mode => {
+	const setMode = (mode) => {
 		window.localStorage.setItem('theme', mode)
 		setTheme(mode)
 	}
 
-	const setAccent = accent => {
+	const setAccent = (accent) => {
 		window.localStorage.setItem('accentColor', accent)
 		setAccentColor(accent)
 	}
@@ -37,7 +36,7 @@ export const useColorMode = () => {
 		}
 	}
 
-	useEffect( () => {
+	useEffect(() => {
 		const localTheme = window.localStorage.getItem('theme')
 		const localAccent = window.localStorage.getItem('accentColor')
 		localTheme && setTheme(localTheme)
@@ -45,5 +44,11 @@ export const useColorMode = () => {
 		setMountedComponent(true)
 	}, [])
 
-	return [theme, accentColor, accentColorToggler, themeToggler, mountedComponent]
+	return [
+		theme,
+		accentColor,
+		accentColorToggler,
+		themeToggler,
+		mountedComponent,
+	]
 }

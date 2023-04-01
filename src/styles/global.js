@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { commonTheme } from "./theme";
+import { createGlobalStyle } from 'styled-components'
+import { commonTheme } from './theme'
 
 export default createGlobalStyle`
 ::-webkit-scrollbar {
@@ -22,7 +22,7 @@ html {
 body {
 	margin: 0;
 	height: 100%;
-	background-color: ${ ({theme}) => theme.mode.bg };
+	background-color: ${({ theme }) => theme.mode.bg};
 	font-family: 'BaseFont', sans-serif;
 	overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
@@ -52,22 +52,30 @@ picture {
 }
 
 a {
-	color: ${ ({theme}) => theme.mode.text };
+	color: ${({ theme }) => theme.mode.text};
 	text-decoration: none;
 }
 
 ._anim-show-left {
 	transform: translateX(-100%) scaleX(100%);
 	opacity: 0;
-	transition: transform ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
-					opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
-					background-color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3},
-					color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
+	transition: transform ${commonTheme.durations.middle}s ${
+	commonTheme.easings.outPower3
+},
+							opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
+							background-color ${commonTheme.durations.short}s ${
+	commonTheme.easings.outPower3
+},
+							color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
 }
 ._anim-show-opacity {
 	opacity: 0;
-	transition: opacity ${commonTheme.durations.middle}s ${commonTheme.easings.outPower3},
-					background-color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3},
+	transition: opacity ${commonTheme.durations.middle}s ${
+	commonTheme.easings.outPower3
+},
+					background-color ${commonTheme.durations.short}s ${
+	commonTheme.easings.outPower3
+},
 					color ${commonTheme.durations.short}s ${commonTheme.easings.outPower3};
 }
 `

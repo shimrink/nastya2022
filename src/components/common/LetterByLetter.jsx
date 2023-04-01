@@ -1,44 +1,65 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { commonTheme } from '../../styles/theme';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { commonTheme } from '../../styles/theme'
 
 const LinkWrap = styled.div`
-	height: ${({wavy}) => wavy ? '1.2em' : 'auto'};
+	height: ${({ wavy }) => (wavy ? '1.2em' : 'auto')};
 	overflow: hidden;
 `
 const Wave = styled.div`
 	display: flex;
-	font-family: ${ props => props.bottom ? props.bottomFont
-									: props.topFont}, sans-serif;
-	color: ${ props => props.navMobile || props.whiteCol ? commonTheme.colors.white
-							: !props.navMobile && props.bottom ? props.theme.ac.dark
-							: props.theme.mode.text};
+	font-family: ${(props) => (props.bottom ? props.bottomFont : props.topFont)},
+		sans-serif;
+	color: ${(props) =>
+		props.navMobile || props.whiteCol
+			? commonTheme.colors.white
+			: !props.navMobile && props.bottom
+			? props.theme.ac.dark
+			: props.theme.mode.text};
 	transition: color ${commonTheme.durations.short}s;
 `
 const Letter = styled.div`
-	transform: translateY( ${ props => props.waveAnim ? -100
-												: props.isMenuMobileOpen ? 0
-												: !props.showAnimFinish ? 100
-												: 0}%);
+	transform: translateY(
+		${(props) =>
+			props.waveAnim
+				? '-100%'
+				: props.isMenuMobileOpen
+				? '0%'
+				: !props.showAnimFinish
+				? '100%'
+				: '0%'}
+	);
 	transition-property: transform;
 	transition-duration: ${commonTheme.durations.middle}s;
 	transition-timing-function: ${commonTheme.easings.outPower3};
-	transition-delay: ${({delay}) => delay * 30}ms;
+	transition-delay: ${({ delay }) => delay * 30}ms;
 `
 const Letters = ({ child, waveAnim, showAnimFinish, isMenuMobileOpen }) => {
 	return child.split('').map((l, i) => {
 		if (l === ' ') {
-			return <Letter key={i}
-								isMenuMobileOpen={isMenuMobileOpen}
-								delay={i}
-								waveAnim={waveAnim}
-								showAnimFinish={showAnimFinish}>&thinsp;&thinsp;</Letter>
+			return (
+				<Letter
+					key={i}
+					isMenuMobileOpen={isMenuMobileOpen}
+					delay={i}
+					waveAnim={waveAnim}
+					showAnimFinish={showAnimFinish}
+				>
+					&thinsp;&thinsp;
+				</Letter>
+			)
 		}
-		return <Letter key={i}
-							isMenuMobileOpen={isMenuMobileOpen}
-							delay={i}
-							waveAnim={waveAnim}
-							showAnimFinish={showAnimFinish}>{l}</Letter>
+		return (
+			<Letter
+				key={i}
+				isMenuMobileOpen={isMenuMobileOpen}
+				delay={i}
+				waveAnim={waveAnim}
+				showAnimFinish={showAnimFinish}
+			>
+				{l}
+			</Letter>
+		)
 	})
 }
 
@@ -52,19 +73,20 @@ const LetterByLetter = ({
 	isMenuMobileOpen,
 	active,
 	hovering,
-	topFont='AccentFontM',
-	bottomFont='AccentFontB' }) => {
-
+	topFont = 'AccentFontM',
+	bottomFont = 'AccentFontB',
+}) => {
 	const [waveAnim, setWaveAnim] = useState(false)
 	const [selfHovering, setSelfHovering] = useState(false)
+	const [showAnimFinish, setShowAnimFinish] = useState(!showAnim)
 	const [upAnim, setUpAnim] = useState(false)
 	const [downAnim, setDownAnim] = useState(false)
 	const [endUpAnim, setEndUpAnim] = useState(false)
 	const [mMOpen, setMMOpen] = useState(false)
 	const LBLRef = useRef()
-	const [showAnimFinish, setShowAnimFinish] = useState(!showAnim)
 
-	let delay = commonTheme.durations.middle * 1000 + (children.split('').length - 2) * 30
+	let delay =
+		commonTheme.durations.middle * 1000 + (children.split('').length - 2) * 30
 
 	useEffect(() => {
 		if (wavy && !disableWave) {
@@ -81,7 +103,6 @@ const LetterByLetter = ({
 				if (endUpAnim) {
 					setUpAnim(true)
 				}
-
 			} else {
 				if (endUpAnim) {
 					setEndUpAnim(false)
@@ -93,7 +114,16 @@ const LetterByLetter = ({
 				}
 			}
 		}
-	}, [wavy, disableWave, hovering, selfHovering, upAnim, downAnim, endUpAnim, delay])
+	}, [
+		wavy,
+		disableWave,
+		hovering,
+		selfHovering,
+		upAnim,
+		downAnim,
+		endUpAnim,
+		delay,
+	])
 
 	useEffect(() => {
 		if (wavy) {
@@ -129,7 +159,10 @@ const LetterByLetter = ({
 				animItemPoint = window.innerHeight - window.innerHeight / animStart
 			}
 
-			if ((window.scrollY > animItemOffset - animItemPoint) && window.scrollY < (animItemOffset + animItemHeight)) {
+			if (
+				window.scrollY > animItemOffset - animItemPoint &&
+				window.scrollY < animItemOffset + animItemHeight
+			) {
 				setShowAnimFinish(true)
 			}
 		}
@@ -147,14 +180,44 @@ const LetterByLetter = ({
 		}, 700)
 	}, [textAnimate])
 
-	return <LinkWrap ref={LBLRef} wavy={wavy} onMouseOver={ () => setSelfHovering(true) } onMouseOut={ () => setSelfHovering(false) }>
-		<Wave navMobile={navMobile} whiteCol={whiteCol} topFont={topFont} bottomFont={bottomFont}>
-			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
-		</Wave>
-		{wavy && <Wave bottom navMobile={navMobile} whiteCol={whiteCol} topFont={topFont} bottomFont={bottomFont}>
-			<Letters child={children} waveAnim={waveAnim || active} showAnimFinish={showAnimFinish} isMenuMobileOpen={mMOpen} />
-		</Wave>}
-	</LinkWrap>
+	return (
+		<LinkWrap
+			ref={LBLRef}
+			wavy={wavy}
+			onMouseOver={() => setSelfHovering(true)}
+			onMouseOut={() => setSelfHovering(false)}
+		>
+			<Wave
+				navMobile={navMobile}
+				whiteCol={whiteCol}
+				topFont={topFont}
+				bottomFont={bottomFont}
+			>
+				<Letters
+					child={children}
+					waveAnim={waveAnim || active}
+					showAnimFinish={showAnimFinish}
+					isMenuMobileOpen={mMOpen}
+				/>
+			</Wave>
+			{wavy && (
+				<Wave
+					bottom
+					navMobile={navMobile}
+					whiteCol={whiteCol}
+					topFont={topFont}
+					bottomFont={bottomFont}
+				>
+					<Letters
+						child={children}
+						waveAnim={waveAnim || active}
+						showAnimFinish={showAnimFinish}
+						isMenuMobileOpen={mMOpen}
+					/>
+				</Wave>
+			)}
+		</LinkWrap>
+	)
 }
 
-export default LetterByLetter;
+export default LetterByLetter

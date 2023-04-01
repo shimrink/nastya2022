@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { mapRange } from "gsap/gsap-core"
-import { commonTheme } from '../../styles/theme';
-import { MediaContext } from '../../AppWrap';
+import React, { useContext, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { mapRange } from 'gsap/gsap-core'
+import { commonTheme } from '../../styles/theme'
+import { MediaContext } from '../../AppWrap'
 
 const ProgressLineWrapper = styled.div`
 	grid-row: 1/2;
@@ -13,7 +13,7 @@ const ProgressLineWrapper = styled.div`
 	transform: translateX(-50%);
 	width: 180px;
 	height: 4px;
-	margin-bottom: ${({m}) => m.isHugeDesk || m.isDesk ? 40 : 24}px;
+	margin-bottom: ${({ m }) => (m.isHugeDesk || m.isDesk ? 40 : 24)}px;
 	z-index: 3;
 `
 const ProgressLineContainer = styled.div`
@@ -21,30 +21,33 @@ const ProgressLineContainer = styled.div`
 	border-radius: 9em;
 	width: 100%;
 	height: 100%;
-	background-color: ${ ({theme}) => theme.ac.light };
+	background-color: ${({ theme }) => theme.ac.light};
 `
 const ProgressLine = styled.div`
 	position: absolute;
 	border-radius: 9em;
-	width: ${({scrollValue}) => scrollValue}%;
+	width: ${({ scrollValue }) => scrollValue}%;
 	height: 100%;
-	background-color: ${ ({theme}) => theme.ac.dark };
+	background-color: ${({ theme }) => theme.ac.dark};
 	transition: width ${commonTheme.durations.middle}s;
 `
 const ScrollProgress = ({ casesCount, currentIndex, scrollCount }) => {
-
 	const media = useContext(MediaContext)
 
 	const [scrollValue, setScrollValue] = useState(null)
 
 	useEffect(() => {
-		setScrollValue(mapRange(0, casesCount * scrollCount, 0, 100, currentIndex + scrollCount))
+		setScrollValue(
+			mapRange(0, casesCount * scrollCount, 0, 100, currentIndex + scrollCount),
+		)
 	}, [currentIndex, casesCount, scrollCount])
 
-	return <ProgressLineWrapper m={media}>
-		<ProgressLineContainer />
-		<ProgressLine scrollValue={scrollValue} />
-	</ProgressLineWrapper>
+	return (
+		<ProgressLineWrapper m={media}>
+			<ProgressLineContainer />
+			<ProgressLine scrollValue={scrollValue} />
+		</ProgressLineWrapper>
+	)
 }
 
-export default ScrollProgress;
+export default ScrollProgress

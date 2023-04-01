@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const ThemeCircle = styled.div`
 	width: 20px;
 	height: 20px;
-	background-color: ${ ({theme}) => theme.mode.text };
+	background-color: ${({ theme }) => theme.mode.text};
 	border: none;
 	border-radius: 50%;
 	justify-self: end;
@@ -14,4 +14,4 @@ const ThemeToggler = ({ toggleTheme }) => {
 	return <ThemeCircle onClick={toggleTheme} />
 }
 
-export default ThemeToggler;
+export default ThemeToggler

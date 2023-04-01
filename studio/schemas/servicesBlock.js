@@ -13,7 +13,7 @@ export default {
 			title: 'Услуги',
 			type: 'array',
 			description: 'Выбирать из выпадающего списка.',
-			of: [{type: 'reference', to: {type: 'service'}}],
+			of: [{ type: 'reference', to: { type: 'service' } }],
 		},
 		{
 			name: 'order',

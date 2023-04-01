@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import gsap from 'gsap';
-import { commonTheme } from '../../styles/theme';
-import { MediaContext } from '../../AppWrap';
-import LetterByLetter from '../common/LetterByLetter';
-import Line from '../common/Line';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import gsap from 'gsap'
+import { commonTheme } from '../../styles/theme'
+import { MediaContext } from '../../AppWrap'
+import LetterByLetter from '../common/LetterByLetter'
+import Line from '../common/Line'
 
 const RowWrap = styled.div`
 	display: grid;
@@ -20,10 +20,19 @@ const RowContent = styled.div`
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
-	width: ${({m}) => m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%'};
-	padding: ${({m}) => m.isHugeDesk ? '0' : '0 40px'};
+	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
+	padding: ${({ m }) => (m.isHugeDesk ? '0' : '0 40px')};
 `
 const RowArea = styled.div`
+	grid-row: 1/2;
+	grid-column: 1/13;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	z-index: 4;
+`
+const RowAreaLink = styled.a`
 	grid-row: 1/2;
 	grid-column: 1/13;
 	position: relative;
@@ -69,19 +78,20 @@ const Img = styled.img`
 	z-index: 2;
 `
 const Row = ({ c, rowsRef, caseData, pageTransition }) => {
-
 	const media = useContext(MediaContext)
 	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
 	useEffect(() => {
 		const el = rowsRef.current
-		const moveImg = e => {
+		const moveImg = (e) => {
 			let crd = rowsRef.current.getBoundingClientRect()
-			if (crd.top <= e.clientY
-			&& e.clientY <= crd.bottom
-			&& crd.left <= e.clientX
-			&& e.clientX <= crd.right) {
+			if (
+				crd.top <= e.clientY &&
+				e.clientY <= crd.bottom &&
+				crd.left <= e.clientX &&
+				e.clientX <= crd.right
+			) {
 				for (let i = 0; i < caseData.length; i++) {
 					gsap.to(imgRef.current, {
 						left: e.clientX,
@@ -126,28 +136,50 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 		setHovering(false)
 	}
 
-	return <RowWrap className='rowItem'>
-		<RowContent m={media}>
-			<Name>
-				<LetterByLetter wavy
-									showAnim
-									hovering={hovering}
-									topFont='AccentFontT'
-									bottomFont='AccentFontR'>
-					{c.title}
-				</LetterByLetter>
-			</Name>
-			<Tags className='animItems _anim-show-opacity'>
-				{c.tags.map((t, ind) => <span key={ind}>{t}</span>)}
-			</Tags>
-			<Year className='animItems _anim-show-opacity'>{c.publishedAt.split('-')[0]}</Year>
-			<Img ref={imgRef} src={c.mobileImage.asset.url} alt={c.slug.current} />
-			<RowArea onClick={() => pageTransition(`/cases/${c.slug.current}`)}
+	return (
+		<RowWrap className='rowItem'>
+			<RowContent m={media}>
+				<Name>
+					<LetterByLetter
+						wavy
+						showAnim
+						hovering={hovering}
+						topFont='AccentFontT'
+						bottomFont='AccentFontR'
+					>
+						{c.title}
+					</LetterByLetter>
+				</Name>
+				<Tags className='animItems _anim-show-opacity'>
+					{c.tags.map((t, ind) => (
+						<span key={ind}>{t}</span>
+					))}
+				</Tags>
+				<Year className='animItems _anim-show-opacity'>
+					{c.publishedAt.split('-')[0]}
+				</Year>
+				<Img ref={imgRef} src={c.mobileImage.asset.url} alt={c.slug.current} />
+				{c.isPortfolio ? (
+					<RowArea
+						onClick={() => pageTransition(`/cases/${c.slug.current}`)}
 						onMouseOver={showImg}
-						onMouseOut={hideImg} />
-		</RowContent>
-		<Line asEnd />
-	</RowWrap>
+						onMouseOut={hideImg}
+					/>
+				) : (
+					<RowAreaLink
+						href={c.link}
+						target='_blank'
+						rel='noreferrer'
+						onMouseOver={showImg}
+						onMouseOut={hideImg}
+					>
+						{''}
+					</RowAreaLink>
+				)}
+			</RowContent>
+			<Line asEnd />
+		</RowWrap>
+	)
 }
 
-export default Row;
+export default Row

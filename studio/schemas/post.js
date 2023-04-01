@@ -13,8 +13,8 @@ export default {
 			title: 'Человекопонятный URL',
 			type: 'slug',
 			options: {
-			source: 'title',
-			maxLength: 96,
+				source: 'title',
+				maxLength: 96,
 			},
 		},
 		{
@@ -41,7 +41,7 @@ export default {
 			title: 'Обложка 16:9',
 			type: 'image',
 			options: {
-			hotspot: true,
+				hotspot: true,
 			},
 		},
 		{
@@ -49,7 +49,7 @@ export default {
 			title: 'Обложка 3:4',
 			type: 'image',
 			options: {
-			hotspot: true,
+				hotspot: true,
 			},
 		},
 		{
@@ -57,15 +57,15 @@ export default {
 			title: 'Категории',
 			type: 'array',
 			description: 'Выбирать из выпадающего списка.',
-			of: [{type: 'reference', to: {type: 'category'}}],
+			of: [{ type: 'reference', to: { type: 'category' } }],
 		},
 		{
 			name: 'tags',
 			title: 'Теги',
 			type: 'array',
 			description: 'Писать с заглавной буквы. Разделять теги клавишей ENTER',
-			of: [{type: 'string'}],
-			options: {layout: 'tags'},
+			of: [{ type: 'string' }],
+			options: { layout: 'tags' },
 		},
 		{
 			name: 'isMainSlider',
@@ -76,22 +76,15 @@ export default {
 		},
 		{
 			name: 'isPortfolio',
-			title: 'Все кейсы',
+			title: 'Отдельная страница',
 			type: 'boolean',
-			description: 'Добавить на страницу Все кейсы?',
+			description: 'Включи если нужна отдельная страница, а не просто ссылка',
 			initialValue: false,
 		},
 		{
-			name: 'design',
-			title: 'Дизайнер',
-			type: 'reference',
-			to: {type: 'author'},
-		},
-		{
-			name: 'dev',
-			title: 'Разработчик',
-			type: 'reference',
-			to: {type: 'author'},
+			name: 'whatsDone',
+			title: 'Что сделано?',
+			type: 'text',
 		},
 	],
 
@@ -102,9 +95,9 @@ export default {
 			media: 'mainImage',
 		},
 		prepare(selection) {
-			const {author} = selection
+			const { author } = selection
 			return Object.assign({}, selection, {
-			subtitle: author && `by ${author}`,
+				subtitle: author && `by ${author}`,
 			})
 		},
 	},
