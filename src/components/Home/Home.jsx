@@ -42,6 +42,7 @@ const ShowButton = styled.div`
 const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 	useEffect(() => {
 		setPageInitialized(true)
+		document.title = 'asyadulova: избранные проекты'
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)

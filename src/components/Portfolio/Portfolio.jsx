@@ -49,6 +49,7 @@ const Portfolio = ({
 }) => {
 	useEffect(() => {
 		setPageInitialized(true)
+		document.title = 'asyadulova: все кейсы'
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)

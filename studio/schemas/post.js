@@ -60,14 +60,6 @@ export default {
 			of: [{ type: 'reference', to: { type: 'category' } }],
 		},
 		{
-			name: 'tags',
-			title: 'Теги',
-			type: 'array',
-			description: 'Писать с заглавной буквы. Разделять теги клавишей ENTER',
-			of: [{ type: 'string' }],
-			options: { layout: 'tags' },
-		},
-		{
 			name: 'isMainSlider',
 			title: 'Главный слайдер',
 			type: 'boolean',

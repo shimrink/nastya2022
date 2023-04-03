@@ -4,6 +4,8 @@ import { MediaContext } from '../../AppWrap'
 import LetterByLetter from '../../components/common/LetterByLetter'
 
 const Wrapper = styled.div`
+	grid-row: 3/4;
+	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	align-items: end;

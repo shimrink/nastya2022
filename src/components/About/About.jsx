@@ -73,6 +73,7 @@ const Contacts = styled.div`
 const About = ({ setPageInitialized, pageTransition }) => {
 	useEffect(() => {
 		setPageInitialized(true)
+		document.title = 'Об asyadulova'
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)

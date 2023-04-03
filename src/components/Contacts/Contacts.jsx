@@ -11,6 +11,7 @@ const Main = styled.main`
 const Contacts = ({ setPageInitialized }) => {
 	useEffect(() => {
 		setPageInitialized(true)
+		document.title = 'asyadulova: брендинг, дизайн, разработка'
 	}, [setPageInitialized])
 
 	return (

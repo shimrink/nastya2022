@@ -172,8 +172,8 @@ const CaseImg = ({
 								/>
 								<Content>
 									<Tags m={media}>
-										{p.tags.map((t, i) => (
-											<span key={i}>{t}</span>
+										{p.categories.map((t, i) => (
+											<span key={i}>{t.title}</span>
 										))}
 									</Tags>
 									<Year m={media}>{p.publishedAt.split('-')[0]}</Year>

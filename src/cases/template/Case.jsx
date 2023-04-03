@@ -13,6 +13,7 @@ import Pride from '../Pride'
 import Cei from '../Cei'
 import PrezentaciiDlyaEksperta from '../PrezentaciiDlyaEksperta'
 import Stroimontazh from '../Stroimontazh'
+import KrasivyiBiznes from '../KrasivyiBiznes'
 
 const Main = styled.main`
 	display: flex;
@@ -119,7 +120,8 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 
 	useEffect(() => {
 		setPageInitialized(true)
-	}, [pathname, setPageInitialized])
+		document.title = `asyadulova: ${c.title}`
+	}, [pathname, setPageInitialized, c])
 
 	// slug должен совпадать с тем, что в Sanity
 	const casesArr = [
@@ -130,6 +132,7 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 		{ slug: 'prezentacii-dlya-cei', url: Cei },
 		{ slug: 'prezentacii-dlya-eksperta', url: PrezentaciiDlyaEksperta },
 		{ slug: 'stroimontazh', url: Stroimontazh },
+		{ slug: 'krasivyi-biznes', url: KrasivyiBiznes },
 	]
 
 	let CurrentCase
@@ -141,7 +144,10 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 
 	return (
 		<Main>
-			<MainCover src={c.mainImage.asset.url} alt={c.slug.current} />
+			<MainCover
+				src={media.isMobile ? c.mobileImage.asset.url : c.mainImage.asset.url}
+				alt={c.slug.current}
+			/>
 			<Title m={media}>
 				<h2>{c.title}</h2>
 				<Line />
@@ -153,8 +159,8 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 				</Cleint>
 				<Category m={media}>
 					<h4>Категория</h4>
-					{c.tags.map((t, i) => (
-						<span key={i}>{t}</span>
+					{c.categories.map((t, i) => (
+						<span key={i}>{t.title}</span>
 					))}
 				</Category>
 				<Year m={media}>

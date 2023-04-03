@@ -25,9 +25,9 @@ const Title = styled.h1`
 	transition: color ${commonTheme.durations.short}s;
 `
 const ProcessOfWorkContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr ${({ m }) =>
-			m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	margin-top: ${({ m }) =>
 		m.isHugeDesk || m.isDesk
 			? 'clamp(324px, 25.78vw, 504px)'
@@ -44,6 +44,7 @@ const FAQ = styled.div`
 const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 	useEffect(() => {
 		setPageInitialized(true)
+		document.title = 'asyadulova: брендинг, дизайн, разработка'
 	}, [setPageInitialized])
 
 	const media = useContext(MediaContext)
@@ -68,7 +69,15 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 				<Sections key={index} servicesBlock={servicesBlock} />
 			))}
 			<ProcessOfWorkContainer m={media}>
-				<SectionTitle>Порядок работы</SectionTitle>
+				<SectionTitle
+					mbHugeDesk='0'
+					mbDesk='0'
+					mbTabletA='0'
+					mbTabletP='0'
+					mbMobile='36px'
+				>
+					Порядок работы
+				</SectionTitle>
 				<ProcessOfWork />
 			</ProcessOfWorkContainer>
 			<FAQ m={media}>

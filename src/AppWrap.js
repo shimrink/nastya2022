@@ -91,7 +91,6 @@ const AppWrap = () => {
 				link,
 				publishedAt,
 				client,
-				tags,
 				isMainSlider,
 				isPortfolio,
 				whatsDone,

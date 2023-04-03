@@ -151,8 +151,8 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 					</LetterByLetter>
 				</Name>
 				<Tags className='animItems _anim-show-opacity'>
-					{c.tags.map((t, ind) => (
-						<span key={ind}>{t}</span>
+					{c.categories.map((t, ind) => (
+						<span key={ind}>{t.title}</span>
 					))}
 				</Tags>
 				<Year className='animItems _anim-show-opacity'>

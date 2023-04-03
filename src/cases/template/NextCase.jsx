@@ -17,9 +17,8 @@ const moveX = keyframes`
 	}
 `
 const Wrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	justify-items: center;
 	width: 100%;
 	margin-top: ${({ m }) =>
 		m.isHugeDesk
@@ -31,6 +30,8 @@ const Wrapper = styled.div`
 			: '140px'};
 `
 const Info = styled.div`
+	grid-row: 2/3;
+	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
@@ -187,6 +188,7 @@ const NextCase = ({ i, caseData, pageTransition }) => {
 	return (
 		<Wrapper m={media} onMouseMove={circAnim}>
 			<SectionTitle
+				gc='1/2'
 				mbHugeDesk='164px'
 				mbDesk='120px'
 				mbTabletA='96px'
