@@ -81,6 +81,51 @@ const AppWrap = () => {
 		})
 	}, [])
 
+	const preventZoom = (e) => {
+		if (!e.ctrlKey && !e.metaKey) return
+		e.preventDefault()
+		e.stopImmediatePropagation()
+	}
+
+	useEffect(() => {
+		document.addEventListener('wheel', preventZoom, { passive: false })
+
+		return () =>
+			document.removeEventListener('wheel', preventZoom, { passive: false })
+	}, [])
+
+	useEffect(() => {
+		document.addEventListener('gesturestart', preventZoom, { passive: false })
+
+		return () =>
+			document.removeEventListener('gesturestart', preventZoom, {
+				passive: false,
+			})
+	}, [])
+
+	useEffect(() => {
+		const preventZoomOnKeyboard = (e) => {
+			if (!e.ctrlKey && !e.metaKey) return
+			if (
+				e.keyCode !== 107 &&
+				e.keyCode !== 109 &&
+				e.keyCode !== 187 &&
+				e.keyCode !== 189
+			)
+				return
+			e.preventDefault()
+			e.stopImmediatePropagation()
+		}
+		document.addEventListener('keydown', preventZoomOnKeyboard, {
+			passive: false,
+		})
+
+		return () =>
+			document.removeEventListener('keydown', preventZoomOnKeyboard, {
+				passive: false,
+			})
+	}, [])
+
 	// Get data from Sanity
 	useEffect(() => {
 		sanityClient
@@ -171,7 +216,7 @@ const AppWrap = () => {
 								servicesData={servicesData}
 								FAQData={FAQData}
 							/>
-							<Cookie />
+							{/* <Cookie /> */}
 						</MediaContext.Provider>
 					</ThemeProvider>
 				</CookiesProvider>

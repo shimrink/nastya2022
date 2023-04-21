@@ -251,7 +251,7 @@ const App = ({
 				<Routes>
 					{caseData.map((c, i) => (
 						<Route
-							key={i}
+							key={c.slug.current}
 							path={`/cases/${c.slug.current}`}
 							element={
 								<Case

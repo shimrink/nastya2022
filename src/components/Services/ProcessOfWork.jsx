@@ -28,8 +28,8 @@ const Process = styled.div`
 const ProcessOfWork = () => {
 	const media = useContext(MediaContext)
 
-	return state.processOfWork.map((g, i) => (
-		<Fragment key={i}>
+	return state.processOfWork.map((g) => (
+		<Fragment key={g.title}>
 			<Process m={media}>
 				<h3>{g.title}</h3>
 				{!media.isMobile && <p>{g.text}</p>}

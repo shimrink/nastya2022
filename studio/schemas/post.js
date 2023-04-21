@@ -7,6 +7,8 @@ export default {
 			name: 'title',
 			title: 'Название',
 			type: 'string',
+			validation: (Rule) =>
+				Rule.required().max(26).error('Длина не должна превышать 26 символов'),
 		},
 		{
 			name: 'slug',
@@ -16,6 +18,7 @@ export default {
 				source: 'title',
 				maxLength: 96,
 			},
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'link',
@@ -30,6 +33,7 @@ export default {
 			options: {
 				dateFormat: 'DD.MM.YYYY',
 			},
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'client',
@@ -58,6 +62,7 @@ export default {
 			type: 'array',
 			description: 'Выбирать из выпадающего списка.',
 			of: [{ type: 'reference', to: { type: 'category' } }],
+			validation: (Rule) => Rule.required(),
 		},
 		{
 			name: 'isMainSlider',

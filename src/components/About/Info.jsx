@@ -112,8 +112,8 @@ const Info = () => {
 			</SectionTitle>
 			<Content m={media}>
 				<Ranks m={media} className='animItems _anim-show-opacity'>
-					{state.aboutRanks.map((r, i) => (
-						<Rank key={i} m={media}>
+					{state.aboutRanks.map((r) => (
+						<Rank key={r} m={media}>
 							{r}
 						</Rank>
 					))}
@@ -122,10 +122,9 @@ const Info = () => {
 					Мультидисциплинарный дизайнер
 				</Multi>
 				<Text m={media} className='animItems _anim-show-opacity'>
-					Дизайнер-фрилансер с&nbsp;широким спектром навыков.
-					<br />
-					Помогаю решить задачи вашего бизнеса с помощью дизайна: создаю его
-					комплексную «упаковку» — от логотипа и презентаций до сайта.
+					Дизайнер с командой и широким спектром навыков. Моя команда
+					предоставляет комплекс услуг для упаковки бизнеса: от маркетинговых
+					исследований и брендинга до оформления соцсетей и разработки сайта.
 				</Text>
 				<Portrait m={media} src={asyaP} alt='Asya' />
 				<Landscape m={media} src={asyaA} alt='Asya' />

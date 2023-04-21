@@ -52,6 +52,16 @@ const CaseWrapper = styled.div`
 	);
 	cursor: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'none' : 'pointer')};
 `
+const CaseWrapperLink = styled.a`
+	grid-row: 1/2;
+	grid-column: 1/2;
+	width: 100%;
+	height: 100%;
+	transform: translate(
+		${({ i }) => i * 122 + '%'},
+		${({ i }) => i * 100 + '%'}
+	);
+`
 const CaseArea = ({
 	caseData,
 	currentIndex,
@@ -104,7 +114,7 @@ const CaseArea = ({
 				{caseData.map((p, i) => {
 					if (p.isMainSlider) {
 						count++
-						return (
+						return p.isPortfolio ? (
 							<CaseWrapper
 								key={p.slug.current}
 								m={media}
@@ -113,6 +123,18 @@ const CaseArea = ({
 								onMouseOut={mouseOutHandler}
 								onClick={() => pageTransition(`cases/${p.slug.current}`)}
 							/>
+						) : (
+							<CaseWrapperLink
+								key={p.slug.current}
+								i={count}
+								onMouseOver={() => mouseOverHandler(i)}
+								onMouseOut={mouseOutHandler}
+								href={p.link}
+								target='_blank'
+								rel='noreferrer'
+							>
+								{''}
+							</CaseWrapperLink>
 						)
 					}
 					return null

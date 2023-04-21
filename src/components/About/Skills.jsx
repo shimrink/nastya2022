@@ -83,43 +83,34 @@ const Skills = () => {
 				Навыки
 			</SectionTitle>
 			<div>
-				<MovingRow row={0} m={media}>
-					{[...Array(4)].map((v, ind) => (
-						<String key={ind} m={media}>
-							{state.skillsWords.top.map((w, i) => (
-								<Skill bold={i === 2 ? true : false} key={i} m={media}>
-									{w}
-								</Skill>
-							))}
-						</String>
-					))}
-				</MovingRow>
-				<MovingRow row={1} reverse m={media}>
-					{[...Array(4)].map((v, ind) => (
-						<String key={ind} m={media}>
-							{state.skillsWords.middle.map((w, i) => (
-								<Skill
-									bold={i === 0 || i === 3 ? true : false}
-									key={i}
-									m={media}
-								>
-									{w}
-								</Skill>
-							))}
-						</String>
-					))}
-				</MovingRow>
-				<MovingRow row={2} m={media}>
-					{[...Array(4)].map((v, ind) => (
-						<String key={ind} m={media}>
-							{state.skillsWords.bottom.map((w, i) => (
-								<Skill bold={i === 2 ? true : false} key={i} m={media}>
-									{w}
-								</Skill>
-							))}
-						</String>
-					))}
-				</MovingRow>
+				{state.skillsWords.map((sRow, index) => (
+					<MovingRow
+						key={index}
+						row={index}
+						reverse={index % 2 !== 0}
+						m={media}
+					>
+						{[...Array(4)].map((v, ind) => (
+							<String key={ind} m={media}>
+								{sRow.map((w, i) => (
+									<Skill
+										bold={
+											index % 2 === 0 && i === 2
+												? true
+												: index % 2 !== 0 && (i === 0 || i === 3)
+												? true
+												: false
+										}
+										key={w}
+										m={media}
+									>
+										{w}
+									</Skill>
+								))}
+							</String>
+						))}
+					</MovingRow>
+				))}
 			</div>
 		</Wrap>
 	)

@@ -67,22 +67,24 @@ const Cover = styled.img`
 	transform: translateX(
 			${(props) =>
 				props.hovering && props.i === props.hoverNum
-					? 0
+					? '0%'
 					: -5 *
-					  props.mob *
-					  (props.count * props.scrollCount - props.currentIndex)}%
+							props.mob *
+							(props.count * props.scrollCount - props.currentIndex) +
+					  '%'}
 		)
 		translateY(
 			${(props) =>
 				props.hovering && props.i === props.hoverNum
-					? 0
+					? '0%'
 					: -5 *
-					  props.mob *
-					  (props.count * props.scrollCount - props.currentIndex)}%
+							props.mob *
+							(props.count * props.scrollCount - props.currentIndex) +
+					  '%'}
 		)
 		scale(
 			${({ i, hovering, hoverNum }) =>
-				hovering && i === hoverNum ? 110 : 120}%
+				hovering && i === hoverNum ? '110%' : '120%'}
 		);
 	transition: transform ${commonTheme.durations.long}s
 		${commonTheme.easings.outPower4};
@@ -172,8 +174,8 @@ const CaseImg = ({
 								/>
 								<Content>
 									<Tags m={media}>
-										{p.categories.map((t, i) => (
-											<span key={i}>{t.title}</span>
+										{p.categories.map((t) => (
+											<span key={t.title}>{t.title}</span>
 										))}
 									</Tags>
 									<Year m={media}>{p.publishedAt.split('-')[0]}</Year>

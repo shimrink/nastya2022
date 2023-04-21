@@ -74,7 +74,7 @@ const Values = ({ pageTransition }) => {
 			<Content m={media}>
 				<Container m={media}>
 					{state.aboutValues.map((v, i) => (
-						<Value key={i} v={v} />
+						<Value key={v.title} v={v} />
 					))}
 				</Container>
 				<Button m={media} onClick={() => pageTransition('/services')}>

@@ -55,8 +55,8 @@ const Content = ({ c }) => {
 			<Line />
 			<CaseInfo>
 				<Tags>
-					{c.categories.map((t, i) => (
-						<span key={i} className='animItems _anim-show-opacity'>
+					{c.categories.map((t) => (
+						<span key={t.title} className='animItems _anim-show-opacity'>
 							{t.title}
 						</span>
 					))}

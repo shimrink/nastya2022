@@ -29,11 +29,11 @@ export const state = {
 		},
 	],
 	aboutRanks: ['Digital,', 'Веб,', 'UX/UI,', 'SMM,', 'Графический —'],
-	skillsWords: {
-		top: ['GRAPHIC', 'UI/UX', 'WEB DESIGN', 'DIGITAL', 'PRODUCT'],
-		middle: ['FIGMA', 'PHOTOSHOP', 'ILLUSTRATOR', 'HTML/CSS/JS'],
-		bottom: ['CREATIVE', 'MARKETING', 'SMM', 'IIIUSTRATION', '3D'],
-	},
+	skillsWords: [
+		['GRAPHIC', 'UI/UX', 'WEB DESIGN', 'DIGITAL', 'PRODUCT'],
+		['FIGMA', 'PHOTOSHOP', 'ILLUSTRATOR', 'HTML/CSS/JS'],
+		['CREATIVE', 'MARKETING', 'SMM', 'IIIUSTRATION', '3D'],
+	],
 	gifs: [
 		{
 			title: 'Питомцы',

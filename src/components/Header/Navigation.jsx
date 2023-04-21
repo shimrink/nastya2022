@@ -26,7 +26,7 @@ const Navigation = ({
 		<Nav navMobile={navMobile} m={media}>
 			{state.navLinksData.map((l, i) => (
 				<NavItem
-					key={i}
+					key={l.path}
 					l={l}
 					navMobile={navMobile}
 					disableWave={disableWave}

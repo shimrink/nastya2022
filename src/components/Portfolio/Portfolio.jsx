@@ -72,9 +72,9 @@ const Portfolio = ({
 			{media.isHugeDesk || media.isDesk ? (
 				<Rows ref={rowsRef}>
 					<Line />
-					{caseData.map((c, i) => (
+					{caseData.map((c) => (
 						<Row
-							key={i}
+							key={c.slug.current}
 							c={c}
 							rowsRef={rowsRef}
 							caseData={caseData}
@@ -84,8 +84,8 @@ const Portfolio = ({
 				</Rows>
 			) : (
 				<GridWrapper m={media}>
-					{caseData.map((c, i) => (
-						<Grid key={i} c={c} pageTransition={pageTransition} />
+					{caseData.map((c) => (
+						<Grid key={c.slug.current} c={c} pageTransition={pageTransition} />
 					))}
 				</GridWrapper>
 			)}

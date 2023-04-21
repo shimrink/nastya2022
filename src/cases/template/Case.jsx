@@ -159,8 +159,8 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 				</Cleint>
 				<Category m={media}>
 					<h4>Категория</h4>
-					{c.categories.map((t, i) => (
-						<span key={i}>{t.title}</span>
+					{c.categories.map((t) => (
+						<span key={t.title}>{t.title}</span>
 					))}
 				</Category>
 				<Year m={media}>

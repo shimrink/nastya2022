@@ -65,8 +65,8 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 					Услуги и компетенции
 				</SectionTitle>
 			)}
-			{servicesData.map((servicesBlock, index) => (
-				<Sections key={index} servicesBlock={servicesBlock} />
+			{servicesData.map((servicesBlock) => (
+				<Sections key={servicesBlock.title} servicesBlock={servicesBlock} />
 			))}
 			<ProcessOfWorkContainer m={media}>
 				<SectionTitle
@@ -90,8 +90,8 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 				>
 					ЧАВО
 				</SectionTitle>
-				{FAQData.map((f, i) => (
-					<FAQRows key={i} f={f} />
+				{FAQData.map((f) => (
+					<FAQRows key={f.question} f={f} />
 				))}
 			</FAQ>
 			<Footer />

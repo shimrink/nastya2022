@@ -45,7 +45,7 @@ const Name = styled.div`
 	grid-row: 1/2;
 	grid-column: 1/10;
 	position: relative;
-	font-size: 76px;
+	font-size: clamp(48px, 3.5vw, 64px);
 	margin: 48px 0;
 	text-transform: uppercase;
 	z-index: 1;
@@ -151,8 +151,8 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 					</LetterByLetter>
 				</Name>
 				<Tags className='animItems _anim-show-opacity'>
-					{c.categories.map((t, ind) => (
-						<span key={ind}>{t.title}</span>
+					{c.categories.map((t) => (
+						<span key={t.title}>{t.title}</span>
 					))}
 				</Tags>
 				<Year className='animItems _anim-show-opacity'>

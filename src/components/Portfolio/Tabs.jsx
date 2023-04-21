@@ -146,7 +146,7 @@ const Tabs = ({ accentColor, caseData, categoriesData }) => {
 			</Tab>
 			{categoriesData.map((c, i) => (
 				<Tab
-					key={i}
+					key={c.title}
 					num={i + 1}
 					className={`tabItem tabItem${i + 1}`}
 					m={media}

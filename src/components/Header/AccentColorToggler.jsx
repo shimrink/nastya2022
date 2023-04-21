@@ -32,7 +32,7 @@ const WrapDiv = styled.div`
 	padding: ${({ m }) => (m.isHugeDesk || m.isDesk ? 0 : 2)}px;
 	margin: ${({ m, sn }) =>
 		sn === 0 ? 0 : m.isHugeDesk || m.isDesk ? '0 0 0 1px' : '0 1px 0 0'};
-	z-index: ${({ sn }) => accentTheme.length - sn};
+	z-index: ${({ sn }) => accentTheme.length * 2 - sn};
 	transition: margin ${commonTheme.durations.short}s, width 0.1s, height 0.1s;
 	${Wrapper}:hover && {
 		width: ${({ m }) => (m.isHugeDesk || m.isDesk ? 20 : 24)}px;
@@ -69,7 +69,7 @@ const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
 		<Wrapper m={media}>
 			{accentThemeLocal.map((ac, i) => (
 				<WrapDiv
-					key={i}
+					key={ac.name}
 					m={media}
 					sn={i}
 					onClick={() => toggleAccentColor(ac.name)}

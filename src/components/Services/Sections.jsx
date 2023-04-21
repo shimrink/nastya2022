@@ -82,8 +82,8 @@ const Sections = ({ servicesBlock }) => {
 						{servicesBlock.title}
 					</SectionTitle>
 				)}
-				{servicesBlock.services.map((s, i) => (
-					<Service key={i} m={media}>
+				{servicesBlock.services.map((s) => (
+					<Service key={s.title} m={media}>
 						<Name m={media}>{s.title}</Name>
 						{!media.isMobile && <Description>{s.description}</Description>}
 						<Price m={media}>{s.price}</Price>

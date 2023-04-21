@@ -92,7 +92,7 @@ const Interests = () => {
 			<Content m={media}>
 				{state.gifs.map((g, i) => (
 					<Gif
-						key={i}
+						key={g.alt}
 						m={media}
 						active={interestActive[i].active}
 						src={g.url}
@@ -102,7 +102,7 @@ const Interests = () => {
 				<Toggles m={media}>
 					{state.gifs.map((g, i) => (
 						<Interest
-							key={i}
+							key={g.alt}
 							g={g}
 							i={i}
 							interestActive={interestActive}
