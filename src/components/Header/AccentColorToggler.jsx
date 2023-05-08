@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
 import { accentTheme, commonTheme } from '../../styles/theme'
 
-const Wrapper = styled.div`
+const ColorsWrapper = styled.div`
 	display: grid;
 	align-items: center;
 	justify-items: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'start' : 'end')};
@@ -34,7 +34,7 @@ const WrapDiv = styled.div`
 		sn === 0 ? 0 : m.isHugeDesk || m.isDesk ? '0 0 0 1px' : '0 1px 0 0'};
 	z-index: ${({ sn }) => accentTheme.length * 2 - sn};
 	transition: margin ${commonTheme.durations.short}s, width 0.1s, height 0.1s;
-	${Wrapper}:hover && {
+	${ColorsWrapper}:hover && {
 		width: ${({ m }) => (m.isHugeDesk || m.isDesk ? 20 : 24)}px;
 		height: ${({ m }) => (m.isHugeDesk || m.isDesk ? 20 : 24)}px;
 		margin: ${({ m, sn }) =>
@@ -49,9 +49,14 @@ const ColorDiv = styled.div`
 	border-radius: 50%;
 	cursor: pointer;
 `
-const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
+const AccentColorToggler = ({
+	accentColor,
+	toggleAccentColor,
+	setColorsOpen,
+}) => {
 	const media = useContext(MediaContext)
 	const [accentThemeLocal, setAccentThemeLocal] = useState([...accentTheme])
+	const colorsWrapperRef = useRef()
 
 	useEffect(() => {
 		let localArr = [...accentTheme]
@@ -65,8 +70,18 @@ const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
 		})
 	}, [accentColor])
 
+	useEffect(() => {
+		const clickHandler = (e) => {
+			if (media.isMobile) {
+				setColorsOpen(colorsWrapperRef.current.contains(e.target))
+			}
+		}
+		window.addEventListener('click', clickHandler)
+		return () => window.removeEventListener('click', clickHandler)
+	}, [media, setColorsOpen])
+
 	return (
-		<Wrapper m={media}>
+		<ColorsWrapper m={media} ref={colorsWrapperRef}>
 			{accentThemeLocal.map((ac, i) => (
 				<WrapDiv
 					key={ac.name}
@@ -77,7 +92,7 @@ const AccentColorToggler = ({ accentColor, toggleAccentColor }) => {
 					<ColorDiv col={ac.color.dark} />
 				</WrapDiv>
 			))}
-		</Wrapper>
+		</ColorsWrapper>
 	)
 }
 

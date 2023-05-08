@@ -15,6 +15,7 @@ import AccentColorToggler from './AccentColorToggler'
 import Navigation from './Navigation'
 import Logo from './Logo'
 import MenuMobile from './MenuMobile'
+import PageName from './PageName'
 
 const Wrapper = styled.header`
 	position: fixed;
@@ -22,8 +23,7 @@ const Wrapper = styled.header`
 	left: 0;
 	width: 100%;
 	display: grid;
-	grid-template-columns: ${({ m }) =>
-		m.isHugeDesk || m.isDesk ? 'repeat(12, 1fr)' : '1fr'};
+	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
 	font-family: 'AccentFontM', sans-serif;
@@ -34,7 +34,7 @@ const Wrapper = styled.header`
 `
 const TogglersAndNav = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '6/13' : '1/2')};
+	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '6/13' : '4/13')};
 	display: grid;
 	grid-template-columns: ${({ m }) =>
 		m.isHugeDesk || m.isDesk ? 'repeat(7, 1fr)' : 'auto'};
@@ -82,6 +82,7 @@ const Header = ({
 	const [navDisable, setNavDisable] = useState(false)
 	const [disableWave, setDisableWave] = useState(true)
 	const [disableBurger, setDisableBurger] = useState(false)
+	const [colorsOpen, setColorsOpen] = useState(false)
 	const menuMobileRef = useRef()
 
 	const openMenu = () => {
@@ -158,6 +159,7 @@ const Header = ({
 				mobilePageTransition={mobilePageTransition}
 				pageTransition={pageTransition}
 			/>
+			{pathname === '/' && <PageName colorsOpen={colorsOpen} />}
 			<TogglersAndNav m={media}>
 				<ThemeTogglerContainer
 					onClick={media.isHugeDesk || media.isDesk ? () => {} : themeToggler}
@@ -169,6 +171,7 @@ const Header = ({
 					<AccentColorToggler
 						accentColor={accentColor}
 						toggleAccentColor={accentColorToggler}
+						setColorsOpen={setColorsOpen}
 					/>
 				</AccentColorTogglerContainer>
 				{media.isHugeDesk || media.isDesk ? (

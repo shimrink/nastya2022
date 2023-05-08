@@ -216,7 +216,7 @@ const AppWrap = () => {
 								servicesData={servicesData}
 								FAQData={FAQData}
 							/>
-							{/* <Cookie /> */}
+							<Cookie />
 						</MediaContext.Provider>
 					</ThemeProvider>
 				</CookiesProvider>
