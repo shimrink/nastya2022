@@ -1,44 +1,49 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
 
 const Wrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	min-height: 100vh;
-	margin-bottom: ${({ m }) => (m.isHugeDesk || m.isDesk ? 64 : 0)}px;
+	margin-bottom: 64px;
 	text-align: center;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-bottom: 0;
+	}
 `
 const Title = styled.span`
 	font-family: 'AccentFontR', sans-serif;
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+	font-size: 18px;
 	text-transform: uppercase;
 	margin-bottom: 24px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
+	}
 `
 const Slogan = styled.span`
 	font-family: 'AccentFontM', sans-serif;
-	font-size: ${({ m }) => (m.isMobile ? 'clamp(30px, 10vw, 48px)' : '48px')};
+	font-size: 48px;
 	color: ${({ theme }) => theme.ac.dark};
 	text-transform: uppercase;
 	margin-bottom: 12px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: clamp(30px, 10vw, 48px);
+	}
 `
 const Explanation = styled.span`
-	font-size: ${({ m }) => (m.isMobile ? 'clamp(16px, 3.75vw, 18px)' : '18px')};
+	font-size: 18px;
 	color: ${({ theme }) => theme.ac.dark};
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: clamp(16px, 3.75vw, 18px);
+	}
 `
 const Philosophy = () => {
-	const media = useContext(MediaContext)
-
 	return (
-		<Wrap m={media}>
-			<Title m={media} className='animItems _anim-show-opacity'>
-				Моя философия —
-			</Title>
-			<Slogan m={media} className='animItems _anim-show-opacity'>
-				Less is more
-			</Slogan>
-			<Explanation m={media} className='animItems _anim-show-opacity'>
+		<Wrap>
+			<Title className='animItems _anim-show-opacity'>Моя философия —</Title>
+			<Slogan className='animItems _anim-show-opacity'>Less is more</Slogan>
+			<Explanation className='animItems _anim-show-opacity'>
 				(меньше значит больше)
 			</Explanation>
 		</Wrap>

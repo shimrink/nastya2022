@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import Line from '../../components/common/Line'
 import NextCase from './NextCase'
 
@@ -26,74 +25,106 @@ const MainCover = styled.img`
 	height: 100vh;
 	object-fit: cover;
 `
-const Title = styled.div`
+const TitleWrap = styled.div`
 	width: 100%;
-	padding: ${({ m }) => (m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px')};
-	margin: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? '144px 0 76px 0'
-			: m.isTabletA
-			? '76px 0 76px 0'
-			: '144px 0 48px 0'};
-	h2 {
-		font-size: ${({ m }) =>
-			m.isHugeDesk || m.isDesk ? 96 : m.isMobile ? 48 : 76}px;
-		color: ${({ theme }) => theme.mode.text};
-		text-transform: uppercase;
-		text-align: center;
-		margin-bottom: ${({ m }) => (m.isHugeDesk || m.isDesk ? 120 : 96)}px;
+	padding: 0 40px;
+	margin: 144px 0 76px 0;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin: 76px 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		margin: 144px 0 48px 0;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
+`
+const Title = styled.h2`
+	font-size: 96px;
+	color: ${({ theme }) => theme.mode.text};
+	text-transform: uppercase;
+	text-align: center;
+	margin-bottom: 120px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 76px;
+		margin-bottom: 96px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		font-size: 48px;
 	}
 `
 const Info = styled.div`
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-row-gap: 48px;
-	grid-column-gap: ${({ m }) =>
-		m.isTabletP ? '40px' : m.isMobile ? 'clamp(24px, 7.5vw, 40px)' : '24px'};
+	grid-column-gap: 24px;
 	align-self: center;
-	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
-	padding: ${({ m }) =>
-		m.isMobile
-			? '0 clamp(24px, 7.5vw, 40px)'
-			: m.isDesk
-			? '0 80px'
-			: m.isHugeDesk
-			? '0'
-			: '0 40px'};
-	margin-bottom: ${({ m }) => (m.isHugeDesk || m.isDesk ? 120 : 96)}px;
-	h4 {
-		font-family: 'AccentFontR', sans-serif;
-		font-weight: normal;
-		color: ${({ theme }) => theme.mode.subText};
-		margin-bottom: 12px;
-		font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
-		text-transform: uppercase;
+	width: ${({ theme }) => theme.common.gridWidth}px;
+	margin-bottom: 120px;
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 100%;
+		padding: 0 80px;
 	}
-	span {
-		margin-bottom: 8px;
-		font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+		margin-bottom: 96px;
 	}
-	span:last-child {
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column-gap: 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column-gap: clamp(24px, 7.5vw, 40px);
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
+`
+const InfoName = styled.h4`
+	font-family: 'AccentFontR', sans-serif;
+	font-weight: normal;
+	color: ${({ theme }) => theme.mode.subText};
+	margin-bottom: 12px;
+	font-size: 18px;
+	text-transform: uppercase;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
+	}
+`
+const InfoDesc = styled.span`
+	margin-bottom: 8px;
+	font-size: 18px;
+	&:last-child {
 		margin-bottom: 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
 	}
 `
 const Cleint = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile ? '1/7' : '1/4')};
+	grid-column: 1/4;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/7;
+	}
 `
 const Category = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile ? '7/13' : '4/7')};
+	grid-column: 4/7;
 	display: flex;
 	flex-direction: column;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 7/13;
+	}
 `
 const Year = styled.div`
-	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/2')};
-	grid-column: ${({ m }) => (m.isMobile ? '1/7' : '7/10')};
+	grid-row: 1/2;
+	grid-column: 7/10;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-row: 2/3;
+		grid-column: 1/7;
+	}
 `
 const Button = styled.a`
-	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/2')};
-	grid-column: ${({ m }) => (m.isMobile ? '7/13' : '10/13')};
+	grid-row: 1/2;
+	grid-column: 10/13;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -103,15 +134,22 @@ const Button = styled.a`
 	padding: 16px 0;
 	font-family: 'AccentFontM', sans-serif;
 	font-weight: 500;
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
-	color: ${commonTheme.colors.white};
+	font-size: 18px;
+	color: ${({ theme }) => theme.common.colors.white};
 	cursor: pointer;
-	transition: background-color ${commonTheme.durations.short}s;
+	transition: background-color ${({ theme }) => theme.common.durations.short}s;
 	:hover {
 		background-color: ${({ theme }) => theme.ac.dark};
 	}
 	span {
-		margin: 0 12px 0 0;
+		margin-right: 12px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-row: 2/3;
+		grid-column: 7/13;
 	}
 `
 const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
@@ -148,27 +186,27 @@ const Case = ({ setPageInitialized, c, i, caseData, pageTransition }) => {
 				src={media.isMobile ? c.mobileImage.asset.url : c.mainImage.asset.url}
 				alt={c.slug.current}
 			/>
-			<Title m={media}>
-				<h2>{c.title}</h2>
+			<TitleWrap>
+				<Title>{c.title}</Title>
 				<Line />
-			</Title>
-			<Info m={media}>
-				<Cleint m={media}>
-					<h4>Клиент</h4>
-					<span>{c.client}</span>
+			</TitleWrap>
+			<Info>
+				<Cleint>
+					<InfoName>Клиент</InfoName>
+					<InfoDesc>{c.client}</InfoDesc>
 				</Cleint>
-				<Category m={media}>
-					<h4>Категория</h4>
+				<Category>
+					<InfoName>Категория</InfoName>
 					{c.categories.map((t) => (
-						<span key={t.title}>{t.title}</span>
+						<InfoDesc key={t.title}>{t.title}</InfoDesc>
 					))}
 				</Category>
-				<Year m={media}>
-					<h4>Год</h4>
-					<span>{c.publishedAt.split('-')[0]}</span>
+				<Year>
+					<InfoName>Год</InfoName>
+					<InfoDesc>{c.publishedAt.split('-')[0]}</InfoDesc>
 				</Year>
 				{c.link && (
-					<Button m={media} href={`${c.link}`} target='_blank' rel='noreferrer'>
+					<Button href={`${c.link}`} target='_blank' rel='noreferrer'>
 						<span>Посетить</span>
 						<svg
 							width='14'

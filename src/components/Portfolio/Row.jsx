@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap'
 import { commonTheme } from '../../styles/theme'
-import { MediaContext } from '../../AppWrap'
 import LetterByLetter from '../common/LetterByLetter'
 import Line from '../common/Line'
 
@@ -11,7 +10,7 @@ const RowWrap = styled.div`
 	justify-items: center;
 	width: 100%;
 	overflow: hidden;
-	transition: height ${commonTheme.durations.short}s;
+	transition: height ${({ theme }) => theme.common.durations.short}s;
 `
 const RowContent = styled.div`
 	grid-row: 1/2;
@@ -20,8 +19,11 @@ const RowContent = styled.div`
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
-	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
-	padding: ${({ m }) => (m.isHugeDesk ? '0' : '0 40px')};
+	width: ${({ theme }) => theme.common.gridWidth}px;
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 100%;
+		padding: 0 40px;
+	}
 `
 const RowArea = styled.div`
 	grid-row: 1/2;
@@ -78,7 +80,6 @@ const Img = styled.img`
 	z-index: 2;
 `
 const Row = ({ c, rowsRef, caseData, pageTransition }) => {
-	const media = useContext(MediaContext)
 	const [hovering, setHovering] = useState(false)
 	const imgRef = useRef()
 
@@ -138,7 +139,7 @@ const Row = ({ c, rowsRef, caseData, pageTransition }) => {
 
 	return (
 		<RowWrap className='rowItem'>
-			<RowContent m={media}>
+			<RowContent>
 				<Name>
 					<LetterByLetter
 						wavy

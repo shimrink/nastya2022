@@ -34,6 +34,13 @@ export const commonTheme = {
 		outPower3: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
 		outPower4: 'cubic-bezier(0.230, 1.000, 0.320, 1.000)',
 	},
+
+	media: {
+		desk: '(max-width: 1679px)',
+		tabletA: '(max-width: 1279px) and (orientation: landscape)',
+		tabletP: '(max-width: 1279px) and (orientation: portrait)',
+		mobile: '(max-width: 767px) and (orientation: portrait)',
+	},
 }
 
 export const lightTheme = {

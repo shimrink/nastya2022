@@ -1,28 +1,49 @@
 import React, { Fragment, useContext } from 'react'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import { state } from '../../store'
 import Line from '../common/Line'
 
 const Process = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: ${({ m }) => (m.isTabletP ? 40 : 24)}px;
-	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
-	padding: ${({ m }) => (m.isHugeDesk ? '0' : m.isDesk ? '0 80px' : '0 40px')};
-	margin: ${({ m }) => (m.isMobile ? '12px 0' : '24px 0')};
+	grid-column-gap: 24px;
+	width: ${({ theme }) => theme.common.gridWidth}px;
+	margin: 24px 0;
 	h3 {
-		grid-column: ${({ m }) => (m.isMobile ? '1/3' : '1/2')};
-		font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+		grid-column: 1/2;
+		font-size: 18px;
 		font-family: 'AccentFontR';
 		text-transform: uppercase;
-		transition: color ${commonTheme.durations.short}s;
+		transition: color ${({ theme }) => theme.common.durations.short}s;
 	}
 	p {
 		grid-column: 2/3;
-		font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
-		transition: color ${commonTheme.durations.short}s;
+		font-size: 18px;
+		transition: color ${({ theme }) => theme.common.durations.short}s;
+	}
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 100%;
+		padding: 0 80px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+		h3 {
+			font-size: 16px;
+		}
+		p {
+			font-size: 16px;
+		}
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column-gap: 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column-gap: 24px;
+		margin: 12px 0;
+		h3 {
+			grid-column: 1/3;
+		}
 	}
 `
 const ProcessOfWork = () => {
@@ -30,7 +51,7 @@ const ProcessOfWork = () => {
 
 	return state.processOfWork.map((g) => (
 		<Fragment key={g.title}>
-			<Process m={media}>
+			<Process>
 				<h3>{g.title}</h3>
 				{!media.isMobile && <p>{g.text}</p>}
 			</Process>

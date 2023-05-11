@@ -1,7 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import UpperFooter from './UpperFooter'
 import UnderFooter from './UnderFooter'
 
@@ -13,72 +11,72 @@ const FooterWrapper = styled.footer`
 	justify-content: flex-end;
 	width: 100%;
 	min-height: 100vh;
-	padding-top: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? 'clamp(204px, 14.535vw, 252px)'
-			: m.isMobile
-			? 'clamp(219px, 57.185vw, 257px)'
-			: '258px'};
+	padding-top: clamp(204px, 14.535vw, 252px);
 	z-index: 3;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding-top: 258px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding-top: clamp(219px, 57.185vw, 257px);
+	}
 `
 const DevGrid = styled.div`
 	position: relative;
 	display: grid;
-	grid-template-columns: ${({ m }) =>
-		m.isTabletP
-			? 'repeat(4, 1fr)'
-			: m.isMobile
-			? '1fr 1fr'
-			: 'repeat(12, 1fr)'};
+	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
-	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
-	padding: ${({ m }) =>
-		m.isHugeDesk
-			? '0'
-			: m.isDesk
-			? '0 80px'
-			: m.isMobile
-			? '0 clamp(24px, 7.5vw, 40px)'
-			: '0 40px'};
-	margin: ${({ m }) =>
-		m.isTabletA
-			? '128px 0 24px 0'
-			: m.isTabletP
-			? '198px 0 24px 0'
-			: m.isMobile
-			? 'clamp(180px, 49.585vw, 236px) 0 24px 0'
-			: '144px 0 40px 0'};
+	width: ${({ theme }) => theme.common.gridWidth}px;
+	margin: 144px 0 40px 0;
 	z-index: 2;
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 100%;
+		padding: 0 80px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+		margin: 128px 0 24px 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-template-columns: repeat(4, 1fr);
+		margin: 198px 0 24px 0;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-template-columns: 1fr 1fr;
+		padding: 0 clamp(24px, 7.5vw, 40px);
+		margin: clamp(180px, 49.585vw, 236px) 0 24px 0;
+	}
 `
 const Dev = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) =>
-		m.isHugeDesk
-			? '10/13'
-			: m.isDesk
-			? '9/13'
-			: m.isTabletA
-			? '7/13'
-			: m.isTabletP
-			? '3/5'
-			: '1/3'};
+	grid-column: 10/13;
 	display: flex;
 	flex-direction: column;
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 16 : 14)}px;
+	font-size: 16px;
 	color: ${({ theme }) => theme.mode.subText};
 	a {
 		color: ${({ theme }) => theme.mode.subText};
 	}
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-column: 9/13;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		grid-column: 7/13;
+		font-size: 14px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column: 3/5;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/3;
+	}
 `
 const Footer = () => {
-	const media = useContext(MediaContext)
-
 	return (
-		<FooterWrapper m={media}>
+		<FooterWrapper>
 			<UpperFooter />
 			<UnderFooter />
-			<DevGrid m={media}>
-				<Dev m={media}>
+			<DevGrid>
+				<Dev>
 					<span>Design asyadulova</span>
 					<span>
 						Development{' '}

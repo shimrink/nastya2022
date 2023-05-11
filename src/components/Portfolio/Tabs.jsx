@@ -4,15 +4,20 @@ import { MediaContext } from '../../AppWrap'
 import { commonTheme } from '../../styles/theme'
 
 const Wrapper = styled.div`
-	display: ${({ m }) => (m.isMobile ? 'grid' : 'flex')};
+	display: flex;
 	grid-template-columns: 1fr 1fr;
-	grid-gap: ${({ m }) => (m.isMobile ? 24 : 0)}px;
-	justify-content: ${({ m }) =>
-		m.isMobile || m.isTabletP ? 'space-between' : 'center'};
+	justify-content: center;
 	width: 100%;
-	padding: ${({ m }) =>
-		m.isTabletP ? '0 40px' : m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0'};
 	margin-bottom: 48px;
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		justify-content: space-between;
+		padding: 0 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		display: grid;
+		grid-gap: 24px;
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const Tab = styled.div`
 	grid-row: ${({ num }) =>
@@ -20,22 +25,20 @@ const Tab = styled.div`
 	grid-column: ${({ num }) =>
 		num === 0 || num === 2 ? `1/2` : num === 4 ? '1/3' : `2/3`};
 	display: grid;
-	width: ${({ m }) => (m.isMobile ? `100%` : 'auto')};
-	padding: 16px
-		${({ m }) => (m.isMobile ? 'clamp(20px, 5.28vw, 24px)' : '24px')};
-	margin-right: ${({ m }) => (m.isMobile || m.isTabletP ? 0 : 24)}px;
+	padding: 16px 24px;
+	margin-right: 24px;
 	border: 1px solid ${({ theme }) => theme.ac.light};
 	border-radius: 9em;
 	cursor: pointer;
 	font-family: 'AccentFontM', sans-serif;
-	transition: background-color ${commonTheme.durations.short}s;
+	transition: background-color ${({ theme }) => theme.common.durations.short}s;
 	span {
 		grid-row: 1/2;
 		grid-column: 1/2;
 		align-self: center;
-		font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+		font-size: 18px;
 		text-align: center;
-		transition: color ${commonTheme.durations.short}s;
+		transition: color ${({ theme }) => theme.common.durations.short}s;
 	}
 	.tabTextActive {
 		font-family: 'AccentFontB', sans-serif;
@@ -43,7 +46,19 @@ const Tab = styled.div`
 	}
 	&:hover {
 		background-color: ${({ theme }) => theme.ac.dark};
-		color: ${commonTheme.colors.white};
+		color: ${({ theme }) => theme.common.colors.white};
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		span {
+			font-size: 16px;
+		}
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		margin-right: 0;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		width: 100%;
+		padding: 16px clamp(20px, 5.28vw, 24px);
 	}
 `
 const Tabs = ({ accentColor, caseData, categoriesData }) => {
@@ -132,11 +147,10 @@ const Tabs = ({ accentColor, caseData, categoriesData }) => {
 	}
 
 	return (
-		<Wrapper m={media} className='animItems _anim-show-opacity'>
+		<Wrapper className='animItems _anim-show-opacity'>
 			<Tab
 				num={0}
 				className='tabItem tabItem0'
-				m={media}
 				onClick={() => tabSwitch('.tabItem0')}
 				onMouseEnter={mouseEnterHandler}
 				onMouseLeave={mouseLeaveHandler}
@@ -149,7 +163,6 @@ const Tabs = ({ accentColor, caseData, categoriesData }) => {
 					key={c.title}
 					num={i + 1}
 					className={`tabItem tabItem${i + 1}`}
-					m={media}
 					onClick={() => tabSwitch(`.tabItem${i + 1}`)}
 					onMouseEnter={mouseEnterHandler}
 					onMouseLeave={mouseLeaveHandler}

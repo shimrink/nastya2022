@@ -1,44 +1,42 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { accentTheme, commonTheme } from '../../styles/theme'
+import { accentTheme } from '../../styles/theme'
 
 const ColorsWrapper = styled.div`
 	display: grid;
 	align-items: center;
-	justify-items: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'start' : 'end')};
-	padding: ${({ m }) => (m.isHugeDesk || m.isDesk ? 0 : 4)}px;
+	justify-items: start;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		justify-items: end;
+		padding: 4px;
+	}
 `
 const WrapDiv = styled.div`
 	position: relative;
 	grid-row: 1/2;
 	grid-column: 1/2;
-	width: ${({ m, sn }) =>
-		(m.isHugeDesk || m.isDesk) && sn === 0
-			? 20
-			: (m.isHugeDesk || m.isDesk) && sn !== 0
-			? 18
-			: sn === 0
-			? 24
-			: 22}px;
-	height: ${({ m, sn }) =>
-		(m.isHugeDesk || m.isDesk) && sn === 0
-			? 20
-			: (m.isHugeDesk || m.isDesk) && sn !== 0
-			? 18
-			: sn === 0
-			? 24
-			: 22}px;
-	padding: ${({ m }) => (m.isHugeDesk || m.isDesk ? 0 : 2)}px;
-	margin: ${({ m, sn }) =>
-		sn === 0 ? 0 : m.isHugeDesk || m.isDesk ? '0 0 0 1px' : '0 1px 0 0'};
+	width: ${({ sn }) => (sn === 0 ? 20 : 18)}px;
+	height: ${({ sn }) => (sn === 0 ? 20 : 18)}px;
+	margin: ${({ sn }) => (sn === 0 ? 0 : '0 0 0 1px')};
 	z-index: ${({ sn }) => accentTheme.length * 2 - sn};
-	transition: margin ${commonTheme.durations.short}s, width 0.1s, height 0.1s;
+	transition: margin ${({ theme }) => theme.common.durations.short}s, width 0.1s,
+		height 0.1s;
 	${ColorsWrapper}:hover && {
-		width: ${({ m }) => (m.isHugeDesk || m.isDesk ? 20 : 24)}px;
-		height: ${({ m }) => (m.isHugeDesk || m.isDesk ? 20 : 24)}px;
-		margin: ${({ m, sn }) =>
-			m.isHugeDesk || m.isDesk ? `0 0 0 ${sn * 24}px` : `0 ${sn * 24}px 0 0`};
+		width: 20px;
+		height: 20px;
+		margin: ${({ sn }) => `0 0 0 ${sn * 24}px`};
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		width: ${({ sn }) => (sn === 0 ? 24 : 22)}px;
+		height: ${({ sn }) => (sn === 0 ? 24 : 22)}px;
+		padding: 2px;
+		margin: ${({ sn }) => (sn === 0 ? 0 : '0 1px 0 0')};
+		${ColorsWrapper}:hover && {
+			width: 24px;
+			height: 24px;
+			margin: ${({ sn }) => `0 ${sn * 24}px 0 0`};
+		}
 	}
 `
 const ColorDiv = styled.div`
@@ -81,11 +79,10 @@ const AccentColorToggler = ({
 	}, [media, setColorsOpen])
 
 	return (
-		<ColorsWrapper m={media} ref={colorsWrapperRef}>
+		<ColorsWrapper ref={colorsWrapperRef}>
 			{accentThemeLocal.map((ac, i) => (
 				<WrapDiv
 					key={ac.name}
-					m={media}
 					sn={i}
 					onClick={() => toggleAccentColor(ac.name)}
 				>

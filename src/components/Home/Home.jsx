@@ -6,7 +6,6 @@ import React, {
 	useState,
 } from 'react'
 import styled from 'styled-components'
-import { commonTheme } from '../../styles/theme'
 import { MediaContext } from '../../AppWrap'
 import ScrollProgress from './ScrollProgress'
 import CaseArea from './CaseArea'
@@ -15,12 +14,14 @@ import CaseImg from './CaseImg'
 const Main = styled.main`
 	position: absolute;
 	display: grid;
-	grid-template-columns: 1fr ${({ m }) =>
-			m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
+	grid-template-columns: 1fr ${({ theme }) => theme.common.gridWidth}px 1fr;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 	touch-action: none;
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 `
 const ShowButton = styled.div`
 	position: absolute;
@@ -30,7 +31,7 @@ const ShowButton = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: ${({ theme }) => theme.ac.dark};
-	color: ${commonTheme.colors.white};
+	color: ${({ theme }) => theme.common.colors.white};
 	width: 146px;
 	height: 146px;
 	font-family: 'AccentFontB', sans-serif;
@@ -118,7 +119,6 @@ const Home = ({ setPageInitialized, caseData, pageTransition }) => {
 
 	return (
 		<Main
-			m={media}
 			onTouchStart={touchStartHandler}
 			onTouchMove={touchMoveHandler}
 			onTouchEnd={touchEndHandler}

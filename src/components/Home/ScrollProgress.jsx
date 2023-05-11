@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { mapRange } from 'gsap/gsap-core'
-import { commonTheme } from '../../styles/theme'
-import { MediaContext } from '../../AppWrap'
 
 const ProgressLineWrapper = styled.div`
 	grid-row: 1/2;
@@ -13,8 +11,11 @@ const ProgressLineWrapper = styled.div`
 	transform: translateX(-50%);
 	width: 180px;
 	height: 4px;
-	margin-bottom: ${({ m }) => (m.isHugeDesk || m.isDesk ? 40 : 24)}px;
+	margin-bottom: 40px;
 	z-index: 3;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-bottom: 24px;
+	}
 `
 const ProgressLineContainer = styled.div`
 	position: absolute;
@@ -29,11 +30,9 @@ const ProgressLine = styled.div`
 	width: ${({ scrollValue }) => scrollValue}%;
 	height: 100%;
 	background-color: ${({ theme }) => theme.ac.dark};
-	transition: width ${commonTheme.durations.middle}s;
+	transition: width ${({ theme }) => theme.common.durations.middle}s;
 `
 const ScrollProgress = ({ casesCount, currentIndex, scrollCount }) => {
-	const media = useContext(MediaContext)
-
 	const [scrollValue, setScrollValue] = useState(null)
 
 	useEffect(() => {
@@ -43,7 +42,7 @@ const ScrollProgress = ({ casesCount, currentIndex, scrollCount }) => {
 	}, [currentIndex, casesCount, scrollCount])
 
 	return (
-		<ProgressLineWrapper m={media}>
+		<ProgressLineWrapper>
 			<ProgressLineContainer />
 			<ProgressLine scrollValue={scrollValue} />
 		</ProgressLineWrapper>

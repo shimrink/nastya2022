@@ -1,54 +1,58 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import { state } from '../../store'
 import SectionTitle from '../common/SectionTitle'
 import Interest from './Interest'
 
 const Wrap = styled.div`
 	display: grid;
-	grid-template-columns: 1fr ${({ m }) =>
-			m.isHugeDesk ? commonTheme.gridWidth + 'px' : '1fr'} 1fr;
-	margin-top: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? 'clamp(472px, 35.105vw, 640px)'
-			: m.isTabletA || m.isTabletP
-			? 'clamp(444px, 52.205vw, 466px)'
-			: 'clamp(208px, 57.64vw, 276px)'};
-	margin-bottom: ${({ m }) =>
-		m.isHugeDesk
-			? '80px'
-			: m.isDesk
-			? '164px'
-			: m.isTabletA
-			? '88px'
-			: m.isTabletP
-			? '208px'
-			: 'clamp(4px, 10vw, 96px)'};
+	grid-template-columns: 1fr ${({ theme }) => theme.common.gridWidth}px 1fr;
+	margin-top: clamp(472px, 35.105vw, 640px);
+	margin-bottom: 80px;
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-template-columns: 1fr 1fr 1fr;
+		margin-bottom: 164px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin: clamp(444px, 52.205vw, 466px) 0 88px 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		margin-bottom: 208px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin: clamp(208px, 57.64vw, 276px) 0 clamp(4px, 10vw, 96px) 0;
+	}
 `
 const Content = styled.div`
 	grid-row: 2/3;
-	grid-column: ${({ m }) => (m.isHugeDesk ? '2/3' : '1/4')};
+	grid-column: 2/3;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
-	grid-column-gap: ${({ m }) =>
-		m.isMobile ? 'clamp(24px, 7.5vw, 40px)' : m.isTabletP ? '40px' : '24px'};
-	padding: ${({ m }) =>
-		m.isHugeDesk
-			? '0'
-			: m.isDesk
-			? '0 80px'
-			: m.isMobile
-			? '0 clamp(24px, 7.5vw, 40px)'
-			: '0 40px'};
+	grid-column-gap: 24px;
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-column: 1/4;
+		padding: 0 80px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column-gap: 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column-gap: clamp(24px, 7.5vw, 40px);
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const Gif = styled.img`
 	grid-row: 1/3;
-	grid-column: ${({ m }) => (m.isMobile || m.isTabletP ? '1/7' : '2/6')};
+	grid-column: 2/6;
 	width: 100%;
 	opacity: ${({ active }) => (active ? 1 : 0)};
-	transition: opacity ${commonTheme.durations.short}s;
+	transition: opacity ${({ theme }) => theme.common.durations.short}s;
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column: 1/7;
+	}
 `
 const Toggles = styled.div`
 	grid-row: 1/2;
@@ -57,25 +61,37 @@ const Toggles = styled.div`
 	flex-direction: column;
 `
 const TextContainer = styled.div`
-	grid-row: ${({ m }) => (m.isMobile ? '3/4' : '2/3')};
-	grid-column: ${({ m }) => (m.isMobile ? '1/13' : '7/13')};
+	grid-row: 2/3;
+	grid-column: 7/13;
 	display: grid;
-	align-items: ${({ m }) => (m.isMobile ? 'start' : 'end')};
+	align-items: end;
 	grid-template-columns: repeat(6, 1fr);
 	grid-column-gap: 24px;
-	margin-top: ${({ m }) => (m.isMobile ? 48 : 0)}px;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-row: 3/4;
+		grid-column: 1/13;
+		align-items: start;
+		margin-top: 48px;
+	}
 `
 const Text = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) =>
-		m.isHugeDesk ? '1/5' : m.isDesk || m.isTabletA ? '1/6' : '1/7'};
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+	grid-column: 1/5;
+	font-size: 18px;
 	white-space: pre-line;
 	opacity: ${({ active }) => (active ? 1 : 0)};
-	transition: opacity ${commonTheme.durations.short}s;
+	transition: opacity ${({ theme }) => theme.common.durations.short}s;
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-column: 1/6;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column: 1/7;
+	}
 `
 const Interests = () => {
-	const media = useContext(MediaContext)
 	const [disableActive, setDisableActive] = useState(false)
 	const [interestActive, setInterestActive] = useState([
 		{ name: 'pets', active: true },
@@ -85,21 +101,20 @@ const Interests = () => {
 	])
 
 	return (
-		<Wrap m={media}>
+		<Wrap>
 			<SectionTitle mbTabletA='48px' mbTabletP='48px'>
 				Мои интересы
 			</SectionTitle>
-			<Content m={media}>
+			<Content>
 				{state.gifs.map((g, i) => (
 					<Gif
 						key={g.alt}
-						m={media}
 						active={interestActive[i].active}
 						src={g.url}
 						alt={g.alt}
 					/>
 				))}
-				<Toggles m={media}>
+				<Toggles>
 					{state.gifs.map((g, i) => (
 						<Interest
 							key={g.alt}
@@ -112,9 +127,9 @@ const Interests = () => {
 						/>
 					))}
 				</Toggles>
-				<TextContainer m={media}>
+				<TextContainer>
 					{state.gifs.map((g, i) => (
-						<Text key={i} active={interestActive[i].active} m={media}>
+						<Text key={i} active={interestActive[i].active}>
 							{g.text}
 						</Text>
 					))}

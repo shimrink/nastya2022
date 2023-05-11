@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
 import { state } from '../../store'
 import NavItem from './NavItem'
 
@@ -20,10 +19,8 @@ const Navigation = ({
 	pageTransition,
 	mobilePageTransition,
 }) => {
-	const media = useContext(MediaContext)
-
 	return (
-		<Nav navMobile={navMobile} m={media}>
+		<Nav navMobile={navMobile}>
 			{state.navLinksData.map((l, i) => (
 				<NavItem
 					key={l.path}

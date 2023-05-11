@@ -15,30 +15,44 @@ const Main = styled.main`
 `
 const TopBlock = styled.div`
 	width: 100%;
-	padding-top: ${({ m }) => (m.isHugeDesk || m.isDesk ? 288 : 196)}px;
+	padding-top: 288px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding-top: 196px;
+	}
 `
 const Title = styled.h2`
-	font-size: ${({ m }) => (m.isMobile ? 30 : 48)}px;
+	font-size: 48px;
 	color: ${({ theme }) => theme.mode.text};
 	text-transform: uppercase;
 	text-align: center;
 	margin-bottom: 48px;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		font-size: 30px;
+	}
 `
 const Rows = styled.div`
 	padding: 120px 40px;
 `
 const GridWrapper = styled.div`
 	display: grid;
-	grid-template-columns: 1fr ${({ m }) => !m.isMobile && '1fr'};
-	grid-column-gap: ${({ m }) => (m.isTabletP ? '40px' : '24px')};
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 24px;
 	width: 100%;
-	padding: ${({ m }) => (m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px')};
-	margin-top: ${({ m }) =>
-		m.isTabletA
-			? '100px'
-			: m.isTabletP
-			? '80px'
-			: 'clamp(68px, 19.655vw, 96px)'};
+	padding: 0 40px;
+	margin-top: clamp(68px, 19.655vw, 96px);
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-top: 100px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column-gap: 40px;
+		margin-top: 80px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-template-columns: 1fr;
+		grid-column-gap: 24px;
+		padding: 0 clamp(24px, 7.5vw, 40px);
+		margin-top: clamp(68px, 19.655vw, 96px);
+	}
 `
 const Portfolio = ({
 	setPageInitialized,
@@ -57,8 +71,8 @@ const Portfolio = ({
 
 	return (
 		<Main>
-			<TopBlock m={media}>
-				<Title m={media} className='animItems _anim-show-opacity'>
+			<TopBlock>
+				<Title className='animItems _anim-show-opacity'>
 					Проекты,&nbsp;созданные
 					<br />
 					с&nbsp;вниманием и&nbsp;любовью
@@ -83,7 +97,7 @@ const Portfolio = ({
 					))}
 				</Rows>
 			) : (
-				<GridWrapper m={media}>
+				<GridWrapper>
 					{caseData.map((c) => (
 						<Grid key={c.slug.current} c={c} pageTransition={pageTransition} />
 					))}

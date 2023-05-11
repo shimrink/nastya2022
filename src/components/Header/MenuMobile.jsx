@@ -1,7 +1,5 @@
-import React, { forwardRef, useContext } from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import LetterByLetter from '../common/LetterByLetter'
 import Navigation from './Navigation'
 
@@ -12,7 +10,7 @@ const Wrapper = styled.div`
 	display: none;
 	flex-direction: column;
 	align-items: center;
-	color: ${commonTheme.colors.white};
+	color: ${({ theme }) => theme.common.colors.white};
 	width: 100%;
 	height: 110%;
 	touch-action: none;
@@ -30,39 +28,45 @@ const Content = styled.div`
 	width: 100%;
 	height: 100%;
 	font-family: 'AccentFontM', sans-serif;
-	padding: ${({ m }) =>
-		m.isMobile ? '24px clamp(24px, 7.5vw, 40px)' : '24px 40px'};
+	padding: 24px 40px;
 	background-color: ${({ theme }) => theme.ac.dark};
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 24px clamp(24px, 7.5vw, 40px);
+	}
 `
 const Social = styled.div`
 	grid-row: 3/4;
 	grid-column: 1/2;
 	display: flex;
 	align-items: flex-end;
-	justify-content: ${({ m }) => (m.isMobile ? 'space-between' : 'center')};
+	justify-content: center;
 	width: 100%;
 	height: 100%;
 	a {
-		font-size: ${({ m }) =>
-			m.isMobile ? 'clamp(14px, 3.855vw, 16px)' : '16px'};
-		color: ${commonTheme.colors.white};
-		margin: ${({ m }) => (m.isMobile ? '0' : '0 12px')};
+		font-size: 16px;
+		color: ${({ theme }) => theme.common.colors.white};
+		margin: 0 12px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		justify-content: space-between;
+		a {
+			margin: 0;
+			font-size: clamp(14px, 3.855vw, 16px);
+		}
 	}
 `
 const MenuMobile = forwardRef(
 	({ disableWave, isMenuMobileOpen, mobilePageTransition }, ref) => {
-		const media = useContext(MediaContext)
-
 		return (
 			<Wrapper ref={ref}>
-				<Content m={media}>
+				<Content>
 					<Navigation
 						navMobile
 						disableWave={disableWave}
 						isMenuMobileOpen={isMenuMobileOpen}
 						mobilePageTransition={mobilePageTransition}
 					/>
-					<Social m={media}>
+					<Social>
 						<a
 							href='https://vk.com/asyadulova'
 							target='_blank'

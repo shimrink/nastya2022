@@ -7,25 +7,27 @@ import { MediaContext } from '../../AppWrap'
 const CarouselContainer = styled.div`
 	position: relative;
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isHugeDesk ? '2/3' : '1/4')};
+	grid-column: 2/3;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-column-gap: 24px;
 	width: 100%;
 	height: 100%;
-	padding: ${({ m }) =>
-		m.isHugeDesk
-			? '0'
-			: m.isDesk
-			? '0 80px'
-			: m.isMobile
-			? '0 clamp(24px, 7.5vw, 40px)'
-			: '0 40px'};
 	z-index: 4;
+	@media ${({ theme }) => theme.common.media.desk} {
+		grid-column: 1/4;
+		padding: 0 80px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const Carousel = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile || m.isTabletP ? '1/13' : '2/12')};
+	grid-column: 2/12;
 	display: grid;
 	grid-template-rows: 1fr;
 	grid-template-columns: 1fr;
@@ -33,13 +35,19 @@ const Carousel = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	aspect-ratio: ${({ m }) => (m.isMobile ? '2/3' : '16/9')};
+	aspect-ratio: 16/9;
 	transform: translate(
 		${(props) => (-props.currentIndex * 122) / props.scrollCount + '%'},
 		${(props) => (-props.currentIndex * 100) / props.scrollCount + '%'}
 	);
-	transition: transform ${commonTheme.durations.long}s
-		${commonTheme.easings.outPower4};
+	transition: transform ${({ theme }) => theme.common.durations.long}s
+		${({ theme }) => theme.common.easings.outPower4};
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		grid-column: 1/13;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		aspect-ratio: 2/3;
+	}
 `
 const CaseWrapper = styled.div`
 	grid-row: 1/2;
@@ -50,7 +58,10 @@ const CaseWrapper = styled.div`
 		${({ i }) => i * 122 + '%'},
 		${({ i }) => i * 100 + '%'}
 	);
-	cursor: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'none' : 'pointer')};
+	cursor: none;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		cursor: pointer;
+	}
 `
 const CaseWrapperLink = styled.a`
 	grid-row: 1/2;
@@ -109,15 +120,14 @@ const CaseArea = ({
 
 	let count = -1
 	return (
-		<CarouselContainer m={media} onMouseMove={moveCirc}>
-			<Carousel m={media} currentIndex={currentIndex} scrollCount={scrollCount}>
+		<CarouselContainer onMouseMove={moveCirc}>
+			<Carousel currentIndex={currentIndex} scrollCount={scrollCount}>
 				{caseData.map((p, i) => {
 					if (p.isMainSlider) {
 						count++
 						return p.isPortfolio ? (
 							<CaseWrapper
 								key={p.slug.current}
-								m={media}
 								i={count}
 								onMouseOver={() => mouseOverHandler(i)}
 								onMouseOut={mouseOutHandler}

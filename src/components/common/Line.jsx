@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
 
 const LineWrap = styled.div`
 	grid-row: ${({ gr }) => gr};
@@ -27,19 +26,8 @@ const Line = ({
 	gr = '1/2',
 	gc = '1/2',
 }) => {
-	const media = useContext(MediaContext)
-
 	return (
-		<LineWrap
-			m={media}
-			asEnd={asEnd}
-			mt={mt}
-			mr={mr}
-			mb={mb}
-			ml={ml}
-			gr={gr}
-			gc={gc}
-		>
+		<LineWrap asEnd={asEnd} mt={mt} mr={mr} mb={mb} ml={ml} gr={gr} gc={gc}>
 			<LineDiv className='animItems _anim-show-left' />
 		</LineWrap>
 	)

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import SectionTitle from '../common/SectionTitle'
 import ProcessOfWork from './ProcessOfWork'
 import FAQRows from './FAQRows'
@@ -15,26 +14,35 @@ const Main = styled.main`
 	z-index: 3;
 `
 const Title = styled.h1`
-	padding: ${({ m }) => (m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px')};
-	margin: ${({ m }) =>
-		m.isHugeDesk || m.isDesk ? '288px 0 176px 0' : '196px 0 120px 0'};
+	padding: 0 40px;
+	margin: 288px 0 176px 0;
 	color: ${({ theme }) => theme.mode.text};
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 48 : 30)}px;
+	font-size: 48px;
 	text-align: center;
 	text-transform: uppercase;
-	transition: color ${commonTheme.durations.short}s;
+	transition: color ${({ theme }) => theme.common.durations.short}s;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin: 196px 0 120px 0;
+		font-size: 30px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const ProcessOfWorkContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? 'clamp(324px, 25.78vw, 504px)'
-			: m.isTabletA || m.isTabletP
-			? '120px'
-			: 'clamp(62px, 22.775vw, 136px)'};
-	margin-bottom: ${({ m }) => (m.isMobile ? 160 : m.isTabletP ? 220 : 480)}px;
+	margin: clamp(324px, 25.78vw, 504px) 0 480px 0;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-top: 120px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		margin-bottom: 220px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin: clamp(62px, 22.775vw, 136px) 0 160px 0;
+	}
 `
 const FAQ = styled.div`
 	display: flex;
@@ -51,7 +59,7 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 
 	return (
 		<Main>
-			<Title m={media}>
+			<Title>
 				Экспертиза, дизайн, разработка —<br />
 				весь комплекс услуг для упаковки бизнеса
 			</Title>
@@ -68,7 +76,7 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 			{servicesData.map((servicesBlock) => (
 				<Sections key={servicesBlock.title} servicesBlock={servicesBlock} />
 			))}
-			<ProcessOfWorkContainer m={media}>
+			<ProcessOfWorkContainer>
 				<SectionTitle
 					mbHugeDesk='0'
 					mbDesk='0'
@@ -80,7 +88,7 @@ const Services = ({ setPageInitialized, servicesData, FAQData }) => {
 				</SectionTitle>
 				<ProcessOfWork />
 			</ProcessOfWorkContainer>
-			<FAQ m={media}>
+			<FAQ>
 				<SectionTitle
 					mbHugeDesk='0'
 					mbDesk='0'

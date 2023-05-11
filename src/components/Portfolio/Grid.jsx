@@ -1,26 +1,34 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
 import Line from '../common/Line'
 
 const Case = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: ${({ m }) => (!m.isMobile ? 72 : 48)}px;
+	margin-bottom: 72px;
 	cursor: pointer;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin-bottom: 48px;
+	}
 `
 const CaseLink = styled.a`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: ${({ m }) => (!m.isMobile ? 72 : 48)}px;
+	margin-bottom: 72px;
 	cursor: pointer;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin-bottom: 48px;
+	}
 `
 const Img = styled.img`
 	width: 100%;
-	aspect-ratio: ${({ m }) => (m.isMobile ? '2/3' : '224/277')};
+	aspect-ratio: 224/277;
 	object-fit: cover;
 	user-select: none;
 	-webkit-user-drag: none;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		aspect-ratio: 2/3;
+	}
 `
 const Name = styled.h3`
 	font-size: 30px;
@@ -46,11 +54,9 @@ const Year = styled.span`
 	font-size: 16px;
 `
 const Content = ({ c }) => {
-	const media = useContext(MediaContext)
-
 	return (
 		<Fragment>
-			<Img m={media} src={c.mobileImage.asset.url} alt={c.slug.current} />
+			<Img src={c.mobileImage.asset.url} alt={c.slug.current} />
 			<Name className='animItems _anim-show-opacity'>{c.title}</Name>
 			<Line />
 			<CaseInfo>
@@ -70,12 +76,9 @@ const Content = ({ c }) => {
 }
 
 const Grid = ({ c, pageTransition }) => {
-	const media = useContext(MediaContext)
-
 	return c.isPortfolio ? (
 		<Case
 			className='rowItem'
-			m={media}
 			onClick={() => pageTransition(`cases/${c.slug.current}`)}
 		>
 			<Content c={c} />
@@ -83,7 +86,6 @@ const Grid = ({ c, pageTransition }) => {
 	) : (
 		<CaseLink
 			className='rowItem'
-			m={media}
 			href={c.link}
 			target='_blank'
 			rel='noreferrer'

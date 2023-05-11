@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MediaContext } from '../../AppWrap'
 import LetterByLetter from '../../components/common/LetterByLetter'
 
 const Wrapper = styled.div`
@@ -10,62 +9,80 @@ const Wrapper = styled.div`
 	grid-template-columns: repeat(4, 1fr);
 	align-items: end;
 	width: 100%;
-	padding: ${({ m }) => (m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px')};
-	margin: ${({ m }) =>
-		m.isHugeDesk
-			? '202px 0 40px 0'
-			: m.isDesk
-			? '160px 0 40px 0'
-			: m.isMobile
-			? '152px 0 24px 0'
-			: '120px 0 24px 0'};
+	padding: 0 40px;
+	margin: 202px 0 40px 0;
+	@media ${({ theme }) => theme.common.media.desk} {
+		margin: 160px 0 40px 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin: 120px 0 24px 0;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+		margin: 152px 0 24px 0;
+	}
 `
 const Copywriting = styled.div`
-	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/2')};
-	grid-column: ${({ m }) => (m.isMobile ? '1/3' : '1/2')};
+	grid-row: 1/2;
+	grid-column: 1/2;
 	display: flex;
 	flex-direction: column;
-	font-size: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? '16px'
-			: m.isMobile
-			? 'clamp(12px, 3.125vw, 14px)'
-			: '14px'};
+	font-size: 16px;
 	color: ${({ theme }) => theme.mode.subText};
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 14px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-row: 2/3;
+		grid-column: 1/3;
+		font-size: clamp(12px, 3.125vw, 14px);
+	}
 `
 const Team = styled(Copywriting)`
-	grid-column: ${({ m }) => (m.isMobile ? '3/5' : '4/5')};
+	grid-column: 4/5;
 	text-align: end;
 	a {
 		color: ${({ theme }) => theme.mode.subText};
 	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 3/5;
+	}
 `
 const Links = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile ? '1/5' : '2/4')};
+	grid-column: 2/4;
 	display: flex;
-	justify-content: ${({ m }) => (m.isMobile ? 'space-between' : 'center')};
-	margin-bottom: ${({ m }) =>
-		m.isMobile ? 'clamp(24px, 8.125vw, 46px)' : '0'};
+	justify-content: center;
 	a {
-		margin-right: ${({ m }) => (m.isMobile ? 0 : m.isTabletP ? 16 : 24)}px;
-		font-size: ${({ m }) =>
-			m.isMobile ? 'clamp(14px, 3.61vw, 16px)' : '16px'};
+		margin-right: 24px;
+		font-size: 16px;
 	}
 	a:last-child {
 		margin-right: 0;
 	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		a {
+			margin-right: 16px;
+		}
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/5;
+		justify-content: space-between;
+		margin-bottom: clamp(24px, 8.125vw, 46px);
+		a {
+			margin-right: 0;
+			font-size: clamp(14px, 3.61vw, 16px);
+		}
+	}
 `
 const Contacts = () => {
-	const media = useContext(MediaContext)
-
 	return (
-		<Wrapper m={media}>
-			<Copywriting m={media}>
+		<Wrapper>
+			<Copywriting>
 				<span>©2023</span>
 				<span>ASYADULOVA</span>
 			</Copywriting>
-			<Links m={media}>
+			<Links>
 				<a href='https://vk.com/asyadulova' target='_blank' rel='noreferrer'>
 					<LetterByLetter wavy>Vk</LetterByLetter>
 				</a>
@@ -94,7 +111,7 @@ const Contacts = () => {
 					<LetterByLetter wavy>Tilda experts</LetterByLetter>
 				</a>
 			</Links>
-			<Team m={media}>
+			<Team>
 				<span>Design asyadulova</span>
 				<span>
 					Development{' '}

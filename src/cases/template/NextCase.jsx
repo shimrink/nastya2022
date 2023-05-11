@@ -20,87 +20,120 @@ const Wrapper = styled.div`
 	display: grid;
 	justify-items: center;
 	width: 100%;
-	margin-top: ${({ m }) =>
-		m.isHugeDesk
-			? '164px'
-			: m.isDesk
-			? '132px'
-			: m.isMobile
-			? 'clamp(176px, 49.445vw, 240px)'
-			: '140px'};
+	margin-top: 164px;
+	@media ${({ theme }) => theme.common.media.desk} {
+		margin-top: 132px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-top: 140px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin-top: clamp(176px, 49.445vw, 240px);
+	}
 `
 const Info = styled.div`
 	grid-row: 2/3;
 	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
-	width: ${({ m }) => (m.isHugeDesk ? commonTheme.gridWidth + 'px' : '100%')};
+	width: ${({ theme }) => theme.common.gridWidth}px;
 	align-items: end;
-	padding: ${({ m }) =>
-		m.isMobile
-			? '0 clamp(24px, 7.5vw, 40px)'
-			: m.isDesk
-			? '0 80px'
-			: m.isHugeDesk
-			? '0'
-			: '0 40px'};
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 100%;
+		padding: 0 80px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 40px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const NextCover = styled.img`
 	position: relative;
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile ? '1/13' : '4/10')};
+	grid-column: 4/10;
 	width: 100%;
-	aspect-ratio: ${({ m }) => (m.isTabletP || m.isMobile ? '2/3' : '16/9')};
+	aspect-ratio: 6/9;
 	object-fit: cover;
-	margin-bottom: ${({ m }) =>
-		m.isMobile ? 'clamp(48px, 12.08vw, 52px)' : '0'};
 	cursor: pointer;
 	z-index: 2;
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		aspect-ratio: 2/3;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/13;
+		margin-bottom: clamp(48px, 12.08vw, 52px);
+	}
 `
 const CoverArea = styled.div`
 	position: relative;
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isMobile ? '1/13' : '4/10')};
+	grid-column: 4/10;
 	width: 100%;
 	height: 100%;
-	cursor: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'none' : 'pointer')};
+	cursor: none;
 	z-index: 4;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		cursor: pointer;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/13;
+	}
 `
 const NameWrap = styled.div`
 	position: absolute;
 	left: 0;
 	display: flex;
-	align-self: ${({ m }) => (m.isMobile ? 'flex-start' : 'center')};
+	align-self: center;
 	z-index: 1;
 	animation: ${moveX} 10s linear infinite;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		align-self: flex-start;
+	}
 `
 const Name = styled.h2`
-	margin-top: ${({ m }) => (m.isMobile ? 'clamp(-101px, -21.77vw, -81px)' : 0)};
+	margin-right: 30px;
 	color: ${({ theme }) => theme.mode.text};
-	font-size: ${({ m }) =>
-		m.isHugeDesk || m.isDesk
-			? '96px'
-			: m.isTabletA
-			? '76px'
-			: m.isMobile
-			? 'clamp(30px, 9.165vw, 48px)'
-			: '48px'};
+	font-size: 96px;
 	text-transform: uppercase;
 	white-space: nowrap;
-	margin-right: ${({ m }) => (m.isHugeDesk || m.isDesk ? 30 : 22)}px;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-right: 22px;
+		font-size: 76px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletP} {
+		font-size: 48px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin-top: clamp(-101px, -21.77vw, -81px);
+		font-size: clamp(30px, 9.165vw, 48px);
+	}
 `
 const Links = styled.div`
-	grid-row: ${({ m }) => (m.isMobile ? '2/3' : '1/2')};
-	font-size: ${({ m }) => (m.isHugeDesk || m.isDesk ? 18 : 16)}px;
+	grid-row: 1/2;
+	font-size: 18px;
 	cursor: pointer;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: 16px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-row: 2/3;
+	}
 `
 const AllWorks = styled(Links)`
-	grid-column: ${({ m }) => (m.isMobile ? '1/7' : '1/4')};
+	grid-column: 1/4;
 	justify-self: start;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 1/7;
+	}
 `
 const OrderProject = styled(Links)`
-	grid-column: ${({ m }) => (m.isMobile ? '7/13' : '10/13')};
+	grid-column: 10/13;
 	justify-self: end;
+	@media ${({ theme }) => theme.common.media.mobile} {
+		grid-column: 7/13;
+	}
 `
 const Circle = styled.div`
 	position: fixed;
@@ -112,7 +145,7 @@ const Circle = styled.div`
 	width: 146px;
 	height: 146px;
 	font-family: 'AccentFontB', sans-serif;
-	color: ${commonTheme.colors.white};
+	color: ${({ theme }) => theme.common.colors.white};
 	background-color: ${({ theme }) => theme.ac.dark};
 	border-radius: 50%;
 	cursor: none;
@@ -186,7 +219,7 @@ const NextCase = ({ i, caseData, pageTransition }) => {
 	}, [pathname, media])
 
 	return (
-		<Wrapper m={media} onMouseMove={circAnim}>
+		<Wrapper onMouseMove={circAnim}>
 			<SectionTitle
 				gc='1/2'
 				mbHugeDesk='164px'
@@ -197,16 +230,13 @@ const NextCase = ({ i, caseData, pageTransition }) => {
 			>
 				Следующий кейс
 			</SectionTitle>
-			<Info m={media}>
-				<NameWrap m={media}>
+			<Info>
+				<NameWrap>
 					{[...Array(10)].map((v, ind) => (
-						<Name key={ind} m={media}>
-							{caseData[nextCaseI].title} /
-						</Name>
+						<Name key={ind}>{caseData[nextCaseI].title} /</Name>
 					))}
 				</NameWrap>
 				<NextCover
-					m={media}
 					src={
 						media.isTabletP || media.isMobile
 							? caseData[nextCaseI].mobileImage.asset.url
@@ -216,17 +246,16 @@ const NextCase = ({ i, caseData, pageTransition }) => {
 					ref={imgRef}
 				/>
 				<CoverArea
-					m={media}
 					onMouseOver={showCirc}
 					onMouseOut={hideCirc}
 					onClick={() =>
 						pageTransition(`/cases/${caseData[nextCaseI].slug.current}`)
 					}
 				/>
-				<AllWorks m={media} onClick={() => pageTransition('/portfolio')}>
+				<AllWorks onClick={() => pageTransition('/portfolio')}>
 					<LetterByLetter wavy>Все работы</LetterByLetter>
 				</AllWorks>
-				<OrderProject m={media} onClick={() => pageTransition('/contacts')}>
+				<OrderProject onClick={() => pageTransition('/contacts')}>
 					<LetterByLetter wavy>Заказать проект</LetterByLetter>
 				</OrderProject>
 			</Info>

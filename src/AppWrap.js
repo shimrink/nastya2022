@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components'
 import useMediaQuery from 'beautiful-react-hooks/useMediaQuery'
 import { useColorMode } from './hooks/useColorMode'
 import GlobalStyles from './styles/global'
-import { accentTheme, darkTheme, lightTheme } from './styles/theme'
+import { accentTheme, commonTheme, darkTheme, lightTheme } from './styles/theme'
 import App from './App'
 import Cookie from './components/common/Cookie'
 
@@ -203,7 +203,9 @@ const AppWrap = () => {
 		FAQData && (
 			<BrowserRouter>
 				<CookiesProvider>
-					<ThemeProvider theme={{ mode: themeMode, ac: endCol }}>
+					<ThemeProvider
+						theme={{ common: commonTheme, mode: themeMode, ac: endCol }}
+					>
 						<MediaContext.Provider value={media}>
 							<GlobalStyles />
 							<App

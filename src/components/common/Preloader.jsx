@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap'
-import { MediaContext } from '../../AppWrap'
 import { commonTheme } from '../../styles/theme'
 
 const Main = styled.div`
@@ -18,12 +17,17 @@ const Main = styled.div`
 	z-index: 100;
 `
 const Svg = styled.svg`
-	width: ${({ m }) => (m.isHugeDesk ? 103 : m.isDesk ? 87 : 67)}px;
+	width: 103px;
 	height: auto;
 	fill: none;
+	@media ${({ theme }) => theme.common.media.desk} {
+		width: 87px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		width: 67px;
+	}
 `
 const Preloader = ({ pageInitialized, setShowPreloader, accentColor }) => {
-	const media = useContext(MediaContext)
 	const mainRef = useRef()
 	const darkColRef = useRef()
 
@@ -64,7 +68,7 @@ const Preloader = ({ pageInitialized, setShowPreloader, accentColor }) => {
 
 	return (
 		<Main ref={mainRef}>
-			<Svg m={media} viewBox='0 0 103 93' xmlns='http://www.w3.org/2000/svg'>
+			<Svg viewBox='0 0 103 93' xmlns='http://www.w3.org/2000/svg'>
 				<defs>
 					<linearGradient id='grad' x1='100%' x2='100%' y1='100%' y2='0'>
 						<stop ref={darkColRef} offset='0%' stopColor={accentColor.dark} />

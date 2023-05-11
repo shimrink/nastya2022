@@ -2,24 +2,27 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import LetterByLetter from '../common/LetterByLetter'
 
 const LinkWrap = styled.div`
-	font-size: ${({ m }) =>
-		!m.isHugeDesk && !m.isDesk ? 'clamp(48px, 15.415vw, 76px)' : '18px'};
-	margin-right: ${({ m }) => (!m.isHugeDesk && !m.isDesk ? 0 : 24)}px;
-	margin-bottom: ${({ m }) =>
-		m.isMobile ? 24 : m.isTabletA || m.isTabletP ? 28 : 0}px;
-	color: ${({ theme, m }) =>
-		!m.isHugeDesk && !m.isDesk ? commonTheme.colors.white : theme.mode.text};
-	text-transform: ${({ m }) =>
-		!m.isHugeDesk && !m.isDesk ? 'uppercase' : 'none'};
+	font-size: 18px;
+	margin-right: 24px;
+	color: ${({ theme }) => theme.mode.text};
 	white-space: nowrap;
 	cursor: pointer;
-	transition: color ${commonTheme.durations.short}s;
+	transition: color ${({ theme }) => theme.common.durations.short}s;
 	&:last-child {
 		margin: 0;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		font-size: clamp(48px, 15.415vw, 76px);
+		margin-right: 0;
+		margin-bottom: 28px;
+		color: ${({ theme }) => theme.common.colors.white};
+		text-transform: uppercase;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		margin-bottom: 24px;
 	}
 `
 const NavItem = ({
@@ -45,7 +48,7 @@ const NavItem = ({
 	}, [pathname, l])
 
 	return (
-		<LinkWrap m={media} onClick={clickHandler}>
+		<LinkWrap onClick={clickHandler}>
 			<LetterByLetter
 				navMobile={navMobile}
 				wavy

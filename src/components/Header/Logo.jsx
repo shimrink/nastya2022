@@ -1,26 +1,31 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 
 const Wrapper = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '1/6' : '1/4')};
+	grid-column: 1/6;
 	display: flex;
 	align-items: center;
 	justify-content: start;
 	z-index: 7;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		grid-column: 1/4;
+	}
 `
 const Svg = styled.svg`
 	width: auto;
-	height: ${({ m }) => (m.isHugeDesk || m.isDesk ? 30 : 26)}px;
+	height: 30px;
 	fill: none;
 	cursor: pointer;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		height: 26px;
+	}
 `
 const Path = styled.path`
 	fill: ${({ theme, isMenuMobileOpen }) =>
-		isMenuMobileOpen ? commonTheme.colors.white : theme.ac.dark};
-	transition: fill ${commonTheme.durations.short}s
+		isMenuMobileOpen ? theme.common.colors.white : theme.ac.dark};
+	transition: fill ${({ theme }) => theme.common.durations.short}s
 		${({ isMenuMobileOpen }) => (isMenuMobileOpen ? 0 : 0.5)}s;
 `
 const Logo = ({ isMenuMobileOpen, mobilePageTransition, pageTransition }) => {
@@ -33,9 +38,8 @@ const Logo = ({ isMenuMobileOpen, mobilePageTransition, pageTransition }) => {
 	}
 
 	return (
-		<Wrapper m={media}>
+		<Wrapper>
 			<Svg
-				m={media}
 				onClick={clickHandler}
 				viewBox='0 0 103 93'
 				xmlns='http://www.w3.org/2000/svg'

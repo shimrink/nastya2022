@@ -9,7 +9,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import gsap from 'gsap'
 import { MediaContext } from '../../AppWrap'
-import { commonTheme } from '../../styles/theme'
 import ThemeToggler from './ThemeToggler'
 import AccentColorToggler from './AccentColorToggler'
 import Navigation from './Navigation'
@@ -28,33 +27,49 @@ const Wrapper = styled.header`
 	align-items: center;
 	font-family: 'AccentFontM', sans-serif;
 	touch-action: none;
-	padding: ${({ m }) => (m.isMobile ? '0 clamp(24px, 7.5vw, 40px)' : '0 40px')};
-	margin-top: ${({ m }) => (m.isHugeDesk || m.isDesk ? 40 : 24)}px;
+	padding: 0 40px;
+	margin-top: 40px;
 	z-index: 5;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		margin-top: 24px;
+	}
+	@media ${({ theme }) => theme.common.media.mobile} {
+		padding: 0 clamp(24px, 7.5vw, 40px);
+	}
 `
 const TogglersAndNav = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '6/13' : '4/13')};
+	grid-column: 6/13;
 	display: grid;
-	grid-template-columns: ${({ m }) =>
-		m.isHugeDesk || m.isDesk ? 'repeat(7, 1fr)' : 'auto'};
-	grid-column-gap: ${({ m }) => (m.isHugeDesk || m.isDesk ? 24 : 0)}px;
+	grid-template-columns: repeat(7, 1fr);
+	grid-column-gap: 24px;
 	align-items: center;
-	justify-self: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'auto' : 'end')};
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		grid-column: 4/13;
+		grid-template-columns: auto;
+		grid-column-gap: 0;
+		justify-self: end;
+	}
 `
 const ThemeTogglerContainer = styled.div`
 	grid-row: 1/2;
-	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '1/2' : '2/3')};
+	grid-column: 1/2;
 	display: flex;
 	justify-content: flex-end;
-	margin-right: ${({ m }) => (m.isHugeDesk || m.isDesk ? 0 : 18)}px;
-	padding: ${({ m }) => (m.isHugeDesk || m.isDesk ? 0 : 6)}px;
-	cursor: ${({ m }) => (m.isHugeDesk || m.isDesk ? 'auto' : 'pointer')};
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		grid-column: 2/3;
+		margin-right: 18px;
+		padding: 6px;
+		cursor: pointer;
+	}
 `
 const AccentColorTogglerContainer = styled.div`
 	grid-row: 1/2;
 	justify-self: start;
-	grid-column: ${({ m }) => (m.isHugeDesk || m.isDesk ? '2/4' : '1/2')};
+	grid-column: 2/4;
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		grid-column: 1/2;
+	}
 `
 const Burger = styled.span`
 	grid-row: 1/2;
@@ -62,10 +77,10 @@ const Burger = styled.span`
 	justify-self: end;
 	font-size: 16px;
 	color: ${({ theme, isMenuMobileOpen }) =>
-		isMenuMobileOpen ? commonTheme.colors.white : theme.mode.text};
+		isMenuMobileOpen ? theme.common.colors.white : theme.mode.text};
 	cursor: pointer;
 	z-index: 7;
-	transition: color ${commonTheme.durations.short}s;
+	transition: color ${({ theme }) => theme.common.durations.short}s;
 `
 const Header = ({
 	pageInitialized,
@@ -153,21 +168,20 @@ const Header = ({
 	}, [media, isMenuMobileOpen])
 
 	return (
-		<Wrapper m={media}>
+		<Wrapper>
 			<Logo
 				isMenuMobileOpen={isMenuMobileOpen}
 				mobilePageTransition={mobilePageTransition}
 				pageTransition={pageTransition}
 			/>
 			{pathname === '/' && <PageName colorsOpen={colorsOpen} />}
-			<TogglersAndNav m={media}>
+			<TogglersAndNav>
 				<ThemeTogglerContainer
 					onClick={media.isHugeDesk || media.isDesk ? () => {} : themeToggler}
-					m={media}
 				>
 					<ThemeToggler toggleTheme={themeToggler} />
 				</ThemeTogglerContainer>
-				<AccentColorTogglerContainer m={media}>
+				<AccentColorTogglerContainer>
 					<AccentColorToggler
 						accentColor={accentColor}
 						toggleAccentColor={accentColorToggler}
