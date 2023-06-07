@@ -18,7 +18,7 @@ const CarouselContainer = styled.div`
 		grid-column: 1/4;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -59,7 +59,7 @@ const CaseWrapper = styled.div`
 		${({ i }) => i * 100 + '%'}
 	);
 	cursor: none;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		cursor: pointer;
 	}
 `

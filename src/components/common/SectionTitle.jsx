@@ -12,8 +12,10 @@ const Wrap = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		margin-bottom: ${({ mbDesk }) => mbDesk};
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: ${({ pZero }) => (pZero ? '0' : '0 clamp(24px, 7.5vw, 40px)')};
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
 		margin-bottom: ${({ mbTabletA }) => mbTabletA};
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

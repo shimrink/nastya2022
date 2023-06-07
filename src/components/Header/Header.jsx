@@ -30,7 +30,7 @@ const Wrapper = styled.header`
 	padding: 0 40px;
 	margin-top: 40px;
 	z-index: 5;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-top: 24px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -44,7 +44,7 @@ const TogglersAndNav = styled.div`
 	grid-template-columns: repeat(7, 1fr);
 	grid-column-gap: 24px;
 	align-items: center;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 4/13;
 		grid-template-columns: auto;
 		grid-column-gap: 0;
@@ -56,7 +56,7 @@ const ThemeTogglerContainer = styled.div`
 	grid-column: 1/2;
 	display: flex;
 	justify-content: flex-end;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 2/3;
 		margin-right: 18px;
 		padding: 6px;
@@ -67,7 +67,7 @@ const AccentColorTogglerContainer = styled.div`
 	grid-row: 1/2;
 	justify-self: start;
 	grid-column: 2/4;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 1/2;
 	}
 `

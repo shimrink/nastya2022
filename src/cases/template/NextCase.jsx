@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		margin-top: 132px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-top: 140px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -42,7 +42,7 @@ const Info = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -74,7 +74,7 @@ const CoverArea = styled.div`
 	height: 100%;
 	cursor: none;
 	z-index: 4;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		cursor: pointer;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -98,8 +98,10 @@ const Name = styled.h2`
 	font-size: 96px;
 	text-transform: uppercase;
 	white-space: nowrap;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-right: 22px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
 		font-size: 76px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -114,7 +116,7 @@ const Links = styled.div`
 	grid-row: 1/2;
 	font-size: 18px;
 	cursor: pointer;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

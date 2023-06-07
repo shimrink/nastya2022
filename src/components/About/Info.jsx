@@ -13,7 +13,7 @@ const Wrap = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding-top: 120px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -30,7 +30,7 @@ const Content = styled.div`
 		grid-column: 1/4;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -64,7 +64,7 @@ const Rank = styled.span`
 	&:last-child {
 		margin-bottom: 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 `
@@ -76,7 +76,7 @@ const Multi = styled.h2`
 	font-weight: 500;
 	font-size: clamp(40px, 2.815vw, 48px);
 	text-transform: uppercase;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: clamp(24px, 3.065vw, 30px);
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -96,7 +96,7 @@ const Text = styled.p`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 7/12;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

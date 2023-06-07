@@ -45,7 +45,7 @@ const Title = styled.h2`
 	text-transform: uppercase;
 	text-align: center;
 	margin-bottom: 120px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 76px;
 		margin-bottom: 96px;
 	}
@@ -65,7 +65,7 @@ const Info = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 		margin-bottom: 96px;
 	}
@@ -84,7 +84,7 @@ const InfoName = styled.h4`
 	margin-bottom: 12px;
 	font-size: 18px;
 	text-transform: uppercase;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 `
@@ -94,7 +94,7 @@ const InfoDesc = styled.span`
 	&:last-child {
 		margin-bottom: 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 `
@@ -144,7 +144,7 @@ const Button = styled.a`
 	span {
 		margin-right: 12px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

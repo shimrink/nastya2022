@@ -16,7 +16,7 @@ const Main = styled.main`
 const TopBlock = styled.div`
 	width: 100%;
 	padding-top: 288px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding-top: 196px;
 	}
 `

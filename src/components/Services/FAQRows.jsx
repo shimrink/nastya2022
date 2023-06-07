@@ -31,7 +31,7 @@ const Row = styled.div`
 		grid-column: 1/4;
 		padding: 24px 40px 0 40px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 24px 0 0 0;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -49,7 +49,7 @@ const Question = styled.p`
 	font-size: 18px;
 	text-transform: uppercase;
 	line-height: 110%;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -85,7 +85,7 @@ const Answer = styled.pre`
 	line-height: 110%;
 	white-space: pre-wrap;
 	transition: height ${({ theme }) => theme.common.durations.short}s;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

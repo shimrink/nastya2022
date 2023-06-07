@@ -11,11 +11,13 @@ const Favorites = styled.h4`
 	margin-left: 57px;
 	opacity: ${({ colorsOpen }) => (colorsOpen ? 0 : 1)};
 	transition: opacity ${({ theme }) => theme.common.durations.short}s;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 1/4;
 		font-family: 'AccentFontM', sans-serif;
 		font-weight: 500;
 		font-size: 16px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
 		margin-left: 53px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

@@ -32,7 +32,7 @@ const Container = styled.div`
 		grid-column: 1/4;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -65,9 +65,11 @@ const Button = styled.button`
 		border-color: ${({ theme }) => theme.ac.dark};
 		color: ${({ theme }) => theme.common.colors.white};
 	}
+	@media ${({ theme }) => theme.common.media.tablet} {
+		font-size: 16px;
+	}
 	@media ${({ theme }) => theme.common.media.tabletA} {
 		margin-top: 96px;
-		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
 		margin-top: 76px;

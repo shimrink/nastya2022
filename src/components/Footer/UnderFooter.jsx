@@ -12,7 +12,7 @@ const UnderFooterContainer = styled.div`
 	color: ${({ theme }) => theme.mode.subText};
 	padding: 0 40px;
 	margin-bottom: 40px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 14px;
 		margin-bottom: 24px;
 	}

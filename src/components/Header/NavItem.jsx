@@ -14,7 +14,7 @@ const LinkWrap = styled.div`
 	&:last-child {
 		margin: 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: clamp(48px, 15.415vw, 76px);
 		margin-right: 0;
 		margin-bottom: 28px;

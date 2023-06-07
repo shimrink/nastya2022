@@ -18,7 +18,7 @@ export const WhatsDone = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -38,7 +38,7 @@ export const Title = styled.h2`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 1/8;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 1/7;
 		font-size: clamp(24px, 3.065vw, 30px);
 	}
@@ -54,7 +54,7 @@ export const Text = styled.p`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 8/13;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 7/13;
 		font-size: 16px;
 	}
@@ -119,7 +119,7 @@ export const Device = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 		.container {
 			grid-column-gap: 40px;
@@ -163,7 +163,7 @@ export const SpecialThanks = styled.div`
 		font-size: 48px;
 		color: ${({ theme }) => theme.ac.dark};
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		span {
 			font-size: 16px;
 			margin-bottom: 12px;
@@ -194,7 +194,7 @@ export const ColumnImg = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -218,7 +218,7 @@ export const TwoImg = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

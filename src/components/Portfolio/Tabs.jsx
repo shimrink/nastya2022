@@ -48,7 +48,7 @@ const Tab = styled.div`
 		background-color: ${({ theme }) => theme.ac.dark};
 		color: ${({ theme }) => theme.common.colors.white};
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		span {
 			font-size: 16px;
 		}

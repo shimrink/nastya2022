@@ -30,7 +30,7 @@ const Name = styled.h2`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 1/8;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 1/7;
 		font-size: clamp(24px, 3.065vw, 30px);
 	}
@@ -48,7 +48,7 @@ const Desc = styled.span`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 8/13;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 7/13;
 		font-size: 16px;
 	}

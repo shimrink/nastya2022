@@ -75,11 +75,13 @@ const Contacts = styled.div`
 	a:last-child {
 		margin-bottom: 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
-		padding: 0 0 24px 40px;
+	@media ${({ theme }) => theme.common.media.tablet} {
 		a {
 			font-size: 16px;
 		}
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
+		padding: 0 0 24px 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
 		padding: 0 0 40px 40px;

@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: start;
 	z-index: 7;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-column: 1/4;
 	}
 `
@@ -18,7 +18,7 @@ const Svg = styled.svg`
 	height: 30px;
 	fill: none;
 	cursor: pointer;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		height: 26px;
 	}
 `

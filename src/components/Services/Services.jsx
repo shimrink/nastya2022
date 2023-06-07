@@ -21,7 +21,7 @@ const Title = styled.h1`
 	text-align: center;
 	text-transform: uppercase;
 	transition: color ${({ theme }) => theme.common.durations.short}s;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin: 196px 0 120px 0;
 		font-size: 30px;
 	}
@@ -34,7 +34,7 @@ const ProcessOfWorkContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin: clamp(324px, 25.78vw, 504px) 0 480px 0;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-top: 120px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

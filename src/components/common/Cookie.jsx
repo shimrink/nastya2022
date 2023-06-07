@@ -26,7 +26,7 @@ const Text = styled.p`
 	font-size: 18px;
 	color: ${({ theme }) => theme.mode.text};
 	transition: color ${({ theme }) => theme.common.durations.short}s;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

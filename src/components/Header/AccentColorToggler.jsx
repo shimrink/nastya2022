@@ -7,7 +7,7 @@ const ColorsWrapper = styled.div`
 	display: grid;
 	align-items: center;
 	justify-items: start;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		justify-items: end;
 		padding: 4px;
 	}
@@ -27,7 +27,7 @@ const WrapDiv = styled.div`
 		height: 20px;
 		margin: ${({ sn }) => `0 0 0 ${sn * 24}px`};
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		width: ${({ sn }) => (sn === 0 ? 24 : 22)}px;
 		height: ${({ sn }) => (sn === 0 ? 24 : 22)}px;
 		padding: 2px;

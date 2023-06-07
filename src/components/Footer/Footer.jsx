@@ -13,7 +13,7 @@ const FooterWrapper = styled.footer`
 	min-height: 100vh;
 	padding-top: clamp(204px, 14.535vw, 252px);
 	z-index: 3;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding-top: 258px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -32,8 +32,10 @@ const DevGrid = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
 		margin: 128px 0 24px 0;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -59,9 +61,11 @@ const Dev = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 9/13;
 	}
+	@media ${({ theme }) => theme.common.media.tablet} {
+		font-size: 14px;
+	}
 	@media ${({ theme }) => theme.common.media.tabletA} {
 		grid-column: 7/13;
-		font-size: 14px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
 		grid-column: 3/5;

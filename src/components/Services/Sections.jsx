@@ -12,7 +12,7 @@ const Section = styled.div`
 	padding: 0 40px;
 	margin-bottom: 48px;
 	font-size: 18px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -36,7 +36,7 @@ const ServiceStack = styled.div`
 		width: 100%;
 		padding: 0 40px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

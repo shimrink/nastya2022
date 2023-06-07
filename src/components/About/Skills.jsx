@@ -24,9 +24,11 @@ const Wrap = styled.div`
 	flex-direction: column;
 	margin-top: clamp(452px, 32.655vw, 576px);
 	padding-bottom: 300px;
+	@media ${({ theme }) => theme.common.media.tablet} {
+		margin-top: clamp(288px, 35.85vw, 342px);
+	}
 	@media ${({ theme }) => theme.common.media.tabletA} {
 		padding-bottom: 207px;
-		margin-top: clamp(288px, 35.85vw, 342px);
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
 		padding-bottom: 183px;
@@ -61,7 +63,7 @@ const String = styled.div`
 	span:last-child {
 		margin-right: 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding-left: 24px;
 		span {
 			margin-right: 24px;
@@ -82,7 +84,7 @@ const Skill = styled.span`
 	text-transform: uppercase;
 	white-space: nowrap;
 	transition: color ${({ theme }) => theme.common.durations.short}s;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 48px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

@@ -13,7 +13,7 @@ const ProgressLineWrapper = styled.div`
 	height: 4px;
 	margin-bottom: 40px;
 	z-index: 3;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-bottom: 24px;
 	}
 `

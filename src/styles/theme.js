@@ -37,6 +37,7 @@ export const commonTheme = {
 
 	media: {
 		desk: '(max-width: 1679px)',
+		tablet: '(max-width: 1279px)',
 		tabletA: '(max-width: 1279px) and (orientation: landscape)',
 		tabletP: '(max-width: 1279px) and (orientation: portrait)',
 		mobile: '(max-width: 767px) and (orientation: portrait)',

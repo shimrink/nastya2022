@@ -23,7 +23,7 @@ const Svg = styled.svg`
 	@media ${({ theme }) => theme.common.media.desk} {
 		width: 87px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		width: 67px;
 	}
 `

@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		margin: 160px 0 40px 0;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin: 120px 0 24px 0;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -29,7 +29,7 @@ const Copywriting = styled.div`
 	flex-direction: column;
 	font-size: 16px;
 	color: ${({ theme }) => theme.mode.subText};
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 14px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

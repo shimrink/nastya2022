@@ -26,7 +26,7 @@ const Process = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 		h3 {
 			font-size: 16px;

@@ -17,7 +17,7 @@ const Wrap = styled.div`
 		margin: clamp(444px, 52.205vw, 466px) 0 88px 0;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
-		margin-bottom: 208px;
+		margin: clamp(444px, 52.205vw, 466px) 0 208px 0;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
 		margin: clamp(208px, 57.64vw, 276px) 0 clamp(4px, 10vw, 96px) 0;
@@ -33,7 +33,7 @@ const Content = styled.div`
 		grid-column: 1/4;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -84,7 +84,7 @@ const Text = styled.div`
 	@media ${({ theme }) => theme.common.media.desk} {
 		grid-column: 1/6;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

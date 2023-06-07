@@ -16,7 +16,7 @@ const CarouselContainer = styled.div`
 		grid-column: 1/4;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		padding: 0 40px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -127,7 +127,7 @@ const Tags = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-size: 18px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -140,7 +140,7 @@ const Year = styled.span`
 	grid-column: 2/3;
 	font-size: 18px;
 	text-align: start;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {
@@ -157,7 +157,7 @@ const Title = styled.h2`
 	font-size: clamp(40px, 2.815vw, 48px);
 	text-align: end;
 	text-transform: uppercase;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: clamp(24px, 3.065vw, 30px);
 	}
 	@media ${({ theme }) => theme.common.media.mobile} {

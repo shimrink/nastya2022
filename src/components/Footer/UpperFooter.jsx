@@ -23,7 +23,7 @@ const Wrap = styled.div`
 		width: 100%;
 		padding: 0 80px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 		padding: 0 40px;
 	}
@@ -46,8 +46,10 @@ const TitleWrap = styled.div`
 	overflow: hidden;
 	z-index: 1;
 	animation: ${moveX} 10s linear infinite;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		align-self: flex-start;
+	}
+	@media ${({ theme }) => theme.common.media.tabletA} {
 		margin-top: 40px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
@@ -70,9 +72,11 @@ const Title = styled.h2`
 		color: ${({ theme }) => theme.ac.dark};
 		transition: color ${({ theme }) => theme.common.durations.short}s;
 	}
+	@media ${({ theme }) => theme.common.media.tablet} {
+		margin-right: 22px;
+	}
 	@media ${({ theme }) => theme.common.media.tabletA} {
 		font-size: 76px;
-		margin-right: 22px;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {
 		font-size: 48px;
@@ -116,7 +120,7 @@ const Contacts = styled.div`
 	a {
 		margin-bottom: 4px;
 	}
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		grid-row: 2/3;
 	}
 	@media ${({ theme }) => theme.common.media.tabletP} {

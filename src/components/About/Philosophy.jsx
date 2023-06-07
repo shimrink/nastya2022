@@ -8,7 +8,7 @@ const Wrap = styled.div`
 	min-height: 100vh;
 	margin-bottom: 64px;
 	text-align: center;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		margin-bottom: 0;
 	}
 `
@@ -17,7 +17,7 @@ const Title = styled.span`
 	font-size: 18px;
 	text-transform: uppercase;
 	margin-bottom: 24px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: 16px;
 	}
 `
@@ -27,14 +27,14 @@ const Slogan = styled.span`
 	color: ${({ theme }) => theme.ac.dark};
 	text-transform: uppercase;
 	margin-bottom: 12px;
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: clamp(30px, 10vw, 48px);
 	}
 `
 const Explanation = styled.span`
 	font-size: 18px;
 	color: ${({ theme }) => theme.ac.dark};
-	@media ${({ theme }) => theme.common.media.tabletA} {
+	@media ${({ theme }) => theme.common.media.tablet} {
 		font-size: clamp(16px, 3.75vw, 18px);
 	}
 `
